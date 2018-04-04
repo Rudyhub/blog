@@ -1,28 +1,18 @@
 <template>
   <div class="rmedia" data-version="1.0.0" data-loadurl="http://assets.wenweipo.com/software/RMedia1.0.0x64.zip">
-    <div class="rmedia-header">
+    <div class="rmedia-header border-box">
       <h1 class="rmedia-h1">
-        <span class="letter" data-letter="R">R</span>
-        <span class="letter" data-letter="M">M</span>
-        <span class="letter" data-letter="e">e</span>
-        <span class="letter" data-letter="d">d</span>
-        <span class="letter" data-letter="i">i</span>
-        <span class="letter" data-letter="a">a</span>
-        <small class="rmedia-h1-v">1.0.0操作介绍</small>
+        {{title}}
       </h1>
     </div>
-    <div class="rmedia-main">
-      <h2 class="rmedia-h2">目录</h2>
-      <tree :tree="tree"></tree>
-      <section v-for="(item, index) of tree" v-bind:key="index">
-        <h2 class="rmedia-h2" :id="item.id">{{(index + 1) + ' - ' + item.name}}</h2>
-        <article v-if="item.tree" v-for="(art, artkey) of item.tree" v-bind:key="artkey">
-          <h3 class="rmedia-h3" :id="art.id">{{(index+1) + '.' + (artkey+1) + ' - ' + art.name}}:</h3>
-          <div class="rmedia-art-content" v-if="art.content" v-html="art.content"></div>
-        </article>
-        <hr>
-      </section>
-      ...
+    <div class="rmedia-layout border-box">
+      <div class="rmedia-nav border-box">
+        <h2 class="rmedia-h2">目录</h2>
+        <tree id="rmedia-nav-list" :tree="tree"></tree>
+      </div>
+      <div id="rmedia-scroll-body" class="rmedia-main border-box">
+        <ctree :tree="tree" :sindex="0"></ctree>
+      </div>
     </div>
   </div>
 </template>
@@ -36,17 +26,38 @@ export default {
       template: `
       <ul class="tree">
         <li class="tree-item" v-for="(item, index) in tree" v-bind:key="index">
-          <div class="tree-name" v-on:click="goAnchor(item.id)">{{item.name}}</div>
+          <div class="tree-name" v-on:click="goAnchor($event,item.id)">{{item.name}}</div>
           <tree v-if="item.tree" :tree="item.tree"></tree>
         </li>
       </ul>`,
       props: ['tree'],
       methods: {
-        goAnchor (id) {
-          let anchor = document.getElementById(id).getBoundingClientRect()
-          document.documentElement.scrollTop = document.body.scrollTop = anchor.top
+        goAnchor (e, id) {
+          let scrollBody = document.getElementById('rmedia-scroll-body')
+          let anchor = document.getElementById(id)
+          let curTarget = e.currentTarget
+          let active = document.getElementById('rmedia-nav-list').querySelectorAll('.active')
+          for (let i = 0, len = active.length; i < len; i++) {
+            active[i].classList.remove('active')
+          }
+          curTarget.classList.add('active')
+          scrollBody.scrollTop = anchor.offsetTop
         }
       }
+    },
+    ctree: {
+      name: 'ctree',
+      template: `
+        <section class="rmedia-section">
+          <article class="rmedia-art" v-for="(item, index) of tree" v-bind:key="index">
+            <h3 class="rmedia-h3" :id="item.id">{{ sindex + (index + 1) + ' - ' + item.name}}</h3>
+            <article v-if="item.content" class="rmedia-art" v-html="item.content"></article>
+            <ctree v-if="item.tree" :tree="item.tree" :sindex="(index+1)+'.'"></ctree>
+          </article>
+          <hr>
+        </section>
+      `,
+      props: ['tree', 'sindex']
     }
   },
   data () {
@@ -54,25 +65,52 @@ export default {
       title: 'RMedia1.0.0操作介绍',
       tree: [{
         id: 't1',
-        name: '操作流程概述',
-        tree: [{
-          id: 't1-1',
-          name: '主要流程',
-          content: '<p>批量输入文件 --> 点击【开始】按钮直接压缩处理。</p>'
-        }, {
-          id: 't1-2',
-          name: '中间可选流程',
-          content: '<p>设置参数、批量设置（即全局调控）、设置输出目录。默认的输出目录是桌面，需要特别注意覆盖文件行为。</p>'
-        }, {
-          id: 't1-3',
-          name: '一些操作按钮介绍',
-          content: `<p><img class="float-r margin-l" src="./static/rmedia/img/00.jpg" alt=""></p>
-          <p>菜单栏的滑杆：控制视图大小。</p>
-          <p>预览窗口下三个图标按钮：左到右分别是：【锁定/解锁】、【显示/隐藏透明区】、【删除】。这些按钮共同特性是，左击只操作对应文件，右击操作所有文件。</p>
-          <p>【锁定/解锁】：相当于【选择/反选】，大部分功能只对锁定的文件处理，会忽略解锁状态的文件。</p>
-          <p>【显示/隐藏透明区】：由于预览窗的比例是16:9的，比例有差异的视频、图片，就会有部分多余空间，默认会显示为透明，关闭透明则以黑色填充。<b>注意：此项仅是为了方便观察，不影响结果。</b></p>
-          <p>【删除】：删除视图文件，不影响本地文件。</p>`
-        }]
+        name: '界面简介与基本操作',
+        content: `
+        <p><img class="float-r margin-l" src="./static/rmedia/img/00.jpg" alt=""></p>
+        <p>如右图：</p>
+        <p>【菜单栏】和【工作区】</p>
+        - 菜单栏：
+        <ul>
+          <li>选择文件<br>
+            <small>可以输入任意多个文件，除拼接、混合操作外，其他操作可以输入任意不同类型的文件，如图片、视频、音频全部都放进来。</small>
+          </li>
+          <li>保存目录<br>
+            <small>默认输出位置是桌面。需要注意的是有些操作是不会提示覆盖/替换的，所以建议操作之前还是检查一下输出位置，以免不必要的麻烦。</small>
+          </li>
+          <li>批量设置<br>
+            <small>是进入批量设置参数的面板，它可以控制一些全局参数，如批量添加LOGO、批量重命名、批量限制尺寸等</small>
+          </li>
+          <li>更多功能<br>
+            <small>为了界面简洁，很多功能放到此按钮的下拉菜单中。</small>
+          </li>
+          <li>开始<br>
+            <small>除【更多功能】菜单外，其他操作都需要点击【开始】处理，开始后，按钮会变成【停止】，点击它可以断中当前正在处理的文件或断中全部。</small>
+          </li>
+          <li>视图大小控制滑杆<br>
+            <small>主要是用来缩放工作区视图方便观察的，尤其调整LOGO比例时，可能需要放大观察。右滑放大，左滑缩小。</small>
+          </li>
+        </ul>
+        - 工作区：
+        <p>从上到下分别是：文件预览区、时间/帧控制区、LOGO控制区、输入输出参数控制区</p>
+        <ul>
+          <li>文件预览区 <br>
+            <small>
+            - 视频或图片可以在此看到预览图。支持播放的音频、视频类型，中央为有白色三角播放按钮，点击它可以播放，再次点击画面则暂停。
+            <br><br>
+            - 右下方的三个图标按钮从左到右分别是：【锁定/解锁】、【显示/隐藏透明区】、【删除】。<br>
+            【锁定/解锁】可理解为“选中/取消、全选/反选”的合体，它的作用是，有些操作会忽视未锁定的文件，如批量添加LOGO，它只给所有锁定的文件添加。
+            【显示/隐藏透明区】与【删除】无需解释。<br>
+            值得注意的是这些按钮的共同特性，左击只操作当前文件，右击操作所有文件。如，右击【删除】，工作区中所有文件将全部被清空。</small>
+          </li>
+          <li>时间/帧控制区 <br>
+            <small>视频、音频文件的时间，可以通过此区域来跳到任意时间点，可精确到帧。</small>
+          </li>
+          <li>LOGO控制区 <br>
+            <small>此面板是为了单独控制当前文件的LOGO，它不影响全局</small>
+          </li>
+        </ul>
+        `
       }, {
         id: 't2',
         name: '参数面板介绍（结合部分处理种类）',
@@ -243,100 +281,74 @@ export default {
 </script>
 
 <style>
-  .letter{
-    display: inline-block;
-    font-weight: 900;
-    font-size: 100px;
-    position: relative;
-    color: #5f3d8a;
-    transform-style: preserve-3d;
-    perspective: 400px;
-    line-height: 1;
-    z-index: 1;
-  }
-  .letter:before, .letter:after{
-    position:absolute;
-    content: attr(data-letter);
-    transform-origin: top left;
-    top:0;
-    left:0;
-    display: block;
-    box-sizing: border-box;
-  }
-  .letter, .letter:before, .letter:after{
-    transition: all 0.3s ease-in-out;
-  }
-  .letter:before{
-    color: #fff;
-    text-shadow:
-      -1px 0px 1px rgba(255,255,255,.8),
-      1px 0px 1px rgba(0,0,0,.8);
-    z-index: 3;
-    transform:
-      rotateX(0deg)
-      rotateY(-15deg)
-      rotateZ(0deg);
-  }
-  .letter:after{
-    color: rgba(0,0,0,.11);
-    z-index:2;
-    transform:
-      scale(1.08,1)
-      rotateX(0deg)
-      rotateY(0deg)
-      rotateZ(0deg)
-      skew(0deg,1deg);
-    width: 100%;
-    height: 100%;
-  }
-  .letter:hover:before{
-    color: #fafafa;
-    transform:
-      rotateX(0deg)
-      rotateY(-40deg)
-      rotateZ(0deg);
-  }
-  .letter:hover:after{
-    transform:
-      scale(1.08,1)
-      rotateX(0deg)
-      rotateY(40deg)
-      rotateZ(0deg)
-      skew(0deg,22deg);
-  }
   .rmedia-header{
-    background: linear-gradient(90deg, transparent, #573469 30%, transparent);
+    background: linear-gradient(#dce1f1, transparent);
+    height: 100px;
+    text-align: center;
+    border-bottom: #d4d4d4 solid 1px;
+    overflow: hidden;
   }
   .rmedia-h1{
     color: #48525b;
     padding: 0 1em;
-    max-width: 1200px;
-    margin: 0 auto;
+    font-size: 48px;
   }
-  .rmedia-h1-v{
-    font-size: 28px;
-    color: #fff;
-    text-shadow: 1px 1px 2px #244c75;
+  .rmedia-layout {
+    font-size: 0;
   }
-  .rmedia-main {
+  .rmedia-nav,
+  .rmedia-main{
+    display: inline-block;
+    vertical-align: top;
     line-height: 1.6;
-    max-width: 1200px;
-    margin: 30px auto;
+    font-size: 16px;
     color: #6a737d;
+    height: calc(100vh - 100px);
+    overflow: auto;
+  }
+  .rmedia-nav{
+    width: 360px;
+    border-right: #d4d4d4 solid 1px;
+    padding: 1em;
+    font-size: 14px;
+  }
+  .rmedia-main{
+    width: calc(100% - 360px);
+    padding: 1em;
+    position: relative;
   }
   .rmedia-h2,
   .rmedia-h3{
-    color: #5899da;
+    color: #4168a4;
     font-weight: normal;
+  }
+  .tree{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .tree-item .tree{
+    padding-left: 1em;
   }
   .tree-name{
     cursor: pointer;
     display: inline-block;
+    color: #555;
+    border: 1px solid transparent;
+    padding: .2em .5em;
+    transition: all .5s;
   }
   .tree-name:hover{
-    background: #eee;
+    border-color: #4168a4;
+  }
+  .tree-name.active{
+    background: #c2d5f2;
   }
   .rmedia b{
     color: #b970af;
+  }
+  .rmedia-section,
+  .rmedia-art{
+    overflow: hidden;
   }
 </style>

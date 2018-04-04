@@ -9,35 +9,27 @@ export default {
 </script>
 
 <style>
-body{
-  margin: 0;
-}
-.float-l {
-  float: left;
-}
-
-.float-r {
-  float: right;
-}
-
-.margin-r {
-  margin-right: 2em;
-}
-
-.margin-l {
-  margin-left: 2em;
-}
-
-.clear {
-  clear: both;
-}
-
-article {
-  padding: 0 2em 2em;
-  overflow: hidden;
-}
-
-section {
-  overflow: hidden;
-}
+  body{
+    margin: 0;
+  }
+  .float-l {
+    float: left;
+  }
+  .float-r {
+    float: right;
+  }
+  .margin-r {
+    margin-right: 2em;
+  }
+  .margin-l {
+    margin-left: 2em;
+  }
+  .clear {
+    clear: both;
+  }
+  .border-box{
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+  }
 </style>
