@@ -4,7 +4,7 @@
       <img class="logo" src="/static/logo.png" alt="logo">
     </div>
     <div class="home-links">
-      <router-link to="/rmedia">rmedia</router-link>
+      <router-link to="/rmedia">RMedia1.0</router-link>
     </div>
   </div>
 </template>
