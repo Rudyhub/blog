@@ -62,8 +62,25 @@ export default {
   },
   data () {
     return {
-      title: 'RMedia1.0.0操作介绍',
+      title: 'RMedia操作介绍',
       tree: [{
+        id: 't2-1',
+        name: '更新至1.1.0',
+        content: `<img class="float-r margin-l" src="./static/rmedia/img/11.png" alt="">
+        <div>如右图：</div>
+        <ul>
+          <li>更新了LOGO控制，换用更灵活的晶格手柄控制</li>
+          <li>修复了LOGO显示起始时间为0时无效的BUG</li>
+          <li>默认一排显示5个改为显示3个</li>
+          <li>更新了无关紧要的版权LOGO图标</li>
+        </ul>
+        <div class="clear"></div>
+        <hr>`
+      }, {
+        id: 'v1-0-0',
+        name: '初始版本1.0.0',
+        content: '<div>更新日期: 2018-5-18</div>'
+      }, {
         id: 't1',
         name: '界面简介与基本操作',
         content: `
