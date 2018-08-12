@@ -1,6 +1,6 @@
 <template>
   <div class="help">
-    <p>按Enter进入命令行模式，输入要访问的页面名称，然后再Enter即可，命令如下：</p>
+    <p>敲击Enter，然后输入你想要访问的页面：</p>
     <p>-h / -? / 帮助</p>
     <p>home / 主页</p>
     <p>works / 作品</p>
@@ -44,11 +44,20 @@ export default {
   height: 100%;
   overflow: hidden;
   box-sizing: border-box;
-  text-align: center;
   color: #92a3b1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.help p:first-child{
+  width: 100%;
+  padding: 0;
+  text-align: center;
 }
 .help p{
   opacity: 0;
+  padding: 0 1em;
 }
 .help-animate{
   animation: help-up 1.5s forwards;

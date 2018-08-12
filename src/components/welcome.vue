@@ -16,7 +16,7 @@ export default {
     }
     function onEnd (e) {
       children[len - 1].removeEventListener(e.type, onEnd, false)
-      _this.$parent.animateEnd()
+      _this.$parent.animateEnd('Keyboard')
     }
     children[len - 1].addEventListener('webkitAnimationEnd', onEnd, false)
     children[len - 1].addEventListener('animationend', onEnd, false)
@@ -39,7 +39,7 @@ export default {
   .welcome{
     font-size: 2.8vw;
     text-align: center;
-    height: 100%;
+    height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
