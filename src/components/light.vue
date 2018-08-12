@@ -17,7 +17,7 @@ export default {
     }
     let scale
     for (let i = 0; i < len; i++) {
-      scale = Math.round(Math.random() * 10 + 10) + 'vw'
+      scale = Math.round(Math.random() * 5 + 10) + 'vw'
       children[i].style.width = children[i].style.height = scale
     }
   }
@@ -46,20 +46,20 @@ export default {
   animation: light-1 10s linear infinite alternate;
 }
 .light-item:nth-child(2){
-  animation: light-2 8s linear infinite alternate;
+  animation: light-2 12s linear infinite alternate;
 }
 .light-item:nth-child(3){
-  animation: light-3 8s linear infinite alternate;
+  animation: light-3 12s linear infinite alternate;
 }
 @keyframes light-1 {
   0%{
     transform: translate(0, 0);
   }
   50%{
-    transform: translate(50vw, 40vh);
+    transform: translate(50vw, 80vh);
   }
   100%{
-    transform: translate(100vw, 20vh);
+    transform: translate(90vw, 50vh);
   }
 }
 @keyframes light-2 {

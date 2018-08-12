@@ -2,8 +2,8 @@
   <div class="main">
     <div class="blackboard" ref="blackboard">
       <div :is="scene"></div>
-      <light></light>
     </div>
+    <light></light>
     <div class="keyboard">
       <div class="keyboard-keys">
         <div class="keyboard-row" v-for="(row, index) of keys" :key="index">
@@ -22,17 +22,6 @@
 import Welcome from './welcome'
 import Help from './help'
 import Light from './light'
-let command = document.createElement('div')
-command.className = 'command-line'
-// function blackBoard (board) {
-//   if (board.classList.contains('command')) {
-//     console.log('ing')
-//   } else {
-//     board.classList.add('command')
-//     board.innerHTML = ''
-//     board.appendChild(command)
-//   }
-// }
 export default {
   name: 'home',
   components: {Light},
@@ -51,9 +40,7 @@ export default {
           clearTimeout(timer)
           items[e.code].classList.add('active')
         }, 20)
-        if (e.code === 'Enter') {
-          // blackBoard(_this.$refs.blackboard)
-        }
+        if (e.code === 'Enter') {}
       }
     }
   },

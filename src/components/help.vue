@@ -1,6 +1,6 @@
 <template>
   <div class="help">
-    <p class="help-gray">按Enter进入命令行模式，输入要访问的页面名称，然后再Enter即可，命令如下：</p>
+    <p>按Enter进入命令行模式，输入要访问的页面名称，然后再Enter即可，命令如下：</p>
     <p>-h / -? / 帮助</p>
     <p>home / 主页</p>
     <p>works / 作品</p>
@@ -39,15 +39,13 @@ export default {
 .help{
   max-width: 1000px;
   margin: 0 auto;
-  font-size: 14px;
+  font-size: 1.4vw;
   padding: 1em;
   height: 100%;
   overflow: hidden;
   box-sizing: border-box;
   text-align: center;
-}
-.help-gray{
-  color: #888;
+  color: #92a3b1;
 }
 .help p{
   opacity: 0;
