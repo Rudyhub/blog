@@ -1,2 +1,2 @@
 # rudyhub.github.io
-vue-cli构建的
+vue-cli
