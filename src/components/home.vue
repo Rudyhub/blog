@@ -12,32 +12,33 @@ import Welcome from './welcome'
 import Help from './help'
 import Light from './light'
 import Keyboard from './keyboard'
+let scenes = {
+  Keyboard,
+  Help
+}
 export default {
   name: 'home',
   components: {Light},
   mounted () {
     this.scene = Welcome
-    // this.scene = this.scenes[0]
   },
   data () {
     return {
+      curSceneName: '',
       scene: null,
-      keyboard: null,
-      scenes: {
-        Keyboard,
-        Help
-      }
+      keyboard: null
     }
   },
   methods: {
     animateEnd (sceneName) {
-      if (this.scenes[sceneName]) {
+      if (scenes[sceneName]) {
         if (sceneName === 'Keyboard') {
           this.keyboard = Keyboard
         } else {
-          this.scene = this.scenes[sceneName]
+          this.scene = scenes[sceneName]
         }
       }
+      this.curSceneName = sceneName
     }
   }
 }
@@ -49,7 +50,7 @@ export default {
   }
   .blackboard{
     height: 70vh;
-    overflow: auto;
+    overflow: hidden;
     position: relative;
     color: #bbcfed;
     box-sizing: border-box;

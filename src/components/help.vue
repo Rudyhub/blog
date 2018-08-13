@@ -21,7 +21,6 @@ export default {
     }
     function onEnd (e) {
       children[len - 1].removeEventListener(e.type, onEnd, false)
-      _this.$parent.animateEnd()
     }
     children[len - 1].addEventListener('webkitAnimationEnd', onEnd, false)
     children[len - 1].addEventListener('animationend', onEnd, false)
@@ -37,8 +36,6 @@ export default {
 
 <style scoped>
 .help{
-  max-width: 1000px;
-  margin: 0 auto;
   font-size: 1.4vw;
   padding: 1em;
   height: 100%;
@@ -60,7 +57,7 @@ export default {
   padding: 0 1em;
 }
 .help-animate{
-  animation: help-up 1.5s forwards;
+  animation: help-up 1.5s forwards alternate;
 }
 @keyframes help-up {
   0%{

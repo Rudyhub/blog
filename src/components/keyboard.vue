@@ -17,7 +17,7 @@ export default {
   name: 'keyboard',
   created () {
     let items = {}
-
+    let _this = this
     document.onkeydown = function (e) {
       if (!items[e.code]) {
         items[e.code] = document.querySelector('.keyboard-' + e.code)
@@ -28,7 +28,11 @@ export default {
           clearTimeout(timer)
           items[e.code].classList.add('active')
         }, 20)
-        if (e.code === 'Enter') {}
+        if (e.code === 'Enter') {
+          if (_this.$parent.curSceneName === 'Help') {
+            console.log('Enter Command')
+          }
+        }
       }
     }
   },
@@ -102,7 +106,6 @@ export default {
   margin:0 .5vh;
   vertical-align: middle;
   border: .1vh solid;
-  overflow: hidden;
   border-radius: 4px;
   padding: .2vh .4vh;
   line-height: 1.2;
