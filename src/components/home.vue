@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <div class="blackboard" ref="blackboard">
+    <div class="blackboard">
       <div :is="scene"></div>
     </div>
     <div :is="keyboard"></div>
@@ -12,10 +12,13 @@ import Welcome from './welcome'
 import Help from './help'
 import Light from './light'
 import Keyboard from './keyboard'
+import Command from './commad'
 let scenes = {
   Keyboard,
-  Help
+  Help,
+  Command
 }
+let enterPageTimer
 export default {
   name: 'home',
   components: {Light},
@@ -26,7 +29,8 @@ export default {
     return {
       curSceneName: '',
       scene: null,
-      keyboard: null
+      keyboard: null,
+      pages: [/^((-[h?])|帮助)$/, /^(home|主页)$/, /^(works|作品)$/, /^(blog|博客)$/, /^(album|相册)$/]
     }
   },
   methods: {
@@ -39,6 +43,39 @@ export default {
         }
       }
       this.curSceneName = sceneName
+    },
+    commandAddLine () {
+      let _this, lines, preline
+      _this = this
+      lines = _this.$children[1].lines
+      preline = lines.pop()
+      lines.push(preline, '')
+      _this.$children[1].$el.scrollTop = _this.$children[1].$el.scrollHeight
+      if (enterPageTimer) clearTimeout(enterPageTimer)
+      enterPageTimer = setTimeout(function () {
+        clearTimeout(enterPageTimer)
+        if (_this.pages[0].test(preline.trim())) {
+          _this.animateEnd('Help')
+        }
+        console.log(preline)
+      }, 200)
+    },
+    commandAddChar (char) {
+      let lines, last
+      lines = this.$children[1].lines
+      last = lines.pop() + char
+      lines.push(last)
+    },
+    commandRemoveChar () {
+      let lines, last
+      lines = this.$children[1].lines
+      last = lines.pop()
+      if (last.length > 0) {
+        last = last.slice(0, -1)
+        lines.push(last)
+      } else {
+        lines.push('')
+      }
     }
   }
 }
@@ -46,7 +83,10 @@ export default {
 <style>
   .main{
     height: 100vh;
+    min-width: 109vh;
     background: #333;
+    overflow: hidden;
+    position: relative;
   }
   .blackboard{
     height: 70vh;
@@ -54,44 +94,5 @@ export default {
     position: relative;
     color: #bbcfed;
     box-sizing: border-box;
-  }
-  .blackboard:after{
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 10vh;
-    background: linear-gradient(to top, #333, transparent);
-    bottom: 0;
-    left: 0;
-  }
-  .command{
-    font-size: 12px;
-    padding: 1em;
-  }
-  .command-line:before{
-    content: '[Guest ~]:';
-    display: inline-block;
-    vertical-align: middle;
-    padding-right: .5em;
-  }
-  .command-line:after{
-    content: '|';
-    display: inline-block;
-    vertical-align: middle;
-    animation: flicker 1s infinite;
-  }
-  @keyframes flicker {
-    0%{
-      opacity: 0;
-    }
-    20%{
-      opacity: 1;
-    }
-    80%{
-      opacity: 1;
-    }
-    100%{
-      opacity: 0;
-    }
   }
 </style>

@@ -19,6 +19,7 @@ export default {
     let items = {}
     let _this = this
     document.onkeydown = function (e) {
+      e.preventDefault()
       if (!items[e.code]) {
         items[e.code] = document.querySelector('.keyboard-' + e.code)
       }
@@ -29,8 +30,21 @@ export default {
           items[e.code].classList.add('active')
         }, 20)
         if (e.code === 'Enter') {
-          if (_this.$parent.curSceneName === 'Help') {
-            console.log('Enter Command')
+          switch (_this.$parent.curSceneName) {
+            case 'Help':
+              _this.$parent.animateEnd('Command'); break
+            case 'Command':
+              _this.$parent.commandAddLine(); break
+          }
+        } else {
+          if (_this.$parent.curSceneName === 'Command') {
+            if (e.key.length === 1) {
+              _this.$parent.commandAddChar(e.key)
+            } else {
+              if (e.key === 'Backspace') {
+                _this.$parent.commandRemoveChar()
+              }
+            }
           }
         }
       }
@@ -77,7 +91,8 @@ export default {
 .keyboard{
   width: 100%;
   height: 35vh;
-  position: fixed;
+  position: absolute;
+  left: 0;
   bottom: 0;
   perspective: 400px;
   color: #cb0101;
@@ -110,6 +125,7 @@ export default {
   padding: .2vh .4vh;
   line-height: 1.2;
   position: relative;
+  font-size: 2vh;
 }
 .keyboard-item:after{
   content: '';

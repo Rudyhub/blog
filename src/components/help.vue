@@ -6,6 +6,7 @@
     <p>works / 作品</p>
     <p>blog / 博客</p>
     <p>album / 相册</p>
+    <p>开始各种骚操作吧！</p>
   </div>
 </template>
 
@@ -36,7 +37,7 @@ export default {
 
 <style scoped>
 .help{
-  font-size: 1.4vw;
+  font-size: 15px;
   padding: 1em;
   height: 100%;
   overflow: hidden;
@@ -46,8 +47,15 @@ export default {
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
+  align-content: center;
 }
-.help p:first-child{
+@media all and (max-width: 1079px) {
+  .help {
+    font-size: 1.4vw;
+  }
+}
+.help p:first-child,
+.help p:last-child{
   width: 100%;
   padding: 0;
   text-align: center;
@@ -56,6 +64,7 @@ export default {
   opacity: 0;
   padding: 0 1em;
 }
+
 .help-animate{
   animation: help-up 1.5s forwards alternate;
 }
