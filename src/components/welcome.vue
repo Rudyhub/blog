@@ -16,7 +16,7 @@ export default {
     }
     function onEnd (e) {
       children[len - 1].removeEventListener(e.type, onEnd, false)
-      _this.$parent.animateEnd('Keyboard')
+      _this.$parent.sceneTo('keyboard')
     }
     children[len - 1].addEventListener('webkitAnimationEnd', onEnd, false)
     children[len - 1].addEventListener('animationend', onEnd, false)
@@ -30,6 +30,12 @@ export default {
   data () {
     return {
       content: 'Welcome Rudy\'s Zone'.split('')
+    }
+  },
+  methods: {
+    animateIn () {
+    },
+    animateOut () {
     }
   }
 }

@@ -1,12 +1,12 @@
 <template>
     <div class="command">
-      <div class="command-line" v-for="(line, index) of lines" :key="index">{{line}}</div>
+      <div class="command-line" v-for="(line, index) of lines" :key="index" :class="line==='...'?'command-line-wait':'command-line-input'">{{line}}</div>
     </div>
 </template>
 
 <script>
 export default {
-  name: 'commad',
+  name: 'command',
   mounted () {
     let isTouch = 'ontouchstart' in document
     let el = this.$el
@@ -70,13 +70,13 @@ export default {
   .command-unselect{
     user-select: none;
   }
-  .command-line:before{
+  .command-line-input:before{
     content: '[Guest ~]:';
     display: inline-block;
     vertical-align: middle;
     padding-right: .5em;
   }
-  .command-line:last-child:after{
+  .command-line-input:last-child:after{
     content: '|';
     display: inline-block;
     vertical-align: middle;

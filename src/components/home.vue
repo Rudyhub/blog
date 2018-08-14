@@ -8,57 +8,62 @@
 </template>
 
 <script>
-import Welcome from './welcome'
-import Help from './help'
+import welcome from './welcome'
+import help from './help'
 import Light from './light'
-import Keyboard from './keyboard'
-import Command from './commad'
+import keyboard from './keyboard'
+import command from './command'
 let scenes = {
-  Keyboard,
-  Help,
-  Command
+  keyboard,
+  help,
+  command
 }
-let enterPageTimer
+let pages, pagesLen
+pages = [/^((-[h?])|帮助)$/, /^(home|主页)$/, /^(works|作品)$/, /^(blog|博客)$/, /^(album|相册)$/]
+pagesLen = pages.length
 export default {
   name: 'home',
   components: {Light},
   mounted () {
-    this.scene = Welcome
+    this.scene = welcome
   },
   data () {
     return {
-      curSceneName: '',
       scene: null,
-      keyboard: null,
-      pages: [/^((-[h?])|帮助)$/, /^(home|主页)$/, /^(works|作品)$/, /^(blog|博客)$/, /^(album|相册)$/]
+      keyboard: null
     }
   },
   methods: {
-    animateEnd (sceneName) {
-      if (scenes[sceneName]) {
-        if (sceneName === 'Keyboard') {
-          this.keyboard = Keyboard
-        } else {
+    sceneTo (sceneName) {
+      switch (sceneName) {
+        case 'keyboard':
+          this.keyboard = scenes[sceneName]; break
+        default:
           this.scene = scenes[sceneName]
-        }
       }
-      this.curSceneName = sceneName
     },
-    commandAddLine () {
+    commandAddLine (callback) {
       let _this, lines, preline
       _this = this
       lines = _this.$children[1].lines
       preline = lines.pop()
-      lines.push(preline, '')
-      _this.$children[1].$el.scrollTop = _this.$children[1].$el.scrollHeight
-      if (enterPageTimer) clearTimeout(enterPageTimer)
-      enterPageTimer = setTimeout(function () {
-        clearTimeout(enterPageTimer)
-        if (_this.pages[0].test(preline.trim())) {
-          _this.animateEnd('Help')
+      lines.push(preline)
+      if (preline.trim() === '') {
+        lines.push('')
+        callback()
+      } else {
+        lines.push('...')
+        for (let i = 0; i < pagesLen; i++) {
+          if (pages[i].test(preline.trim())) {
+            lines.push('找到' + preline + '，正在跳转...')
+            callback()
+            return
+          }
         }
-        console.log(preline)
-      }, 200)
+        lines.push('未找到')
+        callback()
+      }
+      _this.$children[1].$el.scrollTop = _this.$children[1].$el.scrollHeight
     },
     commandAddChar (char) {
       let lines, last

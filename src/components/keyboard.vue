@@ -18,6 +18,7 @@ export default {
   created () {
     let items = {}
     let _this = this
+    let status = 0
     document.onkeydown = function (e) {
       e.preventDefault()
       if (!items[e.code]) {
@@ -30,14 +31,20 @@ export default {
           items[e.code].classList.add('active')
         }, 20)
         if (e.code === 'Enter') {
-          switch (_this.$parent.curSceneName) {
-            case 'Help':
-              _this.$parent.animateEnd('Command'); break
-            case 'Command':
-              _this.$parent.commandAddLine(); break
+          switch (_this.$parent.scene.name) {
+            case 'help':
+              _this.$parent.scene.animateOut(() => {
+                _this.$parent.sceneTo('command')
+              }); break
+            case 'command':
+              status = 1
+              _this.$parent.commandAddLine(() => {
+                status = 0
+              }); break
           }
         } else {
-          if (_this.$parent.curSceneName === 'Command') {
+          if (_this.$parent.scene.name === 'command') {
+            if (status) return
             if (e.key.length === 1) {
               _this.$parent.commandAddChar(e.key)
             } else {
@@ -59,7 +66,9 @@ export default {
     kb.addEventListener('webkitAnimationEnd', onEnd, false)
     function onEnd (e) {
       kb.removeEventListener(e.type, onEnd, false)
-      _this.$parent.animateEnd('Help')
+      if (e.animationName === 'fall-later') {
+        _this.$parent.sceneTo('help')
+      }
     }
   },
   data () {
@@ -107,7 +116,7 @@ export default {
   transform-origin: bottom;
 }
 .keyboard-animate .keyboard-keys{
-  animation: drop-down 1s cubic-bezier(.77,.22,.98,.81) forwards, rotate-X 0.8s cubic-bezier(.77,.22,.98,.81) 1s forwards;
+  animation: fall-down 1s cubic-bezier(.77,.22,.98,.81) forwards, fall-later 0.8s cubic-bezier(.77,.22,.98,.81) 1s forwards;
 }
 .keyboard-row{
   height: 6vh;
@@ -215,7 +224,7 @@ export default {
     box-shadow: 0 0 5px;
   }
 }
-@keyframes drop-down {
+@keyframes fall-down {
   0%{
     transform: translateY(-100vh);
   }
@@ -235,7 +244,7 @@ export default {
     transform: translateY(0);
   }
 }
-@keyframes rotate-X {
+@keyframes fall-later {
   0%{
     transform: rotateX(0);
   }
