@@ -1,16 +1,13 @@
 <template>
   <div class="help">
-    <p>敲击Enter，然后输入你想要访问的页面：</p>
-    <p>-h / -? / 帮助</p>
-    <p>home / 主页</p>
-    <p>works / 作品</p>
-    <p>blog / 博客</p>
-    <p>album / 相册</p>
-    <p>开始各种骚操作吧！</p>
+    <div class="help-lead">敲击Enter，然后输入你想要访问的页面：</div>
+    <div class="help-item" v-for="(item,index) in nav" :key="index" v-html="item.slice(0,2).join('/')"></div>
+    <div class="help-start">开始各种骚操作吧！</div>
   </div>
 </template>
 
 <script>
+import store from '../scripts/store.js'
 let children, len, callbacks
 callbacks = new Map()
 function onEnd (e) {
@@ -33,6 +30,11 @@ export default {
   name: 'help',
   created () {
     callbacks.clear()
+  },
+  data () {
+    return {
+      nav: store.nav
+    }
   },
   mounted () {
     children = this.$el.children
@@ -70,15 +72,16 @@ export default {
       font-size: 1.4vw;
     }
   }
-  .help p:first-child,
-  .help p:last-child{
+  .help-lead,
+  .help-start{
     width: 100%;
-    padding: 0;
     text-align: center;
-  }
-  .help p{
     opacity: 0;
-    padding: 0 1em;
+    padding: 1em;
+  }
+  .help-item{
+    opacity: 0;
+    padding: 1em;
   }
 
   .animate-in{

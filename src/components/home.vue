@@ -52,35 +52,22 @@ export default {
         lines.push('')
         callback()
       } else {
-        lines.push('...')
         for (let i = 0; i < pagesLen; i++) {
           if (pages[i].test(preline.trim())) {
-            lines.push('找到' + preline + '，正在跳转...')
+            lines.push(['找到' + preline + '，正在跳转...'], '')
             callback()
             return
           }
         }
-        lines.push('未找到')
+        lines.push(['花了几毫秒没找着~~'], '')
         callback()
       }
       _this.$children[1].$el.scrollTop = _this.$children[1].$el.scrollHeight
     },
     commandAddChar (char) {
-      let lines, last
-      lines = this.$children[1].lines
-      last = lines.pop() + char
-      lines.push(last)
-    },
-    commandRemoveChar () {
-      let lines, last
-      lines = this.$children[1].lines
-      last = lines.pop()
-      if (last.length > 0) {
-        last = last.slice(0, -1)
-        lines.push(last)
-      } else {
-        lines.push('')
-      }
+      let lines = this.$children[1].lines
+      lines.pop()
+      lines.push(char)
     }
   }
 }

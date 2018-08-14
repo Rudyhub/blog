@@ -1,6 +1,9 @@
 <template>
     <div class="command">
-      <div class="command-line" v-for="(line, index) of lines" :key="index" :class="line==='...'?'command-line-wait':'command-line-input'">{{line}}</div>
+      <template v-for="(line, index) of lines">
+        <div v-if="typeof line === 'object'" class="command-line command-line-system"  :key="index" v-html="'[系统回复]：'+line[0]"></div>
+        <div v-else class="command-line-user" :key="index" v-html="line"></div>
+      </template>
     </div>
 </template>
 
@@ -62,25 +65,30 @@ export default {
 <style scoped>
   .command{
     height: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2em 0;
     overflow: hidden;
     font-size: 12px;
-    padding: 1em;
     box-sizing: border-box;
   }
   .command-unselect{
     user-select: none;
   }
-  .command-line-input:before{
+  .command-line-user:before{
     content: '[Guest ~]:';
     display: inline-block;
     vertical-align: middle;
     padding-right: .5em;
   }
-  .command-line-input:last-child:after{
+  .command-line-user:last-child:after{
     content: '|';
     display: inline-block;
     vertical-align: middle;
     animation: flicker 1s infinite;
+  }
+  .command-line-system{
+    margin-left: 4em;
   }
   @keyframes flicker {
     0%{

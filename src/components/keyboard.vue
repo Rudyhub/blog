@@ -9,18 +9,20 @@
         </template>
       </div>
     </div>
+    <input class="kbd-input-el" ref="kbdInput" type="text" v-on:input="keyboardInput">
   </div>
 </template>
 
 <script>
+let allowInput = 0
 export default {
   name: 'keyboard',
-  created () {
-    let items = {}
-    let _this = this
-    let status = 0
-    document.onkeydown = function (e) {
-      e.preventDefault()
+  mounted () {
+    let _this, kb, items
+    _this = this
+    kb = this.$el
+    items = {}
+    document.addEventListener('keydown', function (e) {
       if (!items[e.code]) {
         items[e.code] = document.querySelector('.keyboard-' + e.code)
       }
@@ -35,32 +37,19 @@ export default {
             case 'help':
               _this.$parent.scene.animateOut(() => {
                 _this.$parent.sceneTo('command')
+                _this.focusInput()
               }); break
             case 'command':
-              status = 1
+              allowInput = 1
               _this.$parent.commandAddLine(() => {
-                status = 0
+                allowInput = 0
+                _this.$refs.kbdInput.value = ''
+                _this.focusInput()
               }); break
-          }
-        } else {
-          if (_this.$parent.scene.name === 'command') {
-            if (status) return
-            if (e.key.length === 1) {
-              _this.$parent.commandAddChar(e.key)
-            } else {
-              if (e.key === 'Backspace') {
-                _this.$parent.commandRemoveChar()
-              }
-            }
           }
         }
       }
-    }
-  },
-  mounted () {
-    let _this, kb
-    _this = this
-    kb = this.$el
+    })
     kb.classList.add('keyboard-animate')
     kb.addEventListener('animationend', onEnd, false)
     kb.addEventListener('webkitAnimationEnd', onEnd, false)
@@ -92,6 +81,19 @@ export default {
           {html: 'Space', code: 'Space'}, {html: 'Alt', code: 'AltRight'}, {html: 'PrtSc', code: 'PrintScreen'},
           {html: 'Win', code: 'MetaRight'}, {html: 'Ctrl', code: 'ControlRight'}]
       ]}
+  },
+  methods: {
+    focusInput () {
+      let inp, val
+      inp = this.$refs.kbdInput
+      val = inp.value
+      inp.value = val
+      inp.focus()
+    },
+    keyboardInput () {
+      if (allowInput) return
+      this.$parent.commandAddChar(this.$refs.kbdInput.value)
+    }
   }
 }
 </script>
@@ -187,6 +189,11 @@ export default {
 .keyboard-row:last-child .keyboard-item{
   line-height: 5vh;
   text-align: center;
+}
+.kbd-input-el{
+  opacity: 0;
+  position: absolute;
+  z-index: -1;
 }
 @keyframes bright-a {
   0%{
