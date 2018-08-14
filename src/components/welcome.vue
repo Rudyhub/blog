@@ -5,27 +5,10 @@
 </template>
 
 <script>
-let children, len
 export default {
   name: 'welcome',
   mounted () {
-    let _this = this
-    if (!children) {
-      children = _this.$el.children
-      len = children.length
-    }
-    function onEnd (e) {
-      children[len - 1].removeEventListener(e.type, onEnd, false)
-      _this.$parent.sceneTo('keyboard')
-    }
-    children[len - 1].addEventListener('webkitAnimationEnd', onEnd, false)
-    children[len - 1].addEventListener('animationend', onEnd, false)
-    for (let i = 0; i < len; i++) {
-      let timer = setTimeout(function () {
-        clearTimeout(timer)
-        children[i].classList.add('welcome-animate')
-      }, 100 * i)
-    }
+    this.animateIn()
   },
   data () {
     return {
@@ -33,9 +16,24 @@ export default {
     }
   },
   methods: {
-    animateIn () {
-    },
-    animateOut () {
+    animateIn (fn) {
+      let _this, children, len, last
+      _this = this
+      children = _this.$el.children
+      len = children.length
+      last = children[len - 1]
+      for (let i = 0; i < len; i++) {
+        let timer = setTimeout(function () {
+          clearTimeout(timer)
+          children[i].classList.add('welcome-animate')
+        }, 100 * i)
+      }
+      last.addEventListener('animationend', animateEnd, false)
+      function animateEnd (e) {
+        last.removeEventListener(e.type, animateEnd, false)
+        if (fn) fn('welcome', e.animationName)
+        _this.$emit('animate-in-end', 'welcome', e.animationName)
+      }
     }
   }
 }

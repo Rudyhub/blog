@@ -9,19 +9,14 @@
         </template>
       </div>
     </div>
-    <input class="kbd-input-el" ref="kbdInput" type="text" v-on:input="keyboardInput">
   </div>
 </template>
 
 <script>
-let allowInput = 0
 export default {
   name: 'keyboard',
   mounted () {
-    let _this, kb, items
-    _this = this
-    kb = this.$el
-    items = {}
+    let items = {}
     document.addEventListener('keydown', function (e) {
       if (!items[e.code]) {
         items[e.code] = document.querySelector('.keyboard-' + e.code)
@@ -32,33 +27,9 @@ export default {
           clearTimeout(timer)
           items[e.code].classList.add('active')
         }, 20)
-        if (e.code === 'Enter') {
-          switch (_this.$parent.scene.name) {
-            case 'help':
-              _this.$parent.scene.animateOut(() => {
-                _this.$parent.sceneTo('command')
-                _this.focusInput()
-              }); break
-            case 'command':
-              allowInput = 1
-              _this.$parent.commandAddLine(() => {
-                allowInput = 0
-                _this.$refs.kbdInput.value = ''
-                _this.focusInput()
-              }); break
-          }
-        }
       }
     })
-    kb.classList.add('keyboard-animate')
-    kb.addEventListener('animationend', onEnd, false)
-    kb.addEventListener('webkitAnimationEnd', onEnd, false)
-    function onEnd (e) {
-      kb.removeEventListener(e.type, onEnd, false)
-      if (e.animationName === 'fall-later') {
-        _this.$parent.sceneTo('help')
-      }
-    }
+    this.animateIn()
   },
   data () {
     return {
@@ -83,16 +54,15 @@ export default {
       ]}
   },
   methods: {
-    focusInput () {
-      let inp, val
-      inp = this.$refs.kbdInput
-      val = inp.value
-      inp.value = val
-      inp.focus()
-    },
-    keyboardInput () {
-      if (allowInput) return
-      this.$parent.commandAddChar(this.$refs.kbdInput.value)
+    animateIn (fn) {
+      let _this = this
+      this.$el.classList.add('keyboard-animate')
+      this.$el.addEventListener('animationend', animateEnd, false)
+      function animateEnd (e) {
+        this.removeEventListener(e.type, animateEnd, false)
+        if (fn) fn('keyboard', e.animationName)
+        _this.$emit('animate-in-end', 'keyboard', e.animationName)
+      }
     }
   }
 }

@@ -1,29 +1,23 @@
 <template>
   <div class="main">
     <div class="blackboard">
-      <div :is="scene"></div>
+      <div :is="scene" @animate-in-end="animateInEnd"></div>
     </div>
-    <div :is="keyboard"></div>
+    <div :is="keyboard" @animate-in-end="animateInEnd"></div>
   </div>
 </template>
 
 <script>
 import welcome from './welcome'
-import help from './help'
-import Light from './light'
 import keyboard from './keyboard'
+import help from './help'
 import command from './command'
-let scenes = {
-  keyboard,
-  help,
-  command
-}
+
 let pages, pagesLen
 pages = [/^((-[h?])|帮助)$/, /^(home|主页)$/, /^(works|作品)$/, /^(blog|博客)$/, /^(album|相册)$/]
 pagesLen = pages.length
 export default {
   name: 'home',
-  components: {Light},
   mounted () {
     this.scene = welcome
   },
@@ -34,12 +28,21 @@ export default {
     }
   },
   methods: {
-    sceneTo (sceneName) {
-      switch (sceneName) {
+    animateInEnd (name, animate) {
+      let _this = this
+      switch (name) {
+        case 'welcome':
+          this.keyboard = keyboard
+          break
         case 'keyboard':
-          this.keyboard = scenes[sceneName]; break
-        default:
-          this.scene = scenes[sceneName]
+          this.scene = help
+          document.addEventListener('keydown', function enterCommand (e) {
+            if (e.key === 'Enter') {
+              document.removeEventListener('keydown', enterCommand, false)
+              _this.scene = command
+            }
+          }, false)
+          break
       }
     },
     commandAddLine (callback) {

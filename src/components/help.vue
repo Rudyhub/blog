@@ -8,47 +8,48 @@
 
 <script>
 import store from '../scripts/store.js'
-let children, len, callbacks
-callbacks = new Map()
-function onEnd (e) {
-  this.removeEventListener(e.type, onEnd, false)
-  callbacks.forEach(fn => {
-    if (typeof fn === 'function') fn()
-  })
-}
-function addAnimate (cls, oldCls) {
-  for (let i = 0; i < len; i++) {
-    let timer = setTimeout(function () {
-      clearTimeout(timer)
-      if (oldCls) children[i].classList.remove(oldCls)
-      children[i].classList.add(cls)
-    }, 200 * i)
-  }
-}
 
 export default {
   name: 'help',
-  created () {
-    callbacks.clear()
-  },
   data () {
     return {
       nav: store.nav
     }
   },
   mounted () {
-    children = this.$el.children
-    len = children.length
-    children[len - 1].addEventListener('webkitAnimationEnd', onEnd, false)
-    children[len - 1].addEventListener('animationend', onEnd, false)
-    addAnimate('animate-in', 'animate-out')
+    this.animateIn()
   },
-  animateIn (callback) {
-    callbacks.set('animateIn', callback)
-  },
-  animateOut (callback) {
-    callbacks.set('animateOut', callback)
-    addAnimate('animate-out', 'animate-in')
+  methods: {
+    toggleAnimate (cls, oldCls, fn) {
+      let _this, children, len
+      _this = this
+      children = this.$el.children
+      len = children.length
+      children[len - 1].addEventListener('animationend', animateEnd, false)
+      for (let i = 0; i < len; i++) {
+        let timer = setTimeout(() => {
+          clearTimeout(timer)
+          if (oldCls) children[i].classList.remove(oldCls)
+          children[i].classList.add(cls)
+        }, 200 * i)
+      }
+
+      function animateEnd (e) {
+        this.removeEventListener(e.type, animateEnd, false)
+        if (fn) fn('help', e.animationName)
+        if (cls === 'animate-in') {
+          _this.$emit('animate-in-end', 'help', e.animationName)
+        } else {
+          _this.$emit('animate-out-end', 'help', e.animationName)
+        }
+      }
+    },
+    animateIn (fn) {
+      this.toggleAnimate('animate-in', 'animate-out', fn)
+    },
+    animateOut (fn) {
+      this.toggleAnimate('animate-out', 'animate-in', fn)
+    }
   }
 }
 </script>
