@@ -17,15 +17,34 @@
         <img src="/static/logo.png" alt="">
         <time>2015</time>
       </div>
+      <div class="about-face">
+        <img src="/static/logo.png" alt="">
+        <time>2018</time>
+      </div>
+      <div class="about-face">
+        <img src="/static/logo.png" alt="">
+        <time>2017</time>
+      </div>
+      <div class="about-face">
+        <img src="/static/logo.png" alt="">
+        <time>2016</time>
+      </div>
+      <div class="about-face">
+        <img src="/static/logo.png" alt="">
+        <time>2015</time>
+      </div>
     </div>
-    <div class="about-right"></div>
+    <div class="about-right">
+    </div>
   </div>
 </template>
 
 <script>
+import Scrollbar from '../lib/Scrollbar.js'
 export default {
   name: 'about',
   mounted () {
+    Scrollbar.scroll(document.getElementById('about-left'))
   }
 }
 </script>
@@ -49,6 +68,7 @@ export default {
     width: 70%;
     height: 100%;
     float: right;
+    overflow: hidden;
   }
   .about-face{
     width: 90%;
