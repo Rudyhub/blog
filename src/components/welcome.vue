@@ -39,7 +39,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
   .welcome{
     font-size: 2.8vw;
     text-align: center;

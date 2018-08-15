@@ -5,12 +5,16 @@
 <script>
 import utils from '../scripts/utils.js'
 import store from '../scripts/store.js'
+
+let lines, lineIndex
+lines = []
+lineIndex = 0
+
 export default {
   name: 'command',
   data () {
     return {
-      input: document.createElement('input'),
-      lines: []
+      input: document.createElement('input')
     }
   },
   mounted () {
@@ -30,8 +34,25 @@ export default {
           let sysLine = document.createElement('div')
           let res = store.respone(val)
           sysLine.className = 'command-sys'
-          sysLine.innerHTML = typeof res === 'string' ? res : res[0]
+          if (typeof res === 'object') {
+            switch (res[0]) {
+              case 'help':
+                _this.help()
+                break
+              case 'clear':
+                _this.clear()
+                break
+              default:
+                _this.$router.push(res[0])
+            }
+          } else {
+            sysLine.innerHTML = res
+          }
           _this.$el.appendChild(sysLine)
+          if (!lines.includes(val)) {
+            lines.push(val)
+            lineIndex = lines.length - 1
+          }
         }
       }
       line.appendChild(head)
@@ -44,11 +65,33 @@ export default {
     }
     addLine()
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter') {
-        addLine()
+      switch (e.key) {
+        case 'Enter': addLine(); break
+        case 'ArrowUp':
+          if (lineIndex > 0) lineIndex--
+          _this.input.value = lines[lineIndex]
+          break
+        case 'ArrowDown':
+          if (lines[lineIndex + 1]) {
+            _this.input.value = lines[++lineIndex]
+          }
+          break
       }
     })
     utils.scroll(this.$el)
+    _this.$el.addEventListener('click', () => {
+      _this.input.focus()
+    })
+  },
+  methods: {
+    clear () {
+      lines = []
+      lineIndex = 0
+      this.$el.innerHTML = ''
+    },
+    help () {
+      this.$parent.animateInEnd('keyboard')
+    }
   }
 }
 </script>
@@ -77,6 +120,7 @@ export default {
     border: none;
     background: transparent;
     color: inherit;
+    font-size: inherit;
     outline: none;
     box-sizing: border-box;
     vertical-align: middle;

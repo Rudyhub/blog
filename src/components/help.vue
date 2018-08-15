@@ -1,7 +1,7 @@
 <template>
   <div class="help">
-    <div class="help-lead">敲击Enter，然后输入你想要访问的页面：</div>
-    <div class="help-item" v-for="(item,index) in nav" :key="index" v-html="item.slice(0,2).join('/')"></div>
+    <div class="help-lead">敲击Enter，进入命令行模式，输入页面中文/英文：</div>
+    <div class="help-item" v-for="(item,index) of nav" :key="index" v-html="item.slice(0,2).join(' / ')" :title="'可输入：'+item.join('、')"></div>
     <div class="help-start">开始各种骚操作吧！</div>
   </div>
 </template>
@@ -13,7 +13,14 @@ export default {
   name: 'help',
   data () {
     return {
-      nav: store.nav
+      nav: []
+    }
+  },
+  created () {
+    for (let k in store.nav) {
+      if (/^[^_]/.test(k)) {
+        this.nav.push(store.nav[k])
+      }
     }
   },
   mounted () {
@@ -83,6 +90,8 @@ export default {
   .help-item{
     opacity: 0;
     padding: 1em;
+    color: #cb0101;
+    font-weight: bold;
   }
 
   .animate-in{
