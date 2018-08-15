@@ -1,13 +1,10 @@
 <template>
-    <div class="command">
-      <!--<template v-for="(line, index) of lines">-->
-        <!--<div v-if="typeof line === 'object'" class="command-line command-line-system"  :key="index" v-html="'[系统回复]：'+line[0]"></div>-->
-        <!--<div v-else class="command-line-user" :key="index" v-html="line"></div>-->
-      <!--</template>-->
-    </div>
+    <div class="command"></div>
 </template>
 
 <script>
+import utils from '../scripts/utils.js'
+import store from '../scripts/store.js'
 export default {
   name: 'command',
   data () {
@@ -17,18 +14,31 @@ export default {
     }
   },
   mounted () {
-    let _this
-    _this = this
-    console.log(this)
+    let _this = this
+    this.input.className = 'command-input'
+
     function addLine () {
       let line = document.createElement('div')
+      let head = document.createElement('span')
+      let val = _this.input.value
       line.className = 'command-line-user'
+      head.className = 'command-head'
+      head.innerText = '[Guest ~]: '
+      if (_this.input.parentNode) {
+        _this.input.parentNode.insertBefore(document.createTextNode(val), _this.input)
+        if (val) {
+          let sysLine = document.createElement('div')
+          let res = store.respone(val)
+          sysLine.className = 'command-sys'
+          sysLine.innerHTML = typeof res === 'string' ? res : res[0]
+          _this.$el.appendChild(sysLine)
+        }
+      }
+      line.appendChild(head)
       line.appendChild(_this.input)
       _this.$el.appendChild(line)
-      if (line.previousSibling) {
-        line.previousSibling.innerText = _this.input.value
-        _this.input.value = ''
-      }
+      _this.input.style.width = (line.offsetWidth - head.offsetWidth - 12) + 'px'
+      _this.input.value = ''
       _this.$el.scrollTop = _this.$el.scrollHeight
       _this.input.focus()
     }
@@ -38,76 +48,7 @@ export default {
         addLine()
       }
     })
-    _this.$el.addEventListener('wheel', function (e) {
-      e.preventDefault()
-      this.scrollTop += e.deltaY
-    }, {passive: false})
-    /*
-    let isTouch = 'ontouchstart' in document
-    let el = this.$el
-    let events = isTouch ? ['touchstart', 'touchmove', 'touchend'] : ['mousedown', 'mousemove', 'mouseup']
-    let scrollTop, startY, endY, prevY, speed, timer
-    document.addEventListener('mousedown', (e) => {
-
-      if (e.code === 'Enter') {
-        switch (_this.$parent.scene.name) {
-          case 'help':
-            _this.$parent.scene.animateOut(() => {
-              _this.$parent.sceneTo('command')
-              // _this.focusInput()
-            }); break
-          case 'command':
-            allowInput = 1
-            _this.$parent.commandAddLine(() => {
-              allowInput = 0
-              // _this.$refs.kbdInput.value = ''
-              // _this.focusInput()
-            }); break
-        }
-      }
-
-    })
-    el.addEventListener(events[0], startFn, false)
-    function startFn (e) {
-      el.classList.add('command-unselect')
-      startY = isTouch ? e.targetTouches[0].clientY : e.clientY
-      endY = startY
-      prevY = startY
-      scrollTop = el.scrollTop
-      el.addEventListener(events[1], moveFn, false)
-      document.addEventListener(events[2], endFn, false)
-    }
-    function moveFn (e) {
-      endY = isTouch ? e.targetTouches[0].clientY : e.clientY
-      el.scrollTop = scrollTop + startY - endY
-      speed = endY - prevY
-      prevY = endY
-    }
-    function endFn () {
-      el.removeEventListener(events[1], moveFn, false)
-      document.removeEventListener(events[2], endFn, false)
-      el.classList.remove('command-unselect')
-      let d, dis, dir
-      d = Math.abs(speed)
-      dis = endY - startY
-      dir = dis < 0 ? 1 : -1
-      if (Math.abs(dis) > 5) {
-        if (timer) clearInterval(timer)
-        timer = setInterval(function () {
-          d *= 0.8
-          if (d < 1) clearInterval(timer)
-          el.scrollTop += d * dir
-        }, 16.6)
-      }
-    }
-    el.addEventListener('wheel', function (e) {
-      e.preventDefault()
-      this.scrollTop += e.deltaY
-    }, {passive: false})
-    */
-  },
-  methods: {
-    addLine (val) {}
+    utils.scroll(this.$el)
   }
 }
 </script>
@@ -117,28 +58,29 @@ export default {
     height: 100%;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 2em 0;
+    padding: 1em;
     overflow: hidden;
     font-size: 12px;
     box-sizing: border-box;
+    line-height: 1.4;
   }
-  .command-unselect{
-    user-select: none;
+  .command-sys{
+    padding: 0.6em 0 0.6em 4em;
   }
-  .command-line-user:before{
-    content: '[Guest ~]:';
+  .command-head{
     display: inline-block;
     vertical-align: middle;
     padding-right: .5em;
+    box-sizing: border-box;
   }
-  .command-line-user:last-child:after{
-    content: '|';
-    display: inline-block;
+  .command-input{
+    border: none;
+    background: transparent;
+    color: inherit;
+    outline: none;
+    box-sizing: border-box;
     vertical-align: middle;
-    animation: flicker 1s infinite;
-  }
-  .command-line-system{
-    margin-left: 4em;
+    padding: 0;
   }
   @keyframes flicker {
     0%{

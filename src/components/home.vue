@@ -13,9 +13,6 @@ import keyboard from './keyboard'
 import help from './help'
 import command from './command'
 
-let pages, pagesLen
-pages = [/^((-[h?])|帮助)$/, /^(home|主页)$/, /^(works|作品)$/, /^(blog|博客)$/, /^(album|相册)$/]
-pagesLen = pages.length
 export default {
   name: 'home',
   mounted () {
@@ -28,7 +25,7 @@ export default {
     }
   },
   methods: {
-    animateInEnd (name, animate) {
+    animateInEnd (name) {
       let _this = this
       switch (name) {
         case 'welcome':
@@ -44,33 +41,6 @@ export default {
           }, false)
           break
       }
-    },
-    commandAddLine (callback) {
-      let _this, lines, preline
-      _this = this
-      lines = _this.$children[1].lines
-      preline = lines.pop()
-      lines.push(preline)
-      if (preline.trim() === '') {
-        lines.push('')
-        callback()
-      } else {
-        for (let i = 0; i < pagesLen; i++) {
-          if (pages[i].test(preline.trim())) {
-            lines.push(['找到' + preline + '，正在跳转...'], '')
-            callback()
-            return
-          }
-        }
-        lines.push(['花了几毫秒没找着~~'], '')
-        callback()
-      }
-      _this.$children[1].$el.scrollTop = _this.$children[1].$el.scrollHeight
-    },
-    commandAddChar (char) {
-      let lines = this.$children[1].lines
-      lines.pop()
-      lines.push(char)
     }
   }
 }

@@ -160,11 +160,6 @@ export default {
   line-height: 5vh;
   text-align: center;
 }
-.kbd-input-el{
-  opacity: 0;
-  position: absolute;
-  z-index: -1;
-}
 @keyframes bright-a {
   0%{
     color: inherit;
