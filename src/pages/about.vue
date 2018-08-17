@@ -1,10 +1,11 @@
 <template>
   <div class="about">
-    <div class="about-banner">
-      <vbanner></vbanner>
-    </div>
     <tabs :items="items"></tabs>
-    <p><br></p>
+    <div class="about-banner">
+      <vbanner ref="vbanner"></vbanner>
+    </div>
+    <button @click="playBanner">play</button>
+    <button @click="pauseBanner">pause</button>
     <keep-alive>
       <div :is="aboutMain"></div>
     </keep-alive>
@@ -51,6 +52,13 @@ export default {
       } else {
         this.aboutMain = timeline
       }
+    },
+    playBanner (e) {
+      this.$refs.vbanner.video.play()
+    },
+    pauseBanner () {
+      // this.$refs.vbanner.video.pause()
+      this.$refs.vbanner.blur(4)
     }
   }
 }
