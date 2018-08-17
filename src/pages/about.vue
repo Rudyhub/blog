@@ -1,59 +1,35 @@
 <template>
   <div class="about">
-    <div id="about-left" class="about-left">
-      <div class="about-face" @click="popupFn">
-        <img src="/static/logo.png" alt="">
-        <time>2018</time>
-      </div>
-      <div class="about-face">
-        <img src="/static/logo.png" alt="">
-        <time>2017</time>
-      </div>
-      <div class="about-face">
-        <img src="/static/logo.png" alt="">
-        <time>2016</time>
-      </div>
-      <div class="about-face">
-        <img src="/static/logo.png" alt="">
-        <time>2015</time>
-      </div>
-      <div class="about-face">
-        <img src="/static/logo.png" alt="">
-        <time>2018</time>
-      </div>
-      <div class="about-face">
-        <img src="/static/logo.png" alt="">
-        <time>2017</time>
-      </div>
-      <div class="about-face">
-        <img src="/static/logo.png" alt="">
-        <time>2016</time>
-      </div>
-      <div class="about-face">
-        <img src="/static/logo.png" alt="">
-        <time>2015</time>
-      </div>
+    <div class="about-banner">
+      <vbanner></vbanner>
     </div>
-    <div class="about-right">
-    </div>
-    <popup ref="popup">
-      <div class="mode">
-        <button @click="modeFn(0)" class="btn-red">正常模式</button>
-        <button @click="modeFn(1)" class="btn-red">时间模式</button>
-        <button @click="modeFn(2)" class="btn-red">事件模式</button>
-      </div>
-    </popup>
+    <tabs :items="items"></tabs>
+    <p><br></p>
+    <keep-alive>
+      <div :is="aboutMain"></div>
+    </keep-alive>
   </div>
 </template>
 
 <script>
-import Scrollbar from '../lib/Scrollbar.js'
+// import Scrollbar from '../lib/Scrollbar.js'
+import vbanner from './about/vbanner'
 import popup from '../components/popup'
+import tabs from '../components/tabs'
+import resume from './about/resume'
+import timeline from './about/timeline'
 export default {
   name: 'about',
-  components: {popup},
+  components: {vbanner, popup, tabs},
+  data () {
+    return {
+      aboutMain: null,
+      items: ['普通', '时间轴', '事件']
+    }
+  },
   mounted () {
-    Scrollbar.scroll(document.getElementById('about-left'))
+    this.aboutMain = resume
+    this.$on('tab', this.onTabChange)
   },
   methods: {
     modeFn (mode) {
@@ -68,6 +44,13 @@ export default {
       let popup
       popup = this.$refs.popup
       popup.show()
+    },
+    onTabChange (e, index) {
+      if (index === 0) {
+        this.aboutMain = resume
+      } else {
+        this.aboutMain = timeline
+      }
     }
   }
 }
@@ -77,54 +60,5 @@ export default {
   .about{
     height: 100vh;
     position: relative;
-  }
-  .about-left{
-    width: 30%;
-    height: 100%;
-    max-width: 320px;
-    min-width: 180px;
-    float: left;
-    background: #eee;
-    position: relative;
-    overflow: hidden;
-  }
-  .about-right{
-    width: 70%;
-    height: 100%;
-    float: right;
-    overflow: hidden;
-  }
-  .about-face{
-    width: 90%;
-    max-width: 180px;
-    margin: 15px auto;
-    border: 1px solid #eee;
-    border-radius: 6px;
-    box-shadow: #555 0 5px 10px;
-    box-sizing: border-box;
-    position: relative;
-  }
-  .about-face img{
-    width: 100%;
-    display: block;
-  }
-  .about-face time{
-    position: absolute;
-    bottom: 5px;
-    right: 5px;
-  }
-  .btn-red{
-    border-radius: .4em;
-    background: linear-gradient(0, #9e0000, #e24545);
-    border: 1px solid #ddd;
-    color: #fff;
-    padding: .5em 1em;
-    margin: .5em auto;
-    display: block;
-    outline: none;
-    cursor: pointer;
-  }
-  .btn-red:hover{
-    background: linear-gradient(0, #bf4040, #8a0000);
   }
 </style>

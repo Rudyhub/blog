@@ -1,6 +1,6 @@
 export default {
   nav: {
-    about: ['主页', 'home'],
+    about: ['主页', 'home', 'about', '关于'],
     works: ['作品', 'works'],
     blog: ['博客', 'blog'],
     album: ['相册', 'album', 'photo', 'picture', '相片', '写真'],
@@ -62,6 +62,9 @@ export default {
   }, {
     user: /爱我[吗吧?？]*/,
     sys: ['呵，可能吗？除非打死我', '呵，可能吗？']
+  }, {
+    user: /((大叔|你|Rudy|令狐(长老)*|大神|长老)(在[吗吧啊?？]*)*)|(在[吗吧啊？?]*)/,
+    sys: ['嗯哼', '哦嚯', '喝嘤料', '不在']
   }],
   respone (val) {
     let len, i, _this, c

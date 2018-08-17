@@ -11,6 +11,6 @@ export default {
 <style>
   body{
     margin: 0;
-    font-family: Helvetica, Tahoma, Arial, STXihei, "华文细黑", Heiti, "黑体", "Microsoft YaHei", "微软雅黑", SimSun, "宋体", sans-serif;
+    font-family: "Source Sans Pro", "Helvetica Neue", Arial, "Microsoft YaHei", "微软雅黑", SimSun, "宋体", sans-serif;
   }
 </style>
