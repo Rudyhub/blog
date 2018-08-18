@@ -46,7 +46,6 @@ export default {
 <style>
   .tabs{
     white-space: nowrap;
-    margin-top: .8em;
     border-bottom: 1px solid #ddd;
   }
   .tab{
@@ -59,18 +58,18 @@ export default {
     cursor: pointer;
     margin-bottom: -1px;
     margin-left: -1px;
-    color: #aaa;
+    color: #afb7d4;
   }
   .tab:first-child{
     margin-left: 0;
   }
   .tab:hover{
     background: #ddd;
-    color: #888;
+    color: #c1c7db;
   }
   .tab-active,
   .tab-active:hover{
-    background: #ccc;
+    background: #fff;
     color: #333;
   }
 </style>

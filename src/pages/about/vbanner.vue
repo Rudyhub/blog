@@ -7,6 +7,10 @@ import StackBlur from '../../lib/StackBlur.js'
 export default {
   name: 'vbanner',
   props: {
+    src: {
+      type: [String],
+      default: './static/001.mp4'
+    },
     width: {
       type: [Number],
       default: 1280
@@ -21,7 +25,9 @@ export default {
       ctx: null,
       video: document.createElement('video'),
       originWidth: 0,
-      originHeight: 0
+      originHeight: 0,
+      duration: 0,
+      currentTime: 0
     }
   },
   mounted () {
@@ -32,31 +38,29 @@ export default {
     function meta () {
       _this.$el.width = _this.originWidth = this.videoWidth
       _this.$el.height = _this.originHeight = this.videoHeight
+      _this.duration = this.duration
     }
 
     function draw () {
       _this.ctx.drawImage(_this.video, 0, 0, _this.originWidth, _this.originHeight)
+      _this.currentTime = _this.video.currentTime
       timer = requestAnimationFrame(draw)
     }
 
-    function onpause () {
+    function onpause (e) {
+      _this.$parent.$emit('pause', e)
       cancelAnimationFrame(timer)
-    }
-
-    function onplay () {
-      _this.video.play()
     }
 
     _this.video.addEventListener('loadedmetadata', meta, false)
     _this.video.addEventListener('play', draw, false)
     _this.video.addEventListener('pause', onpause, false)
-    _this.video.addEventListener('canplay', onplay, false)
-    _this.src('./static/001.mp4')
+    this.video.src = this.src
+  },
+  updated () {
+    this.video.src = this.src
   },
   methods: {
-    src (src) {
-      this.video.src = src
-    },
     blur (val) {
       StackBlur.canvasRGB(this.$el, 0, 0, this.originWidth, this.originHeight, val)
     },
