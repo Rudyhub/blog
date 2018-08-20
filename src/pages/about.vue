@@ -2,7 +2,7 @@
   <div class="about">
     <canvas class="about-cv" ref="canvas"></canvas>
     <div ref="main" class="about-main">
-      <tabs :items="items"></tabs>
+      <!--<tabs :items="items"></tabs>-->
       <div class="tab-body">
         <keep-alive>
           <div :is="aboutMain"></div>

@@ -2,14 +2,12 @@
   <div class="resume">
     <div class="resume-face">
       <img src="../../../static/face.jpg" alt="">
-      <p class="resume-l">我是谁？</p>
-      <p class="resume-l">卢晋曲</p>
-      <p class="resume-l">一个不只做前端的前端</p>
+      <p class="resume-l">{{text[0]}}</p>
     </div>
-    <drawrect class="draw-rect-1">一个前端开发工程师？</drawrect>
-    <drawrect class="draw-rect-2">一个景观设计师？</drawrect>
-    <drawrect class="draw-rect-3">一个后期绘图师？</drawrect>
-    <drawrect class="draw-rect-4">一位疯狂求知的青年？</drawrect>
+    <drawrect class="draw-rect-1">{{text[1]}}</drawrect>
+    <drawrect class="draw-rect-2">{{text[2]}}</drawrect>
+    <drawrect class="draw-rect-3">{{text[3]}}</drawrect>
+    <drawrect class="draw-rect-4">{{text[4]}}</drawrect>
   </div>
 </template>
 
@@ -17,7 +15,12 @@
 import drawrect from './drawrect'
 export default {
   name: 'resume',
-  components: {drawrect}
+  components: {drawrect},
+  data () {
+    return {
+      text: ['', '', '', '', '']
+    }
+  }
 }
 </script>
 
@@ -40,6 +43,8 @@ export default {
     border-radius: 50%;
     width: 12vw;
     height: 12vw;
+    max-width: 160px;
+    max-height: 160px;
     display: block;
     margin: 0 auto;
   }
@@ -51,11 +56,11 @@ export default {
     font-size: 14px;
   }
   .draw-rect-1{
-    top: 0;
+    top: 10px;
     left: 0;
   }
   .draw-rect-2{
-    top: 0;
+    top: 10px;
     right: 0;
   }
   .draw-rect-3{

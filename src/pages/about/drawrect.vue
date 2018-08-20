@@ -17,8 +17,8 @@ export default {
 
 <style>
   .draw-rect{
-    width: 30vw;
-    height: 18vw;
+    width: 20vw;
+    height: 12vw;
     position: absolute;
     overflow: hidden;
     border-radius: 6px;
@@ -59,7 +59,7 @@ export default {
     right: 0;
   }
   .on .draw-rect-line-top{
-    animation: draw-x .2s linear forwards;
+    animation: draw-x .2s ease-in forwards;
   }
   .on .draw-rect-line-right{
     animation: draw-y .2s .2s linear forwards;
@@ -68,7 +68,7 @@ export default {
     animation: draw-x .2s .4s linear forwards;
   }
   .on .draw-rect-line-left{
-    animation: draw-y .2s .6s linear forwards;
+    animation: draw-y .2s .6s ease-out forwards;
   }
   .draw-rect-slot{
     display: flex;
