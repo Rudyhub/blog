@@ -1,15 +1,10 @@
 <template>
   <div class="resume">
     <div class="resume-face">
-      <img src="../../../static/face.jpg" alt="">
-      <p class="resume-l">我是谁？</p>
-      <p class="resume-l">卢晋曲</p>
-      <p class="resume-l">一个不只做前端的前端</p>
+      <!--<img src="../../../static/face.jpg" alt="">-->
+      <p>我是谁并不重要，重要的是我能做什么。</p>
+      <p>It's not important who I am, but what I can do.</p>
     </div>
-    <drawrect class="draw-rect-1">一个前端开发工程师？</drawrect>
-    <drawrect class="draw-rect-2">一个景观设计师？</drawrect>
-    <drawrect class="draw-rect-3">一个后期绘图师？</drawrect>
-    <drawrect class="draw-rect-4">一位疯狂求知的青年？</drawrect>
   </div>
 </template>
 

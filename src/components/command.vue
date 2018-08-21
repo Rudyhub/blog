@@ -1,5 +1,7 @@
 <template>
-    <div class="command"></div>
+    <div class="command">
+      <p class="command-sys">您好，我是小小的互动系统，除了可以输入要访问的页面之外，还可以与我进行简单的交流哦。</p>
+    </div>
 </template>
 
 <script>
@@ -109,6 +111,7 @@ export default {
   }
   .command-sys{
     padding: 0.6em 0 0.6em 4em;
+    color: #b26821;
   }
   .command-head{
     display: inline-block;
