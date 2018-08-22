@@ -50,18 +50,18 @@ export default {
         相关框架一看便知其所以然，直白的说，随便给个框架，扫几眼就能用，并能猜测其大概的实现原理，
         遇到报错很快明白其原因，给点时间就可以修改源码，包括优化框架的某些写法。
         对ES6掌握程度为可轻松实现ES6和ES5互转。
-        90%的能力值是针对web前端而言的，其余的10%代表几乎用不到的冷门、偏门的对象和API。
+        90%的程度值是针对web前端而言的，其余的10%代表几乎用不到的冷门、偏门的对象和API。
         然而，如果把canvas的2d/webGL算在内，那得降为70%。所以，试问，何谓精通？`
       }, {
         type: 0,
         name: 'html',
-        value: 97,
-        detail: 'html没什么可说的，除非把SEO也包括进来，那还可以聊几句。'
+        value: 96,
+        detail: '无需。'
       }, {
         type: 0,
         name: 'css',
         value: 94,
-        detail: 'css除了令人惊喜的3D动画引擎值说之外，其他的都是与html一样，属于无脑针线活，繁琐，需耐心。'
+        detail: '无需。'
       }, {
         type: 0,
         name: 'vue',
@@ -75,112 +75,120 @@ export default {
         type: 0,
         name: 'bootstrap',
         value: 86,
-        detail: '勉强用它来代表一下响应式UI界，低难度，js部分基于jquery这我就不太喜欢了。除了它，还有很多优秀的前端UI框架，如layui、amazeUI、mui等。尤其当下流行的layui，然而，难度都差不多。'
+        detail: '所有UI框架都一样的简单，如layui、amazeUI、mui等亦同理。'
       }, {
         type: 0,
         name: 'nodejs',
         value: 76,
-        detail: '无压力写前端接口，文件IO处理，数据库增删除改查，WebSockect直播图文与视频的直播系统的实现，包括结合ffmpeg实现视频切片点播和直播。'
+        detail: '无压力写前端接口，文件IO处理，数据库增删改查，WebSockect直播图文与视频的直播系统的实现，包括结合ffmpeg实现视频切片点播和直播。'
       }, {
         type: 0,
         name: 'php',
         value: 78,
-        detail: ''
+        detail: '针对web接口的实现，数据库操作，常用类的封装等。我认为是最容易上手和理解的后端语言，我怀疑ES6似乎就是模仿php。'
       }, {
         type: 0,
         name: 'mysql',
         value: 81,
-        detail: ''
+        detail: '数据库语句并不多，因它不需要也不宜处理过多或过于复杂的逻辑，所以几乎所有的语法都会，此外，看了Oracle，感觉语法都几乎一样，其他的数据库估计相差不远。'
       }, {
         type: 0,
         name: 'java',
         value: 68,
-        detail: ''
+        detail: `完全理解类的三大特性以及抽象类、接口、内存机制等。
+        java是标准而舒服的面向对象编程的语言，通过它，还帮助我更深入理解了js，
+        特别是关于类的继承以及静态属性/方法、原型链属性/方法、私有属性/方法等的关系和内存机制，
+        当然，也特别明白java与js存在的区别。
+        对java只是缺少更多实战，68%我觉得行。`
       }, {
         type: 0,
         name: 'node-webkit',
         value: 66,
-        detail: ''
+        detail: `会nodejs、js、html、css基本也就会node-webkit（也即nwjs）了，当然electron也一样。用它完全是为了结合ffmpeg命令写一个媒体处理软件，就是作品中的RMedia。
+        对于写软件尤其移动平台软件，建议用QT，因为无论nwjs还是electron打包很大，要把node和nw一起打包。`
       }, {
         type: 0,
         name: 'actionscript',
         value: 87,
-        detail: ''
+        detail: '被淘汰的基于flash的脚本语言，是我最早学的语言，刚学完，html5时代就来了。不过，针对IE6、7、8的兼容性曾用到它来处理播放器以及批量上传功能。'
       }, {
         type: 1,
         name: 'photoshop',
         value: 98,
-        detail: ''
+        detail: `夸张点说，即使失忆也不会忘记PS如何使用，任意需求必能满足，并且可以全程脱离工具栏菜单栏而直接快捷键操作，一种结果至少可以用三种方式达到。
+        其实本想直接评估100%的程度值，但一想还是留2%作为退路。
+        之所以敢这么说，是因为最先学的软件除了office系列之外，ps是第一个，也是用得最多的一个，而且还专职用了一年多的ps。
+        还有，如果只单纯谈使用，还不足以如此自信，我的ps知识包括了色相原理、填充和透明度的区别、混合模式、色彩通道等一些一般UI设计都可能不知道的知识。`
       }, {
         type: 1,
         name: 'AE',
         value: 68,
-        detail: ''
+        detail: '其实AE功能太多了，而且大多数都是基于插件的运用。68%是对基本动画实现、表达式的书写、图形动画、过渡等功能的掌握和一些常用抠像、骨骼、灯光、粒子系统、仿真系统等插件的掌握的评估值。'
       }, {
         type: 1,
         name: 'AI',
         value: 49,
-        detail: ''
+        detail: '曾经很熟，但时隔多年，只能评估为49%了，基本的绘图还是毫无压力的。'
       }, {
         type: 1,
         name: 'CDr',
         value: 52,
-        detail: ''
+        detail: '掌握程度与AI一样。'
       }, {
         type: 1,
         name: 'CAD',
         value: 88,
-        detail: ''
+        detail: '读的景观设计专业，CAD是必修软件，不用多说。'
       }, {
         type: 1,
         name: '3Dmax',
         value: 89,
-        detail: ''
+        detail: '除了较为复杂的异形比较难（有些可能不会）之外，基本想要做什么模型都可以完成。动画方面会，只是很少用，因为它对电脑要求高，而且效果并不太好，一般都是结合AE来完成动画。'
       }, {
         type: 1,
         name: 'sketchup',
         value: 92,
-        detail: ''
+        detail: '虽然景观专业课程里没有它，但它依然是必修的软件，快速建模，效率极高。'
       }, {
         type: 1,
         name: 'vary',
         value: 82,
-        detail: ''
+        detail: '其实就是灯光和材质的运用，以及对一些光子传递的理解。'
       }, {
         type: 1,
         name: 'lumion',
         value: 65,
-        detail: ''
+        detail: '做建筑场景的镜头动画和调节材质其实没有难度，基本上就靠素材库和素材的质量。'
       }, {
         type: 1,
         name: 'flash',
         value: 87,
-        detail: ''
+        detail: '这是最早学的动画软件，如果抛开脚本代码(actionscript)，就非常简单。然而，会用代码了其实也简单。'
       }, {
         type: 2,
         name: '绘画',
         value: 38,
-        detail: ''
+        detail: '无法跟专业的比，还是能看出一点功底，毕竟是自学成才。'
       }, {
         type: 2,
         name: '吉他',
         value: 36,
-        detail: ''
+        detail: '会弹唱，指弹（即独奏）方面很弱。'
       }, {
         type: 2,
         name: '编曲',
         value: 12,
-        detail: ''
+        detail: '知道原理，能玩简单的。'
       }, {
         type: 2,
         name: 'FLstudio',
         value: 58,
-        detail: ''
+        detail: '到是不难，长时间不玩而已。'
       }, {
         type: 2,
         name: 'cubase',
         value: 26,
-        detail: ''
+        detail: '比FLstudio难一些，玩得少。'
       }]
     }
   },
