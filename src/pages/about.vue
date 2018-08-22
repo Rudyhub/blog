@@ -7,20 +7,46 @@
     </div>
     <div class="about-screen">
       <div class="fs20">技能：</div>
-      <p class="fs14">
-        先说关于“精通”、“熟练”、“掌握”和“了解”几个常用程度容易词，其实是文字游戏，没有参照物，任意水平都可以分出几个程度级别，自欺欺人。
-        所以，必须定一个参照。
+      <p class="fs12">
+        关于技能的掌握程度描述，常见的容易词如“精通”、“熟练”、“掌握”和“了解”，其实是自欺欺人的文字游戏，学得越多越不敢相信“精通”仅止于此。
+        说非要用这些词，也只是以我自身各项技能为参照的评估，或许我的“了解”比大多数人的“熟练”更深入。
       </p>
-      <p class="fs14">
-        以Photoshop为参照，任意要求都可以，并且全程快捷键操作，并且同一个结果随意想出至少三种以上的方法来达到，以此视为精通，程度值为100%，则各技能程度值如下：
-      </p>
-      <div class="fs14">
+      <!--<p class="fs14">-->
+        <!--以Photoshop为参照，任意要求都可以，并且全程快捷键操作，并且同一个结果随意想出至少三种以上的方法来达到，以此视为精通，程度值为100%，则各技能程度值如下：-->
+      <!--</p>-->
+      <div class="fs12">
         <div class="about-item">
-          <span class="about-item-name">javascript:</span>
+          <span class="about-item-name">js(es5、es6、es7) 、 html5 、 css3:</span>
           <span class="progress">
             <i class="progress-value" style="width: 80%;">80%</i>
           </span> <br>
-          <small class="about-small">描述：</small>
+          <small class="about-small">程度描述：
+            前端范畴任意需求都可以实现，封装库、写框架、写游戏皆可。
+            相关流行的框架如vue最熟，其次还有react、angular、bootstrap，流行的和不流行的框架拿来就用，并非因为所有的都用过，而是一看API便猜出大概。
+            相关工具webpack、gulp、grunt等在我眼里与框架无异，也都是拿来就用，并且只需要花一点点时间就可以知道其内部原理。
+            然而，仍有些前端几乎用不到的偏门对象或API不熟悉，还有svg以及基于canvas的2d/webGL没有深入。
+          </small>
+        </div>
+        <div class="about-item">
+          <span class="about-item-name">nodeJs:</span>
+          <span class="progress">
+            <i class="progress-value" style="width: 70%;">70%</i>
+          </span> <br>
+          <small class="about-small">程度描述：实现前端接口绰绰有余，此外也可写软件（node-webkit/electron）。但大概20%的API没有用过。</small>
+        </div>
+        <div class="about-item">
+          <span class="about-item-name">php+mysql:</span>
+          <span class="progress">
+            <i class="progress-value" style="width: 70%;">70%</i>
+          </span> <br>
+          <small class="about-small">程度描述：实现前端接口绰绰有余，增、删、改、查不在话下，sql语法也几乎完全掌握。只是仍有一些函数没有用过，以及相关框架也未用过。</small>
+        </div>
+        <div class="about-item">
+          <span class="about-item-name">as3.0:</span>
+          <span class="progress">
+            <i class="progress-value" style="width: 70%;">80%</i>
+          </span> <br>
+          <small class="about-small">程度描述：这是我最先学会的现已被淘汰的语言，起初是用它作动画，后来学习html5后，曾用as3.0来处理文件上传、播放器等的IE678的兼容。</small>
         </div>
       </div>
     </div>
@@ -142,8 +168,12 @@ export default {
   .fs14{
     font-size: 1.4vw;
   }
+  .fs12{
+    font-size: 1.2vw;
+  }
   .about-item{
     border-bottom: 1px dotted #ccd;
+    margin: 1em 0;
   }
   .about-item-name{
     line-height: 1;
