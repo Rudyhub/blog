@@ -76,7 +76,7 @@ export default {
   left: 0;
   bottom: 0;
   perspective: 400px;
-  color: #cb0101;
+  color: #469e36;
 }
 .keyboard-keys{
   width: 106vh;
@@ -86,6 +86,7 @@ export default {
   border: 1px solid;
   border-radius: 4px;
   transform-origin: bottom;
+  background: linear-gradient(160deg, #464646, #272727);
 }
 .keyboard-animate .keyboard-keys{
   animation: fall-down 1s cubic-bezier(.77,.22,.98,.81) forwards, fall-later 0.8s cubic-bezier(.77,.22,.98,.81) 1s forwards;
@@ -102,16 +103,18 @@ export default {
   margin:0 .5vh;
   vertical-align: middle;
   border: .1vh solid;
+  border-top-color: #aaa;
   border-radius: 4px;
   padding: .2vh .4vh;
   line-height: 1.2;
   position: relative;
   font-size: 2vh;
+  background: linear-gradient(160deg, #5b5b5b, #272727);
 }
 .keyboard-item:after{
   content: '';
   position: absolute;
-  border-bottom: solid .3vh;
+  border-bottom: solid .6vh #282823;
   width: 100%;
   height: 0;
   bottom: 0;
@@ -119,6 +122,9 @@ export default {
   border-radius: 4px;
 }
 .keyboard-item.active{
+  animation: bright-a 3s;
+}
+.keyboard-item.active:after{
   animation: bright-a 3s;
 }
 .keyboard-Backspace{
@@ -160,6 +166,10 @@ export default {
   line-height: 5vh;
   text-align: center;
 }
+.keyboard-content{
+  width: 100%;
+  height: 100%;
+}
 @keyframes bright-a {
   0%{
     color: inherit;
@@ -171,24 +181,6 @@ export default {
   }
   80%{
     color: #00bcff;
-    box-shadow: 0 0 10px;
-  }
-  100%{
-    color: inherit;
-    box-shadow: 0 0 5px;
-  }
-}
-@keyframes bright-b {
-  0%{
-    color: inherit;
-    box-shadow: 0 0 5px;
-  }
-  20%{
-    color: #68dd00;
-    box-shadow: 0 0 10px;
-  }
-  80%{
-    color: #68dd00;
     box-shadow: 0 0 10px;
   }
   100%{
