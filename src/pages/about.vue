@@ -1,13 +1,13 @@
 <template>
   <div class="about">
     <div class="about-screen flex">
-      <!--<p><img class="about-face" src="/static/face.png" alt="Rudy" draggable="false"></p>-->
-      <!--<p class="fs20">我是谁并不重要，重要的是我能做什么。</p>-->
-      <!--<p class="fs20">It's not important who I am, but what I can do.</p>-->
+      <p><img class="about-face" src="/static/face.png" alt="Rudy" draggable="false"></p>
+      <p class="fs20">我是谁并不重要，重要的是我能做什么。</p>
+      <p class="fs20">It's not important who I am, but what I can do.</p>
     </div>
-    <div class="about-screen">
+    <div class="about-screen" ref="skillScroll">
       <div class="fs16 chart-title">技能篇</div>
-      <div class="fs10 chart-header">为避免文字游戏，故不用精通、熟练、掌握、了解等这类文学界的程度容易词来表述能力，而用图表以自身各项技能相对的程度值（百分比）为参照来展现，这个值只是评估值，建议细读每一项的描述，以便准确的判断这个值所代表的能力。学得越多越不敢说自己精通，因为即便现有能力应对日常工作绰绰有余、毫无难度，但却一直发现有新的领域并未触及。</div>
+      <div class="fs10 chart-header">为了避免使用精通、熟练、掌握、了解等这类模糊概念容易词，以图表试展示不仅更直观，结合各项详细描述更能准确评估。知识往深了学，更明白和尊重“精通”二字的神圣。</div>
       <div class="chart fs9" @mouseleave="chartLeaveFn">
         <div class="chart-line" v-for="(skill, index) of skills" :key="index" @mouseenter="chartEnterFn(index, $event)">
           <div class="chart-hd">{{skill.name}}</div>
@@ -24,6 +24,7 @@
           <span class="chart-legend-text">{{item.text}}</span>
         </div>
       </div>
+      <div class="bottom-space"></div>
       <div class="chart-detail fs12" ref="chartDetail"></div>
     </div>
     <div class="about-screen">
@@ -34,6 +35,7 @@
 </template>
 
 <script>
+import Scrollbar from '../lib/Scrollbar.js'
 export default {
   name: 'about',
   data () {
@@ -73,7 +75,7 @@ export default {
         type: 0,
         name: 'bootstrap',
         value: 86,
-        detail: '所有UI框架没有什么难度，如layui、amazeUI、mui等亦同理。'
+        detail: '所有UI框架没有什么难度，如layui、elementUI、amazeUI、mui等亦同理。'
       }, {
         type: 0,
         name: 'nodejs',
@@ -191,7 +193,7 @@ export default {
     }
   },
   mounted () {
-    let _this, el, children, startY, angle, curangle, speeds, speed, timer
+    let _this, el, children, startX, angle, curangle, speeds, speed, timer
     _this = this
     el = _this.$el
     children = _this.$el.children
@@ -201,20 +203,20 @@ export default {
     el.addEventListener('mousedown', down)
     document.addEventListener('mouseup', end)
     function down (e) {
-      startY = e.clientY
+      startX = e.clientX
       speeds[0] = speeds[1] = 0
       el.addEventListener('mousemove', move)
     }
     function move (e) {
-      curangle = angle + (startY - e.clientY) / 10
-      speeds.push(e.clientY)
+      curangle = angle + (e.clientX - startX) / 10
+      speeds.push(e.clientX)
       speeds.shift()
       rotate()
     }
     function end () {
       el.removeEventListener('mousemove', move)
       clearInterval(timer)
-      speed = (speeds[0] - speeds[1]) / 10
+      speed = (speeds[1] - speeds[0]) / 10
       if (speeds[0] > 0 && speeds[1] > 0) {
         timer = setInterval(animteFrame, 16.6)
       }
@@ -230,11 +232,12 @@ export default {
       angle = curangle
     }
     function rotate () {
-      children[0].style.transform = 'translateZ(-50vh) rotateX(' + curangle + 'deg)'
-      children[1].style.transform = 'translateZ(-50vh) rotateX(' + (curangle + 90) + 'deg)'
-      children[2].style.transform = 'translateZ(-50vh) rotateX(' + (curangle + 180) + 'deg)'
-      children[3].style.transform = 'translateZ(-50vh) rotateX(' + (curangle + 270) + 'deg)'
+      children[0].style.transform = 'translateZ(-20vh) rotateY(' + curangle + 'deg)'
+      children[1].style.transform = 'translateZ(-20vh) rotateY(' + (curangle + 90) + 'deg)'
+      children[2].style.transform = 'translateZ(-20vh) rotateY(' + (curangle + 180) + 'deg)'
+      children[3].style.transform = 'translateZ(-20vh) rotateY(' + (curangle + 270) + 'deg)'
     }
+    Scrollbar.scroll(this.$refs.skillScroll)
   },
   methods: {
     chartEnterFn (index, e) {
@@ -274,22 +277,27 @@ export default {
     height: 100vh;
     top: 0;
     left: 0;
-    transform-origin: bottom;
+    transform-origin: left;
     border: 3px solid #2e6881;
     padding: .5em;
     box-sizing: border-box;
+    overflow: hidden;
   }
   .about-screen:nth-child(1){
-    transform: translateZ(-50vh) rotateX(0);
+    transform: translateZ(-20vh) rotateY(0);
+    z-index: 4;
   }
   .about-screen:nth-child(2){
-    transform: translateZ(-50vh) rotateX(90deg)
+    transform: translateZ(-20vh) rotateY(90deg);
+    z-index: 3;
   }
   .about-screen:nth-child(3){
-    transform: translateZ(-50vh) rotateX(180deg)
+    transform: translateZ(-20vh) rotateY(180deg);
+    z-index: 2;
   }
   .about-screen:nth-child(4){
-    transform: translateZ(-50vh) rotateX(270deg)
+    transform: translateZ(-20vh) rotateY(270deg);
+    z-index: 1;
   }
   .about-face{
     width: 50%;
@@ -403,10 +411,11 @@ export default {
     color: #333;
     line-height: 1.5;
     display: none;
+    opacity: 0;
   }
   .chart-detail-show{
     display: block;
-    animation: fade-in .5s forwards;
+    animation: fade-in .5s .5s forwards;
   }
   .chart-detail-title{
     font-weight: bold;
@@ -415,6 +424,9 @@ export default {
   }
   .chart-detail-content{
     text-indent: 2em;
+  }
+  .bottom-space{
+    padding: 3.6% 0;
   }
   @keyframes fade-in {
     0%{

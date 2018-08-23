@@ -2,8 +2,8 @@
   <div class="keyboard">
     <div class="keyboard-keys">
       <div class="keyboard-row" v-for="(row, index) of keys" :key="index">
-        <template v-for="(key, rindex) of row">
-          <div class="keyboard-item" :class="'keyboard-'+key.code" v-bind:key="rindex">
+        <template v-for="key of row">
+          <div class="keyboard-item" :class="'keyboard-'+key.code" :key="key.code" :data-code="key.code">
             <div class="keyboard-content" v-html="key.html"></div>
           </div>
         </template>
@@ -15,22 +15,6 @@
 <script>
 export default {
   name: 'keyboard',
-  mounted () {
-    let items = {}
-    document.addEventListener('keydown', function (e) {
-      if (!items[e.code]) {
-        items[e.code] = document.querySelector('.keyboard-' + e.code)
-      }
-      if (items[e.code]) {
-        items[e.code].classList.remove('active')
-        let timer = setTimeout(function () {
-          clearTimeout(timer)
-          items[e.code].classList.add('active')
-        }, 20)
-      }
-    })
-    this.animateIn()
-  },
   data () {
     return {
       keys: [
@@ -48,10 +32,35 @@ export default {
         [{html: 'Shift', code: 'ShiftLeft'}, {html: 'Z', code: 'KeyZ'}, {html: 'X', code: 'KeyX'}, {html: 'C', code: 'KeyC'},
           {html: 'V', code: 'KeyV'}, {html: 'B', code: 'KeyB'}, {html: 'N', code: 'KeyN'}, {html: 'M', code: 'KeyM'}, {html: '&lt;<br>,', code: 'Comma'},
           {html: '&gt;<br>.', code: 'Period'}, {html: '?<br>/', code: 'Slash'}, {html: 'Shift', code: 'ShiftRight'}],
-        [{html: 'Ctrl', code: 'ControlLeft'}, {html: 'Fn', code: ''}, {html: 'Win', code: 'MetaLeft'}, {html: 'Alt', code: 'AltLeft'},
+        [{html: 'Ctrl', code: 'ControlLeft'}, {html: 'Fn', code: 'Fn'}, {html: 'Win', code: 'MetaLeft'}, {html: 'Alt', code: 'AltLeft'},
           {html: 'Space', code: 'Space'}, {html: 'Alt', code: 'AltRight'}, {html: 'PrtSc', code: 'PrintScreen'},
           {html: 'Win', code: 'MetaRight'}, {html: 'Ctrl', code: 'ControlRight'}]
       ]}
+  },
+  mounted () {
+    let items, els, timer, colors
+    colors = ['', '#ffa100', '#b300dd', '#eeeb77', '#fff', '#cb0101']
+    items = {}
+    els = this.$el.querySelectorAll('[data-code]')
+    function itemAnimateEnd () {
+      this.classList.remove('active')
+      this.style.color = ''
+    }
+    for (let i = 0, len = els.length; i < len; i++) {
+      items[els[i].dataset.code] = els[i]
+      els[i].addEventListener('animationend', itemAnimateEnd, false)
+    }
+    els = null
+    document.addEventListener('keydown', function (e) {
+      items[e.code].classList.remove('active')
+      clearTimeout(timer)
+      timer = setTimeout(function () {
+        clearTimeout(timer)
+        items[e.code].style.color = colors[Math.floor(Math.random() * 5.5)]
+        items[e.code].classList.add('active')
+      }, 20)
+    })
+    this.animateIn()
   },
   methods: {
     animateIn (fn) {
@@ -103,29 +112,15 @@ export default {
   margin:0 .5vh;
   vertical-align: middle;
   border: .1vh solid;
-  border-top-color: #aaa;
   border-radius: 4px;
   padding: .2vh .4vh;
   line-height: 1.2;
   position: relative;
   font-size: 2vh;
-  background: linear-gradient(160deg, #5b5b5b, #272727);
-}
-.keyboard-item:after{
-  content: '';
-  position: absolute;
-  border-bottom: solid .6vh #282823;
-  width: 100%;
-  height: 0;
-  bottom: 0;
-  left: 0;
-  border-radius: 4px;
 }
 .keyboard-item.active{
-  animation: bright-a 3s;
-}
-.keyboard-item.active:after{
-  animation: bright-a 3s;
+  color: #00bcff;
+  animation: bright 1s;
 }
 .keyboard-Backspace{
   width: 12vh;
@@ -169,23 +164,24 @@ export default {
 .keyboard-content{
   width: 100%;
   height: 100%;
+  box-shadow: inset 0 0.1vh 0.3vh #cbc6c4;
+  box-sizing: border-box;
+  padding: 0 .2em;
+  border-radius: 3px;
+  border-bottom: .6vh solid #282823;
 }
-@keyframes bright-a {
+@keyframes bright {
   0%{
-    color: inherit;
-    box-shadow: 0 0 5px;
+    box-shadow: 0 0 .4vh;
   }
   20%{
-    color: #00bcff;
-    box-shadow: 0 0 10px;
+    box-shadow: 0 0 1.4vh;
   }
   80%{
-    color: #00bcff;
-    box-shadow: 0 0 10px;
+    box-shadow: 0 0 1.4vh;
   }
   100%{
-    color: inherit;
-    box-shadow: 0 0 5px;
+    box-shadow: 0 0 .4vh;
   }
 }
 @keyframes fall-down {
