@@ -1,21 +1,23 @@
 <template>
   <div class="about">
     <div class="about-screen flex">
-      <p><img class="about-face" src="/static/face.png" alt="Rudy" draggable="false"></p>
-      <p class="fs20">我是谁并不重要，重要的是我能做什么。</p>
-      <p class="fs20">It's not important who I am, but what I can do.</p>
+      <p class="about-p"><img class="about-face" src="/static/face.png" alt="Rudy" draggable="false"></p>
+      <p class="fs18 about-p">我是谁并不重要，重要的是我能做什么。</p>
+      <p class="fs18 about-p">It's not important who I am, but what I can do.</p>
     </div>
     <div class="about-screen" ref="skillScroll">
-      <div class="fs16 chart-title">技能篇</div>
-      <div class="fs10 chart-header">为了避免使用精通、熟练、掌握、了解等这类模糊概念容易词，以图表试展示不仅更直观，结合各项详细描述更能准确评估。知识往深了学，更明白和尊重“精通”二字的神圣。</div>
-      <div class="chart fs9" @mouseleave="chartLeaveFn">
-        <div class="chart-line" v-for="(skill, index) of skills" :key="index" @mouseenter="chartEnterFn(index, $event)">
+      <h3 class="fs16 about-title">技能篇</h3>
+      <div class="fs10 chart-header">为了避免使用精通、熟练、掌握、了解等这类模糊概念容易词，以图表试展示不仅更直观，而且结合各项详细描述的话更能准确评估。知识往深了学，便不敢轻易使用“精通”二字。</div>
+      <div class="chart fs9">
+        <div class="chart-line" v-for="(skill, index) of skills" :key="index" @click="toggleDetail">
           <div class="chart-hd">{{skill.name}}</div>
           <div class="chart-td">
             <span class="chart-progress" :title="skill.name">
               <i class="chart-progress-value" :style="'width:' + skill.value + '%;background:'+chartColor[skill.type].color">{{skill.value}}%</i>
             </span>
+            <div class="chart-detail fs10" v-html="skill.detail"></div>
           </div>
+          <div class="fs18 chart-more"><b class="chart-more-icon">&#187;</b></div>
         </div>
       </div>
       <div class="chart-legendbar fs10">
@@ -24,10 +26,9 @@
           <span class="chart-legend-text">{{item.text}}</span>
         </div>
       </div>
-      <div class="bottom-space"></div>
-      <div class="chart-detail fs12" ref="chartDetail"></div>
     </div>
     <div class="about-screen">
+      <h3 class="about-title">工作经历篇</h3>
     </div>
     <div class="about-screen">
     </div>
@@ -98,7 +99,7 @@ export default {
         detail: `java是标准而舒服的面向对象编程的语言，掌握得差不多了，包括内存机制。
         java对js的面向对象编程方面帮助极大，尤其关于类的三大特性以及静态属性/方法、原型链属性/方法、私有属性/方法等方面的关系和内存机制。
         再加上看过C++的入门，对内存有更深的了解，还有所谓的指针，其实就是一串16进制的地址，这就更容易明白java或js甚至其他语言的指针和对象实体的存在关系。
-        由于缺少java方面更多的实战，68%我觉得行。`
+        由于缺少java方面更多的实战，就68%吧。`
       }, {
         type: 0,
         name: 'node-webkit',
@@ -115,8 +116,8 @@ export default {
         type: 1,
         name: 'photoshop',
         value: 98,
-        detail: `夸张点说，即使失忆也不会忘记PS如何使用，任意需求必能满足，并且可以全程脱离工具栏、菜单栏而直接快捷键操作，一种效果至少可以用三种方式实现。
-        其实本想直接给100%的程度值，最后还是留2%作为退路。
+        detail: `ps是我惟一永远不会忘掉怎么用的软件，任意需求必能满足，并且可以全程脱离工具栏、菜单栏，直接快捷键操作，一种效果至少可以用三种方式实现。
+        其实本想直接给100%的，最后留2%作为退路。
         如果只单纯谈使用，还不足以如此自信，但涉及容差、阈值、色相原理、填充和透明度的区别、混合模式中的各种算法、色彩通道等，
         我敢说几乎没有UI设计师真正的通透明白，大多数都是凭感觉调试和使用，达到目的即止。`
       }, {
@@ -189,6 +190,15 @@ export default {
         name: 'cubase',
         value: 26,
         detail: '比FLstudio难一些，玩得少。'
+      }],
+      career: [{
+        date: '2012年7月',
+        company: '深圳市朗形数字科技有限公司',
+        job: '后期设计师',
+        harvest: `这是毕业后的第一份工作，我在效果图部负责后期。效果图部的职位分三个：建模师，渲染师，后期设计师。
+        虽然在学校的时候我的ps能力已经挺强，但在朗形工作后，ps得到了质的提升，自此我从来不敢说自己精通任何知识。`
+      }, {
+        date: '2014年'
       }]
     }
   },
@@ -240,14 +250,8 @@ export default {
     Scrollbar.scroll(this.$refs.skillScroll)
   },
   methods: {
-    chartEnterFn (index, e) {
-      let el = this.$refs.chartDetail
-      el.style.top = e.currentTarget.offsetTop + e.currentTarget.offsetHeight + 'px'
-      el.innerHTML = '<div class="fs12 chart-detail-title">' + this.skills[index].name + '掌握程度</div><div class="chart-detail-content">' + this.skills[index].detail + '</div>'
-      el.classList.add('chart-detail-show')
-    },
-    chartLeaveFn () {
-      this.$refs.chartDetail.classList.remove('chart-detail-show')
+    toggleDetail (e) {
+      e.currentTarget.classList.toggle('chart-detail-show')
     }
   }
 }
@@ -305,6 +309,9 @@ export default {
     margin: 0 auto;
     display: block;
   }
+  .about-p{
+    margin: .3em 0;
+  }
   .fs20{
     font-size: 2vw;
   }
@@ -329,8 +336,9 @@ export default {
   .fs8{
     font-size: .8vw;
   }
-  .chart-title{
+  .about-title{
     text-align: center;
+    margin: .5em 0;
   }
   .chart-header{
     margin-left: 6em;
@@ -344,7 +352,8 @@ export default {
   .chart-line{
     display: table-row;
   }
-  .chart-line:hover{
+  .chart-line:hover,
+  .chart-detail-show{
     background-color: rgba(255,255,255,.1);
   }
   .chart-separation .chart-hd{
@@ -382,7 +391,7 @@ export default {
     text-indent: 1em;
   }
   .chart-legendbar{
-    padding: .5em 0;
+    padding: .5em 0 6%;
     text-align: center;
   }
   .chart-legend{
@@ -401,32 +410,23 @@ export default {
     vertical-align: middle;
   }
   .chart-detail{
-    position: absolute;
-    left: 0;
-    right: 0;
-    margin: 0 1em 0 10em;
-    padding: 1em;
-    background: #fff;
-    border-radius: .4em;
-    color: #333;
+    margin: .5em 1em;
     line-height: 1.5;
     display: none;
     opacity: 0;
-  }
-  .chart-detail-show{
-    display: block;
-    animation: fade-in .5s .5s forwards;
-  }
-  .chart-detail-title{
-    font-weight: bold;
-    text-align: center;
-    padding-bottom: .4em;
-  }
-  .chart-detail-content{
     text-indent: 2em;
   }
-  .bottom-space{
-    padding: 3.6% 0;
+  .chart-detail-show .chart-detail{
+    display: block;
+    animation: fade-in .5s forwards;
+  }
+  .chart-more{
+    display: table-cell;
+    width: 2em;
+    vertical-align: middle;
+  }
+  .chart-detail-show .chart-more-icon{
+    display: none;
   }
   @keyframes fade-in {
     0%{
