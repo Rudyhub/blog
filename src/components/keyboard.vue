@@ -52,13 +52,15 @@ export default {
     }
     els = null
     document.addEventListener('keydown', function (e) {
-      items[e.code].classList.remove('active')
-      clearTimeout(timer)
-      timer = setTimeout(function () {
+      if (items[e.code]) {
+        items[e.code].classList.remove('active')
         clearTimeout(timer)
-        items[e.code].style.color = colors[Math.floor(Math.random() * 5.5)]
-        items[e.code].classList.add('active')
-      }, 20)
+        timer = setTimeout(function () {
+          clearTimeout(timer)
+          items[e.code].style.color = colors[Math.floor(Math.random() * 5.5)]
+          items[e.code].classList.add('active')
+        }, 20)
+      }
     })
     this.animateIn()
   },
