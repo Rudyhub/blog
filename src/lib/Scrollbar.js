@@ -16,6 +16,12 @@ export default {
       document.addEventListener('mouseup', endFn);
     }, prevent);
 
+    el.addEventListener('mousewheel', function (e) {
+      let dir = e.wheelDelta < 0 ? 1 : -1;
+      el[scrollTop] += dir*10
+      easeOut(10, 6, dir);
+    });
+
     function moveFn(e) {
       e.preventDefault();
       end = e[clientY];
@@ -25,11 +31,12 @@ export default {
     }
 
     function endFn() {
-      let d = Math.abs(speed), dis = end-touchY, dir = dis < 0 ? 1 : -1;
       document.removeEventListener('mousemove', moveFn, prevent);
       document.removeEventListener('mouseup', endFn);
-
-      //缓冲
+      easeOut(Math.abs(speed), end-touchY, end-touchY < 0 ? 1 : -1);
+    }
+    //缓冲
+    function easeOut(d, dis, dir){
       if(Math.abs(dis) > 5){
         if(timer) clearInterval(timer);
         timer = setInterval(function () {

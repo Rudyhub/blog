@@ -1,11 +1,21 @@
 export default {
   nav: {
-    about: ['主页', 'home', 'about', '关于'],
+    home: ['首页', 'home', 'index', '/'],
+    about: ['个人', 'about', 'me', '关于'],
     works: ['作品', 'works'],
     blog: ['博客', 'blog'],
-    album: ['相册', 'album', 'photo', 'picture', '相片', '写真'],
-    _help: ['帮助', '-h', '-?', '--help', 'help'],
-    _clear: ['清除', 'clear', 'cls']
+    album: ['相册', 'album', 'photo', 'picture', '相片'],
+    help: ['帮助', '-h', '-?', '--help', 'help'],
+    clear: ['清除', 'clear', 'cls']
+  },
+  getCommonNav () {
+    let nav = {}
+    for (let key in this.nav) {
+      if (key !== 'help' && key !== 'clear') {
+        nav[key] = this.nav[key]
+      }
+    }
+    return nav
   },
   res: {count: 0, prev: 0},
   AI: [{
@@ -63,7 +73,7 @@ export default {
     user: /^好气$/,
     sys: ['气个P标签', '关我什么四']
   }, {
-    user: /^(好的?|ok|嗯嗯?|谢谢?|知道了?|明白|晓得|了解)/i,
+    user: /^(好的?|ok|嗯嗯?|谢谢?|知道了?|明白|晓得|了解|真的吗?|你?确定[?？]?)/i,
     sys: ['嗯', '哦', '喔']
   }, {
     user: /(爱上?|喜欢|中意)你/,
@@ -90,16 +100,16 @@ export default {
       }
       if (_this.res.count > 3) {
         if (_this.res.prev === 2) {
-          return '[系统提示 ~]: 错误次数太多，你可能智商不够，输入“-h”或“帮助”了解一下'
+          return '[系统提示 ~]: 输入“-h”或“帮助”了解一下！'
         } else {
-          return '[令狐长老]: 憨包，啰哩啰嗦，打屎你'
+          return '[令狐长老]: 能不能换点别的？'
         }
       }
     }
 
     for (let page in this.nav) {
       if (this.nav[page].includes(val)) {
-        return [page.replace('_', '')]
+        return [page]
       }
     }
     for (; i < len; i++) {
@@ -113,6 +123,6 @@ export default {
     }
     c = count(2)
     if (c) return c
-    return '[系统回复 ~]: 我的数据库还不多大，能回答的问题不多库，期待未来的人功智能吧'
+    return '[系统回复 ~]: 你说啥？'
   }
 }

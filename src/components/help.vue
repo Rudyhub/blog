@@ -1,8 +1,10 @@
 <template>
   <div class="help">
-    <div class="help-lead">敲击Enter，进入命令行模式，输入页面中文/英文：</div>
-    <div class="help-item" v-for="(item,index) of nav" :key="index" v-html="item.slice(0,2).join(' / ')" :title="'可输入：'+item.join('、')"></div>
-    <div class="help-start">开始各种骚操作吧！</div>
+    <div class="help-text">
+      <p>注意到没有，敲击键盘的时候，下方的键盘会发光，是不是很酷？</p>
+      <p>如何访问其他页面？敲击Enter可以进入命令行模式互动系统，然后</p>
+    </div>
+    <div class="help-item" v-for="(item,index) of nav" :key="index" v-html="navFilter(item)"></div>
   </div>
 </template>
 
@@ -13,14 +15,7 @@ export default {
   name: 'help',
   data () {
     return {
-      nav: []
-    }
-  },
-  created () {
-    for (let k in store.nav) {
-      if (/^[^_]/.test(k)) {
-        this.nav.push(store.nav[k])
-      }
+      nav: store.nav
     }
   },
   mounted () {
@@ -56,12 +51,15 @@ export default {
     },
     animateOut (fn) {
       this.toggleAnimate('animate-out', 'animate-in', fn)
+    },
+    navFilter (val) {
+      return val[0] + '： 可输入“' + val.join('”、“') + '”'
     }
   }
 }
 </script>
 
-<style scoped>
+<style>
   .help{
     font-size: 15px;
     padding: 1em;
@@ -70,28 +68,25 @@ export default {
     box-sizing: border-box;
     color: #92a3b1;
     display: flex;
-    align-items: center;
     justify-content: center;
-    flex-wrap: wrap;
     align-content: center;
+    flex-direction: column;
+    max-width: 800px;
+    margin: 0 auto;
   }
   @media all and (max-width: 1079px) {
     .help {
       font-size: 1.4vw;
     }
   }
-  .help-lead,
-  .help-start{
-    width: 100%;
-    text-align: center;
+  .help-text,
+  .help-item{
     opacity: 0;
     padding: 1em;
   }
   .help-item{
-    opacity: 0;
-    padding: 1em;
-    color: #cb0101;
-    font-weight: bold;
+    text-indent: 2em;
+    color: #b26821;
   }
 
   .animate-in{

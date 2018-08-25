@@ -49,7 +49,7 @@ export default {
   .main{
     height: 100vh;
     min-width: 109vh;
-    background: #333;
+    background: #1b2124;
     overflow: hidden;
     position: relative;
   }

@@ -20,11 +20,13 @@ export default {
       }
     }
   },
+  data () {
+    return {isShow: false}
+  },
   mounted () {
     let _this, el
     _this = this
     el = this.$el
-    _this.show()
     el.addEventListener('click', function (e) {
       _this.$emit('click')
       if (e.target === el) {
@@ -39,6 +41,7 @@ export default {
       el = this.$el
       _this.$emit('beforeShow')
       el.classList.add('popup-show')
+      _this.isShow = true
       el.addEventListener('animationend', function end () {
         el.removeEventListener('animationend', end, false)
         if (fn) fn()
@@ -51,6 +54,7 @@ export default {
       el = this.$el
       _this.$emit('beforeHide')
       el.classList.add('popup-hide')
+      _this.isShow = false
       el.addEventListener('animationend', function end () {
         el.removeEventListener('animationend', end, false)
         _this.$emit('hideEnd')

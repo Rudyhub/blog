@@ -38,8 +38,7 @@ export default {
       ]}
   },
   mounted () {
-    let items, els, timer, colors
-    colors = ['', '#ffa100', '#b300dd', '#eeeb77', '#fff', '#cb0101']
+    let items, els, timer
     items = {}
     els = this.$el.querySelectorAll('[data-code]')
     function itemAnimateEnd () {
@@ -57,7 +56,6 @@ export default {
         clearTimeout(timer)
         timer = setTimeout(function () {
           clearTimeout(timer)
-          items[e.code].style.color = colors[Math.floor(Math.random() * 5.5)]
           items[e.code].classList.add('active')
         }, 20)
       }
