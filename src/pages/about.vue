@@ -5,46 +5,56 @@
       <a class="nav-item" href="javascript:void(0)" @click="toggleHelp">指南</a>
     </nav>
     <popup ref="helpPopup">
-      左右拖动可旋转，摁住shift阻止旋转。页面内容溢出时，滚动条虽是隐藏的，但支持上下拖动，也支持滚轮。
+      <b class="popup-close fs18">&times;</b>
+      <p><b>操作指南：</b></p>
+      <p>这是炫酷的css3 3D：<br>
+        鼠标左键左右拖动 = 旋转<br>
+        ctrl键 + 鼠标左键上下左右拖动 = 移动<br>
+        al键 + 鼠标滚轮 = 缩放<br>
+        shift键 = 禁止3D变换。
+      </p>
+      <p>页面内容溢出时，滚动条虽是隐藏的，但支持上下拖动，也支持滚轮。</p>
     </popup>
-    <div class="about-screen about-screen-1">
-      <p class="about-p"><img class="about-face" src="/static/face.png" alt="Rudy" draggable="false"></p>
-      <p class="fs18 about-p">我是谁并不重要，重要的是我能做什么。</p>
-      <p class="fs18 about-p">It's not important who I am, but what I can do.</p>
-    </div>
-    <div class="about-screen about-screen-2">
-      <h3 class="fs16 about-title">技能篇</h3>
-      <div class="fs10 chart-header">为了避免使用精通、熟练、掌握、了解等这类模糊概念容易词，以图表试展示不仅更直观，而且结合各项详细描述的话更能准确评估。知识往深了学，便不敢轻易使用“精通”二字。</div>
-      <div class="chart fs9">
-        <div class="chart-line" v-for="(skill, index) of skills" :key="index" @click="toggleDetail">
-          <div class="chart-hd">{{skill.name}}</div>
-          <div class="chart-td">
-            <span class="chart-progress" :title="skill.name">
-              <i class="chart-progress-value" :style="'width:' + skill.value + '%;background:'+chartColor[skill.type].color">{{skill.value}}%</i>
-            </span>
-            <div class="chart-detail fs10" v-html="skill.detail"></div>
+    <div class="about-screens" ref="screens">
+      <div class="about-screen about-screen-1">
+        <p class="about-p"><img class="about-face" src="/static/face.png" alt="Rudy" draggable="false"></p>
+        <p class="fs18 about-p">我是谁并不重要，重要的是我能做什么。</p>
+        <p class="fs18 about-p">It's not important who I am, but what I can do.</p>
+      </div>
+      <div ref="screen2" class="about-screen about-screen-2">
+        <h3 class="fs16 about-title">技能篇</h3>
+        <div class="fs10 chart-header">为了避免使用精通、熟练、掌握、了解等这类模糊概念容易词，以图表试展示不仅更直观，而且结合各项详细描述的话更能准确评估。知识往深了学，便不敢轻易使用“精通”二字。</div>
+        <div class="chart fs9">
+          <div class="chart-line" v-for="(skill, index) of skills" :key="index" @click="toggleDetail">
+            <div class="chart-hd">{{skill.name}}</div>
+            <div class="chart-td">
+              <span class="chart-progress" :title="skill.name">
+                <i class="chart-progress-value" :style="'width:' + skill.value + '%;background:'+chartColor[skill.type].color">{{skill.value}}%</i>
+              </span>
+              <div class="chart-detail fs10" v-html="skill.detail"></div>
+            </div>
+            <div class="fs18 chart-more"><b class="chart-more-icon">&#187;</b></div>
           </div>
-          <div class="fs18 chart-more"><b class="chart-more-icon">&#187;</b></div>
+        </div>
+        <div class="chart-legendbar fs10">
+          <div class="chart-legend" v-for="(item, index) of chartColor" :key="index">
+            <i class="chart-legend-color" :style="'background:'+item.color" :title="item.text"></i>
+            <span class="chart-legend-text">{{item.text}}</span>
+          </div>
         </div>
       </div>
-      <div class="chart-legendbar fs10">
-        <div class="chart-legend" v-for="(item, index) of chartColor" :key="index">
-          <i class="chart-legend-color" :style="'background:'+item.color" :title="item.text"></i>
-          <span class="chart-legend-text">{{item.text}}</span>
-        </div>
+      <div ref="screen3" class="about-screen  about-screen-3">
+        <h3 class="about-title">工作经历篇</h3>
+        <section class="career">
+          <article class="career-item" v-for="(item, index) in career" :key="index">
+            <h4><span class="career-date">{{item.date}}</span><span class="career-job">{{item.job}}</span></h4>
+            <img v-if="item.logo" class="career-logo" :src="item.logo">
+            <div v-else class="career-no-logo">?</div>
+            <p class="career-company">{{item.company}}</p>
+            <p class="career-harvest">{{item.harvest}}</p>
+          </article>
+        </section>
       </div>
-    </div>
-    <div class="about-screen  about-screen-3">
-      <h3 class="about-title">工作经历篇</h3>
-      <section class="career">
-        <article class="career-item" v-for="(item, index) in career" :key="index">
-          <h4><span class="career-date">{{item.date}}</span><span class="career-job">{{item.job}}</span></h4>
-          <img v-if="item.logo" class="career-logo" :src="item.logo">
-          <div v-else class="career-no-logo">?</div>
-          <p class="career-company">{{item.company}}</p>
-          <p class="career-harvest">{{item.harvest}}</p>
-        </article>
-      </section>
     </div>
   </div>
 </template>
@@ -63,46 +73,68 @@ export default {
     document.body.appendChild(aboutStore.mask)
   },
   mounted () {
-    let _this, el, items, startX, angle, curangle, speeds, speed, timer
+    let _this, el, screens, startX, startY, endX, endY, x, curX, y, curY, angle, curangle, z, speeds, speed, allowWheel, timer, scrollPrevent
     _this = this
     el = _this.$el
-    items = _this.$el.querySelectorAll('.about-screen')
-    angle = 0
-    curangle = 0
+    screens = _this.$refs.screens
+    x = curX = y = curY = angle = curangle = 0
+    z = -20
     speeds = [0, 0]
-
+    scrollPrevent = ['altKey', 'ctrlKey']
     el.classList.add('about-in')
-    items[0].addEventListener('animationend', animateEnd, false)
+    screens.addEventListener('animationend', animateEnd, false)
     function animateEnd (e) {
       this.removeEventListener(e.type, animateEnd, false)
-      el.classList.remove('about-in')
-      rotate()
       document.body.removeChild(aboutStore.mask)
       _this.$refs.nav.classList.add('nav-show')
+      _this.$refs.helpPopup.show()
+      el.addEventListener('mousewheel', wheel)
+      el.addEventListener('mousedown', down)
     }
-    el.addEventListener('mousedown', down)
+    function wheel (e) {
+      if (e.altKey && allowWheel) {
+        z += 20 * (e.wheelDelta < 0 ? -1 : 1)
+        trans()
+      }
+    }
     document.addEventListener('mouseup', end)
     function down (e) {
       if (e.shiftKey) return
       el.classList.remove('about-in')
       startX = e.clientX
+      startY = e.clientY
       speeds[0] = speeds[1] = 0
+      allowWheel = true
+      trans()
       el.addEventListener('mousemove', move)
     }
     function move (e) {
       if (e.shiftKey) return
-      curangle = angle + (e.clientX - startX) / 10
+      endX = e.clientX - startX
+      endY = e.clientY - startY
       speeds.push(e.clientX)
       speeds.shift()
-      rotate()
+      if (e.ctrlKey) {
+        curX = x + endX
+        curY = y + endY
+      } else {
+        curangle = angle + endX / 10
+      }
+      trans()
     }
     function end (e) {
       el.removeEventListener('mousemove', move)
       if (e.shiftKey) return
-      clearInterval(timer)
-      speed = (speeds[1] - speeds[0]) / 10
-      if (speeds[0] > 0 && speeds[1] > 0) {
-        timer = setInterval(animteFrame, 16.6)
+      if (e.ctrlKey) {
+        x = curX
+        y = curY
+        trans()
+      } else {
+        clearInterval(timer)
+        speed = (speeds[1] - speeds[0]) / 10
+        if (speeds[0] > 0 && speeds[1] > 0) {
+          timer = setInterval(animteFrame, 16.6)
+        }
       }
     }
     function animteFrame () {
@@ -111,16 +143,14 @@ export default {
       if (Math.abs(speed) < 0.1) {
         clearInterval(timer)
       }
-      rotate()
+      trans()
       angle = curangle
     }
-    function rotate () {
-      items[0].style.transform = 'translateZ(-20vh) rotateY(' + curangle + 'deg)'
-      items[1].style.transform = 'translateZ(-20vh) rotateY(' + (curangle + 120) + 'deg)'
-      items[2].style.transform = 'translateZ(-20vh) rotateY(' + (curangle + 240) + 'deg)'
+    function trans () {
+      screens.style.transform = 'translate3d(' + curX + 'px, ' + curY + 'px, ' + z + 'vh) rotateY(' + curangle + 'deg)'
     }
-    Scrollbar.scroll(items[1])
-    Scrollbar.scroll(items[2])
+    Scrollbar.scroll(_this.$refs.screen2, '', scrollPrevent)
+    Scrollbar.scroll(_this.$refs.screen3, '', scrollPrevent)
   },
   methods: {
     toggleDetail (e) {
@@ -194,6 +224,18 @@ export default {
     max-width: 360px;
     background: rgba(200, 240, 255, 0.8) !important;
   }
+  .popup-close{
+    position: absolute;
+    line-height: 0.5;
+    padding: .2em;
+    right: 0;
+    top: 0;
+  }
+  .about-screens{
+    transform-style: preserve-3d;
+    transform-origin: left;
+    position: relative;
+  }
   .about-screen{
     background: rgba(200, 240, 255, 0.2);
     position: absolute;
@@ -213,57 +255,26 @@ export default {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    transform: translateZ(-3000vh) rotateY(0);
-    z-index: 4;
+    transform: rotateY(0);
   }
   .about-screen-2{
-    transform: translateZ(-3000vh) rotateY(120deg);
-    z-index: 3;
+    transform: rotateY(120deg);
   }
   .about-screen-3{
-    transform: translateZ(-3000vh) rotateY(240deg);
-    z-index: 2;
+    transform: rotateY(240deg);
   }
-  .about-in .about-screen-1{
-    animation: rotate-zoom-in-0 5s forwards;
+  .about-in .about-screens{
+    animation: rotate-zoom-in 5s forwards;
   }
-  .about-in .about-screen-2{
-    animation: rotate-zoom-in-1 5s forwards;
-  }
-  .about-in .about-screen-3{
-    animation: rotate-zoom-in-2 5s forwards;
-  }
-  @keyframes rotate-zoom-in-0 {
+  @keyframes rotate-zoom-in {
     0%{
-      transform: translateZ(-3000vh) translateX(50vw) rotateY(-360deg);
+      transform: translate3d(50vw, 0, -3000vh) rotateY(-360deg);
     }
     80%{
-      transform: translateZ(-20vh) translateX(50vw) rotateY(0);
+      transform: translate3d(50vw, 0, -20vh) rotateY(0);
     }
     100%{
-      transform: translateZ(-20vh) rotateY(0);
-    }
-  }
-  @keyframes rotate-zoom-in-1 {
-    0%{
-      transform: translateZ(-3000vh) translateX(50vw) rotateY(-270deg);
-    }
-    80%{
-      transform: translateZ(-20vh) translateX(50vw) rotateY(120deg);
-    }
-    100%{
-      transform: translateZ(-20vh) rotateY(120deg);
-    }
-  }
-  @keyframes rotate-zoom-in-2 {
-    0%{
-      transform: translateZ(-3000vh) translateX(50vw) rotateY(-180deg);
-    }
-    80%{
-      transform: translateZ(-20vh) translateX(50vw) rotateY(240deg);
-    }
-    100%{
-      transform: translateZ(-20vh) rotateY(240deg);
+      transform: translate3d(0, 0, -20vh) rotateY(0);
     }
   }
   .about-face{

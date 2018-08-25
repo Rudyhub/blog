@@ -29,7 +29,7 @@ export default {
     el = this.$el
     el.addEventListener('click', function (e) {
       _this.$emit('click')
-      if (e.target === el) {
+      if (e.target === el || e.target.classList.contains('popup-close')) {
         _this.hide()
       }
     })
@@ -88,6 +88,7 @@ export default {
     min-height: 60px;
     box-shadow: 0 0 5px;
     opacity: 0;
+    position: relative;
   }
   .popup-show{
     display: flex;

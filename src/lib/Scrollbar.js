@@ -1,14 +1,18 @@
 /* eslint-disable */
 export default {
-  scroll(el, direction){
+  scroll(el, direction, preventKeys = []){
     let touchY = 0, end = 0, startTop = 0, prev = 0, speed = 0, prevent = {passive: false}, timer, scrollTop = 'scrollTop', clientY = 'clientY';
     if(direction && direction.toLowerCase() === 'x'){
       scrollTop = 'scrollLeft';
       clientY = 'clientX';
     }
     el.addEventListener('mousedown', function(e){
+      for(let i=0, len=preventKeys.length; i<len; i++){
+        if(e[preventKeys[i]]){
+          return false
+        }
+      }
       e.preventDefault();
-
       touchY = e[clientY];
       startTop = el[scrollTop];
       prev = touchY;
@@ -35,7 +39,7 @@ export default {
       document.removeEventListener('mouseup', endFn);
       easeOut(Math.abs(speed), end-touchY, end-touchY < 0 ? 1 : -1);
     }
-    //缓冲
+
     function easeOut(d, dis, dir){
       if(Math.abs(dis) > 5){
         if(timer) clearInterval(timer);
