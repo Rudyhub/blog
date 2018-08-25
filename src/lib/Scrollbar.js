@@ -1,13 +1,16 @@
 /* eslint-disable */
 export default {
   scroll(el, direction, preventKeys = []){
-    let touchY = 0, end = 0, startTop = 0, prev = 0, speed = 0, prevent = {passive: false}, timer, scrollTop = 'scrollTop', clientY = 'clientY';
+    let touchY = 0, end = 0, startTop = 0, prev = 0, speed = 0,
+      prevent = {passive: false}, timer,
+      scrollTop = 'scrollTop', clientY = 'clientY',
+      len = preventKeys.length, i;
     if(direction && direction.toLowerCase() === 'x'){
       scrollTop = 'scrollLeft';
       clientY = 'clientX';
     }
     el.addEventListener('mousedown', function(e){
-      for(let i=0, len=preventKeys.length; i<len; i++){
+      for(i=0; i<len; i++){
         if(e[preventKeys[i]]){
           return false
         }
@@ -21,6 +24,11 @@ export default {
     }, prevent);
 
     el.addEventListener('mousewheel', function (e) {
+      for(i=0; i<len; i++){
+        if(e[preventKeys[i]]){
+          return false
+        }
+      }
       let dir = e.wheelDelta < 0 ? 1 : -1;
       el[scrollTop] += dir*10
       easeOut(10, 6, dir);
