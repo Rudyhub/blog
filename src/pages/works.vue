@@ -1,18 +1,25 @@
 <template>
   <div class="stage">
     <div class="table" ref="table">
-      <div class="book" v-for="(book, index) of books" :key="index" :class="'book-'+(index+1)">
-        <div class="cover">
-          <img :src="book.cover" style="width: 80%;" draggable="false">
+      <div class="book" v-for="(book, index) of books" :key="index" :class="'book-'+(index+1)" :style="'transform: rotateX(-90deg) translate(-21vh, -14.85vh) rotateY('+angelFilter(index)+'deg)'">
+        <div class="cover" >
+          <canvasplayer v-if="book.video" :src="book.video" :autoplay="true" :loop="true" class="cover-img"></canvasplayer>
+          <img class="cover-img" :src="book.cover">
           <h1>{{book.title}}</h1>
           <p class="cover-text">{{book.subtitle}}</p>
         </div>
-        <div class="spine spine-a"><span class="spine-title" v-html="spineTextFilter(book.title)"></span><small class="text-dir-90">{{book.subtitle}}</small></div>
+        <div class="spine spine-a">
+          <span class="spine-title" v-html="spineTextFilter(book.title)"></span>
+          <small class="text-dir-90">{{book.subtitle}}</small>
+        </div>
         <div class="spine spine-b"></div>
         <div class="spine spine-c"></div>
         <div class="spine spine-d"></div>
         <div class="back-cover">
-          <div class="back-text">https://rudyhub.github.io</div>
+          <canvasplayer v-if="book.video" :src="book.video" :autoplay="true" :loop="true" class="cover-img"></canvasplayer>
+          <img v-else class="cover-img" :src="book.cover">
+          <h1>{{book.title}}</h1>
+          <p class="cover-text">{{book.subtitle}}</p>
         </div>
       </div>
     </div>
@@ -21,27 +28,37 @@
 </template>
 
 <script>
+import canvasplayer from '../components/canvasplayer'
 export default {
   name: 'works',
+  components: {canvasplayer},
   data () {
     return {
       books: [
         {
-          title: '在校作品',
-          subtitle: 'works in College',
-          cover: '../../static/works/book1/01.jpg'
+          title: '规划设计类',
+          subtitle: '2008 在学校',
+          cover: '../../static/works/01/01.jpg'
         }, {
-          title: '在朗形作品',
-          subtitle: 'works in LangSky',
-          cover: '../../static/works/book2/01.jpg'
+          title: '效果图类',
+          subtitle: '2012 在朗形',
+          cover: '../../static/works/02/01.jpg'
         }, {
-          title: '在溪林峰作品',
-          subtitle: 'works in XiLinFeng',
-          cover: '../../static/works/book3/01.jpg'
+          title: '景观方案设计类',
+          subtitle: '2014 在溪林峰',
+          cover: '../../static/works/03/01.jpg'
         }, {
-          title: '在文汇作品',
-          subtitle: 'works in WenWei',
-          cover: '../../static/works/book3/01.jpg'
+          title: 'Web网站网页类',
+          subtitle: '2016 在文汇',
+          cover: '../../static/works/cover01.jpg'
+        }, {
+          title: '小游戏H5类',
+          subtitle: '2016 在文汇',
+          video: '../../static/works/v03.mp4'
+        }, {
+          title: '桌面APP类',
+          subtitle: '2016 在文汇',
+          video: '../../static/works/v02.mp4'
         }
       ]
     }
@@ -49,7 +66,7 @@ export default {
   mounted () {
     let table, startX, z, curZ, speedsX, spX, timerX
     table = this.$refs.table
-    curZ = z = 345
+    curZ = z = 130
     speedsX = [0, 0]
     spX = 0
     this.$el.addEventListener('mousedown', down)
@@ -89,6 +106,9 @@ export default {
   methods: {
     spineTextFilter (val) {
       return val.split('').join('<br>')
+    },
+    angelFilter (index) {
+      return Math.round(index * (360 / this.books.length))
     }
   }
 }
@@ -100,6 +120,7 @@ export default {
     line-height: 1;
     padding: .5em;
     border-bottom: 1px solid;
+    margin-top: 10vh;
   }
   .stage{
     perspective: 100vh;
@@ -118,7 +139,7 @@ export default {
     border-radius: 50%;
     background: rgba(200, 240, 255, 0.2);
     border: 3px solid #2e6881;
-    transform: rotateX(60deg) rotateZ(345deg);
+    transform: rotateX(60deg) rotateZ(130deg);
     transform-style: preserve-3d;
     display: flex;
     align-items: center;
@@ -133,7 +154,7 @@ export default {
     top: 0;
     width: 100%;
     height: 100%;
-    background: url("../../static/works/book1/table-bg.png") no-repeat;
+    background: url("../../static/works/01/table-bg.png") no-repeat;
     background-size: cover;
     border-radius: 50%;
     overflow: hidden;
@@ -177,31 +198,18 @@ export default {
     position: absolute;
     transform-origin: 150% center;
     user-select: none;
-    transition: transform .3s;
     cursor: pointer;
-  }
-  .book-1{
-    transform: rotateX(-90deg) translate(-21vh, -14.85vh) rotateY(0);
-  }
-  .book-2{
-    transform: rotateX(-90deg) translate(-21vh, -14.85vh) rotateY(30deg);
-  }
-  .book-3{
-    transform: rotateX(-90deg) translate(-21vh, -14.85vh) rotateY(60deg);
-  }
-  .book-4{
-    transform: rotateX(-90deg) translate(-21vh, -14.85vh) rotateY(90deg);
-  }
-  .book-5{
-    transform: rotateX(-90deg) translate(-21vh, -14.85vh) rotateY(120deg);
-  }
-  .book-6{
-    transform: rotateX(-90deg) translate(-21vh, -14.85vh) rotateY(150deg);
   }
   .cover,
   .back-cover{
     height: 29.7vh;
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+    color: #333;
   }
   .spine,
   .back-cover{
@@ -215,12 +223,6 @@ export default {
   .cover{
     background: linear-gradient(45deg, #888, #ccc);
     text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    align-content: center;
-    flex-direction: column;
-    color: #333;
   }
   .spine{
     width: 3vh;
@@ -270,7 +272,7 @@ export default {
   }
   .back-cover{
     transform: translateZ(-3vh) scaleX(-1);
-    background: url("../../static/logo.png") no-repeat center/5vh, linear-gradient(0, #c8c7d7, #c1b8ac);
+    background: linear-gradient(0, #c8c7d7, #c1b8ac);
   }
   .text-dir-90{
     transform: rotateZ(90deg);
@@ -279,18 +281,15 @@ export default {
     line-height: 3vh;
     white-space: nowrap;
     text-transform: uppercase;
-    font-weight: bold;
   }
   .cover-text{
     text-transform: uppercase;
     font-size: .8em;
   }
-  .back-text{
+  .cover-img{
+    width: 80%;
+    top: 3vh;
     position: absolute;
-    bottom: 0;
-    right: 0;
-    padding: 1em;
-    box-sizing: border-box;
-    font-size: .5vh;
+    transform: translateZ(1px);
   }
 </style>
