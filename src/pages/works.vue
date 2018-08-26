@@ -4,7 +4,7 @@
       <div class="book" v-for="(book, index) of books" :key="index" :class="'book-'+(index+1)" :style="'transform: rotateX(-90deg) translate(-21vh, -14.85vh) rotateY('+angelFilter(index)+'deg)'">
         <div class="cover" >
           <canvasplayer v-if="book.video" :src="book.video" :autoplay="true" :loop="true" class="cover-img"></canvasplayer>
-          <img class="cover-img" :src="book.cover">
+          <img class="cover-img" :src="book.cover" draggable="false">
           <h1>{{book.title}}</h1>
           <p class="cover-text">{{book.subtitle}}</p>
         </div>
@@ -17,7 +17,7 @@
         <div class="spine spine-d"></div>
         <div class="back-cover">
           <canvasplayer v-if="book.video" :src="book.video" :autoplay="true" :loop="true" class="cover-img"></canvasplayer>
-          <img v-else class="cover-img" :src="book.cover">
+          <img v-else class="cover-img" :src="book.cover" draggable="false">
           <h1>{{book.title}}</h1>
           <p class="cover-text">{{book.subtitle}}</p>
         </div>
@@ -291,5 +291,16 @@ export default {
     top: 3vh;
     position: absolute;
     transform: translateZ(1px);
+  }
+  .book-out{
+    animation: book-out 5s forwards;
+  }
+  @keyframes book-out {
+    0%{
+      transform: inherit;
+    }
+    100%{
+      transform: translate3d(0, 0, 29.7vh) rotate3d(1, 0, 0, 90deg);
+    }
   }
 </style>
