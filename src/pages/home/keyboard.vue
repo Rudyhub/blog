@@ -1,13 +1,11 @@
 <template>
   <div class="keyboard">
-    <div class="keyboard-keys">
-      <div class="keyboard-row" v-for="(row, index) of keys" :key="index">
-        <template v-for="key of row">
-          <div class="keyboard-item" :class="'keyboard-'+key.code" :key="key.code" :data-code="key.code">
-            <div class="keyboard-content" v-html="key.html"></div>
-          </div>
-        </template>
-      </div>
+    <div class="keyboard-row" v-for="(row, index) of keys" :key="index">
+      <template v-for="key of row">
+        <div class="keyboard-item" :class="'keyboard-'+key.code" :key="key.code" :data-code="key.code">
+          <div class="keyboard-content" v-html="key.html"></div>
+        </div>
+      </template>
     </div>
   </div>
 </template>
@@ -18,6 +16,9 @@ export default {
   data () {
     return {
       keys: [
+        [{html: 'Esc', code: 'Escape'}, {html: 'F1', code: 'F1'}, {html: 'F2', code: 'F2'}, {html: 'F3', code: 'F3'}, {html: 'F4', code: 'F4'},
+          {html: 'F5', code: 'F5'}, {html: 'F6', code: 'F6'}, {html: 'F7', code: 'F7'}, {html: 'F8', code: 'F8'}, {html: 'F9', code: 'F9'},
+          {html: 'F10', code: 'F10'}, {html: 'F11', code: 'F11'}, {html: 'F12', code: 'F12'}, {html: 'Delete', code: 'Delete'}],
         [{html: '~<br>`', code: 'Backquote'}, {html: '!<br>1', code: 'Digit1'}, {html: '@<br>2', code: 'Digit2'}, {html: '#<br>3', code: 'Digit3'},
           {html: '$<br>4', code: 'Digit4'}, {html: '%<br>5', code: 'Digit5'}, {html: '^<br>6', code: 'Digit6'}, {html: '&<br>7', code: 'Digit7'},
           {html: '*<br>8', code: 'Digit8'}, {html: '(<br>9', code: 'Digit9'}, {html: ')<br>0', code: 'Digit0'}, {html: '—<br>-', code: 'Minus'},
@@ -38,9 +39,10 @@ export default {
       ]}
   },
   mounted () {
-    let items, els, timer
+    let items, els, reg, timer
     items = {}
     els = this.$el.querySelectorAll('[data-code]')
+    reg = /^F([1-4]|[6-9]|11)$/i
     function itemAnimateEnd () {
       this.classList.remove('active')
       this.style.color = ''
@@ -51,6 +53,9 @@ export default {
     }
     els = null
     document.addEventListener('keydown', function (e) {
+      if (reg.test(e.code)) {
+        e.preventDefault()
+      }
       if (items[e.code]) {
         items[e.code].classList.remove('active')
         clearTimeout(timer)
@@ -60,45 +65,17 @@ export default {
         }, 20)
       }
     })
-    this.animateIn()
-  },
-  methods: {
-    animateIn (fn) {
-      let _this = this
-      this.$el.classList.add('keyboard-animate')
-      this.$el.addEventListener('animationend', animateEnd, false)
-      function animateEnd (e) {
-        this.removeEventListener(e.type, animateEnd, false)
-        if (fn) fn('keyboard', e.animationName)
-        _this.$emit('animate-in-end', 'keyboard', e.animationName)
-      }
-    }
   }
 }
 </script>
 
 <style>
 .keyboard{
-  width: 100%;
-  height: 35vh;
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  perspective: 400px;
-  color: #469e36;
-}
-.keyboard-keys{
-  width: 106vh;
-  margin: 0 auto;
+  width: 88vh;
+  margin: 3vh auto;
   padding: .5vh;
   box-sizing: border-box;
-  border: 1px solid;
-  border-radius: 4px;
-  transform-origin: bottom;
-  background: linear-gradient(160deg, #464646, #272727);
-}
-.keyboard-animate .keyboard-keys{
-  animation: fall-down 1s cubic-bezier(.77,.22,.98,.81) forwards, fall-later 0.8s cubic-bezier(.77,.22,.98,.81) 1s forwards;
+  color: #910101;
 }
 .keyboard-row{
   height: 6vh;
@@ -107,50 +84,50 @@ export default {
 .keyboard-item{
   box-sizing: border-box;
   float: left;
-  width: 6vh;
-  height: 6vh;
-  margin:0 .5vh;
+  width: 5.3vh;
+  height: 5.3vh;
+  margin:0 .3vh;
   vertical-align: middle;
-  border: .1vh solid;
   border-radius: 4px;
-  padding: .2vh .4vh;
   line-height: 1.2;
   position: relative;
-  font-size: 2vh;
+  font-size: 1.8vh;
+  box-shadow: 0 .1vh 0.4vh .1vh;
 }
-.keyboard-item.active{
-  color: #00bcff;
-  animation: bright 1s;
+.keyboard-Escape{
+  margin-right: 1.5vh;
+}
+.keyboard-Delete{
+  width: 7vh;
+  margin-left: 1.5vh;
 }
 .keyboard-Backspace{
-  width: 12vh;
-  font-size: 2vh;
-  text-align: center;
+  width: 9.4vh;
+  font-size: 1.6vh;
 }
 .keyboard-Tab,
 .keyboard-Backslash{
-  width: 9vh;
+  width: 7.3vh;
 }
 .keyboard-CapsLock,
 .keyboard-Enter{
-  width: 12.5vh;
-  line-height: 5vh;
+  width: 10.2vh;
 }
 .keyboard-ShiftLeft,
 .keyboard-ShiftRight{
-  width: 16vh;
-  line-height: 5vh;
+  width: 13.1vh;
 }
 .keyboard-ControlLeft,
 .keyboard-ControlRight{
-  width: 8vh;
+  width: 6.5vh;
 }
 .keyboard-Space{
-  width: 38vh;
+  width: 34.5vh;
 }
 .keyboard-PrintScreen{
-  width: 11vh;
+  width: 7vh;
 }
+.keyboard-Delete,
 .keyboard-Backspace,
 .keyboard-Tab,
 .keyboard-CapsLock,
@@ -158,70 +135,40 @@ export default {
 .keyboard-ShiftLeft,
 .keyboard-ShiftRight,
 .keyboard-row:last-child .keyboard-item{
-  line-height: 5vh;
+  line-height: 4.2vh;
   text-align: center;
 }
 .keyboard-content{
   width: 100%;
   height: 100%;
-  box-shadow: inset 0 0.1vh 0.3vh #cbc6c4;
+  box-shadow: inset 0 0 0.2vh #afaaa8;
   box-sizing: border-box;
   padding: 0 .2em;
   border-radius: 3px;
-  border-bottom: .6vh solid #282823;
+  border-bottom: .7vh solid #000;
+}
+.keyboard-item.active{
+  color: #00bcff;
+  animation: bright 1s;
+}
+.active .keyboard-content{
+  height: 98%;
+  border-width: .3vh;
 }
 @keyframes bright {
   0%{
-    box-shadow: 0 0 .4vh;
+    box-shadow: 0 .1vh .4vh;
   }
   20%{
-    box-shadow: 0 0 1.4vh;
+    border: 1px solid #00bcff;
+    box-shadow: 0 .2vh 1.4vh;
   }
   80%{
-    box-shadow: 0 0 1.4vh;
+    border: 1px solid #00bcff;
+    box-shadow: 0 .2vh 1.4vh;
   }
   100%{
-    box-shadow: 0 0 .4vh;
-  }
-}
-@keyframes fall-down {
-  0%{
-    transform: translateY(-100vh);
-  }
-  60%{
-    transform: translateY(1vh);
-  }
-  70%{
-    transform: translateY(-3vh);
-  }
-  80%{
-    transform: translateY(0.4vh);
-  }
-  90%{
-    transform: translateY(-1vh);
-  }
-  100%{
-    transform: translateY(0);
-  }
-}
-@keyframes fall-later {
-  0%{
-    transform: rotateX(0);
-  }
-  60%{
-    transform: rotateX(45deg);
-  }
-  70%{
-    transform: rotateX(40deg);
-  }
-  80%{
-    transform: rotateX(43deg);
-  }
-  90%{
-    transform: rotateX(41deg);
-  }
-  100%{
-    transform: rotateX(42deg);
+    box-shadow: 0 .1vh .4vh;
   }
 }
 </style>

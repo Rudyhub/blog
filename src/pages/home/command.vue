@@ -1,12 +1,12 @@
 <template>
     <div class="command">
-      <p class="command-sys">您好，我是小小的互动系统，除了可以输入要访问的页面之外，还可以与我进行简单的交流哦。</p>
+      <p class="command-sys">您好，我是小小的互动系统，除了可以输入要访问的页面之外，还可以与我进行简单的交流哦。<br>需要帮助可输入：<span v-html="helpText"></span></p>
     </div>
 </template>
 
 <script>
-import utils from '../scripts/utils.js'
-import store from '../scripts/store.js'
+import utils from '../../scripts/utils.js'
+import store from '../../scripts/store.js'
 
 let lines, lineIndex
 lines = []
@@ -16,6 +16,7 @@ export default {
   name: 'command',
   data () {
     return {
+      helpText: store.nav.help.join(' &nbsp; |  &nbsp; '),
       input: document.createElement('input')
     }
   },
@@ -39,7 +40,7 @@ export default {
           if (typeof res === 'object') {
             switch (res[0]) {
               case 'help':
-                _this.help()
+                sysLine.innerHTML = _this.help()
                 break
               case 'clear':
                 _this.clear()
@@ -92,7 +93,11 @@ export default {
       this.$el.innerHTML = ''
     },
     help () {
-      this.$parent.animateInEnd('keyboard')
+      let html = ''
+      for (let page in store.nav) {
+        html += store.nav[page][0] + '：' + store.nav[page].join('  &nbsp; |  &nbsp; ') + '<br>'
+      }
+      return html
     }
   }
 }
@@ -110,14 +115,15 @@ export default {
     line-height: 1.4;
   }
   .command-sys{
-    padding: 0.6em 0 0.6em 4em;
+    padding: 0.3em 0 0.3em 4em;
     color: #b26821;
   }
   .command-head{
     display: inline-block;
-    vertical-align: middle;
+    vertical-align: baseline;
     padding-right: .5em;
     box-sizing: border-box;
+    line-height: 1;
   }
   .command-input{
     border: none;

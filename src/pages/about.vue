@@ -133,11 +133,11 @@ export default {
         clearInterval(timer)
         speed = (speeds[1] - speeds[0]) / 10
         if (speeds[0] > 0 && speeds[1] > 0) {
-          timer = setInterval(animteFrame, 16.6)
+          timer = setInterval(easeOut, 16.6)
         }
       }
     }
-    function animteFrame () {
+    function easeOut () {
       speed *= 0.96
       curangle += speed
       if (Math.abs(speed) < 0.1) {
@@ -186,8 +186,7 @@ export default {
     width: 0;
     height: 100%;
     color: #888;
-    border: 1px solid #2e6881;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
     flex-direction: column;
     z-index: 99;
@@ -209,13 +208,14 @@ export default {
     white-space: nowrap;
     width: 2.5em;
     text-decoration: none;
-    transform: rotateY(-30deg);
     border: 1px solid #2e6881;
     transition: transform .5s;
+    transform-origin: right;
+    margin: .2em 0;
   }
   .nav-item:hover{
     background: rgba(200, 240, 255, 0.5);
-    transform: rotateY(0);
+    transform: rotateY(-10deg);
   }
   .popup{
     color: #333;
