@@ -1,20 +1,32 @@
 <template>
-  <div class="stage" :style="'perspective: '+stagePerspective+'vh'">
-    <div class="table" :style="'transition:'+tableTransition+';transform:translateY('+tableTranslateY+'vh) rotateX(' + tableRotateX + 'deg) rotateZ(' + tableRotateZ + 'deg)'">
-      <div class="book" v-for="(book, index) of books" :key="index" @click="readBook(index)"
-           :style="'transform: scale3d('+bookScale+','+bookScale+','+bookScale+') rotateX(-90deg) rotateY(' + book.rotateY[book.status] + 'deg) translate3d('+book.translate3d[book.status]+')'">
-        <bookcover :book="book" class="cover"/>
-        <div class="spine spine-a">
+  <div class="stage flex-center" :style="'perspective: '+stagePerspective+'vh'">
+    <div class="table flex-center"
+         :style="{
+         transition: allTransition,
+         transform: 'translateY('+tableTranslateY+'vh) rotateX(' + tableRotateX + 'deg) rotateZ(' + tableRotateZ + 'deg)'
+         }">
+      <div class="book" v-for="(book, index) of books" :key="index" @dblclick="readBook(index)"
+           :style="{
+           transition: allTransition,
+           transform: 'scale3d('+bookScale+','+bookScale+','+bookScale+') rotateX(-90deg) rotateY(' + book.rotateY + 'deg) translate3d('+
+           (status ? '-100vh' : '-80vh') + ',-50vh,0)'
+           }">
+        <bookcover :book="book" class="cover flex-center"/>
+        <div class="spine spine-a flex-center">
           <div class="spine-title" v-html="spineTextFilter(book.title)"></div>
           <div class="spine-subtitle" v-html="spineTextFilter(book.subtitle)"></div>
         </div>
         <div class="spine spine-b"></div>
         <div class="spine spine-c"></div>
         <div class="spine spine-d"></div>
-        <bookcover :book="book" class="back-cover"/>
+        <bookcover :book="book" class="back-cover flex-center"/>
       </div>
     </div>
-    <div class="table-leg" :style="'transform:rotateX('+(tableRotateX+90)+'deg) translate3d(0, -'+(49.5+tableTranslateY)+'vh, -20vh)'"></div>
+    <div class="table-leg"
+         :style="{
+         transition: allTransition,
+         transform: 'rotateX('+(tableRotateX+90)+'deg) translate3d(0, -'+(42+tableTranslateY)+'vh, -20vh)'
+         }"></div>
   </div>
 </template>
 
@@ -24,7 +36,7 @@ export default {
   name: 'works',
   components: {bookcover},
   data () {
-    let books, len, i, rotateY, inits
+    let books, len, i, inits
     books = [
       {
         title: '规划设计类',
@@ -45,22 +57,18 @@ export default {
       }, {
         title: '小游戏H5类',
         subtitle: '2016 在文汇',
-        video: '../../static/works/v03.mp4'
+        video: '../../static/works/v02.mp4'
       }, {
         title: '桌面APP类',
         subtitle: '2016 在文汇',
-        video: '../../static/works/v02.mp4'
+        video: '../../static/works/v03.mp4'
       }
     ]
     len = books.length
     for (i = 0; i < len; i++) {
-      rotateY = Math.round(i * (360 / len))
-      books[i].rotateY = Object.freeze([rotateY, rotateY - 90])
-      books[i].translate3d = Object.freeze(['-100vw, -50vh, 0', '0, -50vh, 35vh'])
-      books[i].status = 0
+      books[i].rotateY = Math.round(i * (360 / len))
     }
     inits = Object.freeze({
-      len,
       stagePerspective: 100,
       tableRotateX: 60,
       tableTranslateY: 0
@@ -68,16 +76,17 @@ export default {
     return {
       books,
       inits,
+      status: 0,
       stagePerspective: inits.stagePerspective,
       tableRotateX: inits.tableRotateX,
-      tableRotateZ: 130,
+      tableRotateZ: 180,
       tableTranslateY: inits.tableTranslateY,
-      tableTransition: 'all 1s',
-      bookScale: 0.2
+      allTransition: 'transform 1s',
+      bookScale: 0.25
     }
   },
   mounted () {
-    let _this, startX, z, curZ, speedsX, spX, timerX
+    let _this, startX, z, curZ, speedsX, spX, timerX, allowEaseOut
     _this = this
     curZ = z = this.tableRotateZ
     speedsX = [0, 0]
@@ -87,33 +96,38 @@ export default {
       startX = e.clientX
       speedsX[0] = speedsX[1] = spX = 0
       curZ = z = _this.tableRotateZ
+      allowEaseOut = false
       cancelAnimationFrame(timerX)
-      _this.tableTransition = 'none'
       document.addEventListener('mousemove', move)
     }
     function move (e) {
+      _this.allTransition = 'none'
       curZ = z + (startX - e.clientX) / 10
       speedsX.push(e.clientX)
       speedsX.shift()
+      allowEaseOut = true
       _this.tableRotateZ = curZ
     }
     document.addEventListener('mouseup', up)
     function up () {
+      _this.allTransition = 'transform 1s'
       document.removeEventListener('mousemove', move)
       spX = (speedsX[0] - speedsX[1]) / 10
-      if (speedsX[0] > 0 && speedsX[1] > 0) {
+      if (speedsX[0] > 0 && speedsX[1] > 0 && allowEaseOut) {
         cancelAnimationFrame(timerX)
         timerX = requestAnimationFrame(easeOutX)
       }
     }
     function easeOutX () {
-      spX *= 0.96
+      _this.allTransition = 'none'
+      spX *= 0.9
       curZ += spX
       cancelAnimationFrame(timerX)
       timerX = requestAnimationFrame(easeOutX)
       if (Math.abs(spX) < 0.1) {
         cancelAnimationFrame(timerX)
-        _this.tableTransition = 'all 1s'
+        allowEaseOut = false
+        _this.allTransition = 'transform 1s'
       }
       _this.tableRotateZ = curZ
       z = curZ
@@ -124,22 +138,19 @@ export default {
       return val.split('').join('<br>')
     },
     readBook (index) {
-      for (let i = 0; i < this.inits.booksLen; i++) {
-        if (i !== index) {
-          this.books[i].status = 0
-        }
-      }
-      if (this.books[index].status) {
-        this.books[index].status = 0
+      if (this.status) {
+        this.status = 0
         this.tableRotateX = this.inits.tableRotateX
         this.tableTranslateY = this.inits.tableTranslateY
         this.stagePerspective = this.inits.stagePerspective
+        this.bookScale = 0.25
       } else {
-        this.books[index].status = 1
+        this.status = 1
         this.tableRotateX = 90
-        this.tableRotateZ = this.books[index].rotateY[1] + Math.round(this.tableRotateZ / 360) * 360
-        this.tableTranslateY = 14.85
+        this.tableRotateZ = (this.books[index].rotateY - 90) + Math.round(this.tableRotateZ / 360) * 360
+        this.tableTranslateY = 16
         this.stagePerspective = 50
+        this.bookScale = 0.32
       }
     }
   }
@@ -147,11 +158,18 @@ export default {
 </script>
 
 <style>
+  .flex-center{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+  }
   .stage{
     perspective: 100vh;
     height: 100vh;
     background: #07080d;
     overflow: hidden;
+    transition: all 1s;
   }
   .table{
     width: 80vh;
@@ -160,11 +178,8 @@ export default {
     background: rgba(200, 240, 255, 0.2);
     border: 3px solid #2e6881;
     transform-style: preserve-3d;
-    margin: 10vh auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    align-content: center;
+    position: absolute;
+    z-index: 2;
   }
   .table:after{
     content: '';
@@ -179,23 +194,17 @@ export default {
     overflow: hidden;
     opacity: 0.1;
     position: absolute;
-    z-index: 0;
+    z-index: 1;
   }
   .table-leg{
     position: absolute;
     width: 3vh;
     height: 30vh;
     background: linear-gradient(90deg, #555 10%, #000000 30%, #bbd5ee 80%, #555);
-    top: -8vh;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    margin: auto;
-    transform-origin: top;
     transform-style: preserve-3d;
     border-radius: 1.5vh 1.5vh 0 0;
-    transition: transform 1s;
-    z-index: -1;
+    z-index: 0;
+    top: 8vh;
   }
   .table-leg:before{
     content: '';
@@ -204,7 +213,7 @@ export default {
     height: 10vh;
     border-radius: 50%;
     background: #555;
-    transform: rotateX(90deg) translate3d(-3.5vh,0,-5vh);
+    transform: rotateX(90deg) translate3d(-3.5vh, 0, -5vh);
     bottom: 0;
     left: 0;
   }
@@ -224,42 +233,38 @@ export default {
     position: absolute;
     user-select: none;
     cursor: pointer;
-    transition: transform 1s;
-    width: 100vw;
+    width: 10vh;
     height: 100vh;
     z-index: 1;
   }
   .cover,
   .back-cover{
-    width: 100vw;
+    width: 88vh;
     height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    align-content: center;
     flex-direction: column;
     color: #333;
-    transform-style: preserve-3d;
   }
   .spine,
   .back-cover{
     position: absolute;
     top: 0;
+    left: 0;
   }
   .cover{
     background: linear-gradient(45deg, #888, #ccc);
     text-align: center;
+    transform-origin: left;
+    transform: rotateY(-90deg);
   }
   .back-cover{
-    transform: translateZ(-10vh) scaleX(-1);
+    transform-origin: left;
+    transform: rotateY(-90deg) scaleX(-1) translate3d(-88vh, 0, -10vh);
     background: linear-gradient(0, #c8c7d7, #c1b8ac);
   }
   .spine{
     text-align: center;
     font-size: 5vh;
     color: #333;
-    left: 0;
-    top: 0;
   }
   .spine-b,
   .spine-c,
@@ -270,34 +275,28 @@ export default {
   }
   .spine-a{
     width: 10vh;
-    transform-origin: left;
-    transform: rotateY(-90deg) translateX(-100%);
     box-shadow: inset 0 0 2vh #fff;
     height: 100vh;
     background: linear-gradient(0, #b9c3dd, #c1b8ac);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    align-content: center;
     flex-direction: column;
+    transform: scaleX(-1);
   }
   .spine-b{
-    transform-origin: right;
-    transform: rotateY(90deg)  translate3d(calc(10vh - 1px), 2vh, calc(100vw - 12vh));
+    transform: translate3d(0, 0, 88vh);
     box-shadow: inset 0 0 2vh #555;
-    height: 96vh;
+    height: 100vh;
   }
   .spine-c{
-    transform-origin: right top;
-    transform: rotateX(90deg) rotateZ(90deg) translate3d(-1px, calc(9vh - 98vw), -2vh);
+    transform-origin: top;
+    transform: rotateX(90deg);
     box-shadow: inset 0 0 2vh #555;
-    height: 98vw;
+    height: 88vh;
   }
   .spine-d{
-    transform-origin: left bottom;
-    transform: rotateX(-90deg) rotateZ(90deg) translate3d(1px, -1px, -57vh);
+    transform-origin: top;
+    transform:  rotateX(90deg) translate3d(0, 0, -100vh);
     box-shadow: inset 0 0 2vh #555;
-    height: 98vw;
+    height: 88vh;
   }
   .spine-title{
     margin: 0 auto;

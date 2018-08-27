@@ -28,7 +28,7 @@ export default {
     margin: 0;
   }
   .cover-img{
-    max-height: 40vh;
-    max-width: 80%;
+    width: 80%;
+    border-radius: 6px;
   }
 </style>
