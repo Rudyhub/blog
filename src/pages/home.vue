@@ -57,12 +57,10 @@ export default {
     left: 0;
     box-sizing: border-box;
     box-shadow: inset 0 0 0.2vh #8a8583;
-    overflow: hidden;
     transform-style: preserve-3d;
   }
   .computer-back-cover{
     background: linear-gradient(#333, #272224);
-    transform: translateZ(-1px);
     top: 0;
     display: flex;
     flex-direction: column;
@@ -70,6 +68,7 @@ export default {
     align-content: center;
     justify-content: center;
     color: #888;
+    transform: scaleX(-1);
   }
   .computer-cover{
     background: linear-gradient(#333, #272224);
@@ -102,6 +101,8 @@ export default {
     background: #111;
     color: #fff;
     position: absolute;
+    z-index: 1;
+    transform: translate3d(0,0,1px);
   }
   @keyframes computer-cover-in {
     0%{

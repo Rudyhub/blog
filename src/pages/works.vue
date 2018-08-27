@@ -137,8 +137,8 @@ export default {
         this.books[index].status = 1
         this.tableRotateX = 90
         this.tableRotateZ = this.books[index].rotateY - 90 + Math.round(this.tableRotateZ / 360) * 360
-        this.tableTranslateY = 11
-        this.stagePerspective = 40
+        this.tableTranslateY = 14.85
+        this.stagePerspective = 50
       }
     }
   }
@@ -259,7 +259,6 @@ export default {
     text-align: center;
   }
   .spine{
-    width: 3vh;
     text-align: center;
     font-size: 1.6vh;
     color: #333;
@@ -267,10 +266,12 @@ export default {
   .spine-b,
   .spine-c,
   .spine-d{
+    width: calc(3vh - 2px);
     background: linear-gradient(90deg, #b9c3dd, #b9c3dd 50%, #c1b8ac 50%, #c1b8ac);
     background-size: 10% 100%;
   }
   .spine-a{
+    width: 3vh;
     left: 0;
     transform-origin: left;
     transform: rotateY(-90deg) translateX(-100%);
@@ -281,14 +282,14 @@ export default {
   .spine-b{
     right: 0;
     transform-origin: right;
-    transform: rotateY(90deg)  translate3d(100%, 0.5vh, -0.5vh);
+    transform: rotateY(90deg)  translate3d(calc(3vh - 1px), 0.5vh, -0.5vh);
     box-shadow: inset 0 0 .5vh #555;
     height: 28.7vh;
   }
   .spine-c{
     right: 0;
     transform-origin: right top;
-    transform: rotateX(90deg) rotateZ(90deg) translate3d(0, 0.5vh, -0.5vh);
+    transform: rotateX(90deg) rotateZ(90deg) translate3d(-1px, calc(0.5vh - 1px), -0.5vh);
     box-shadow: inset 0 0 .5vh #555;
     height: 20.5vh;
   }
@@ -296,7 +297,7 @@ export default {
     left: 0;
     bottom: 0;
     transform-origin: left bottom;
-    transform: rotateX(-90deg) rotateZ(90deg) translate3d(0, 0, 8.2vh);
+    transform: rotateX(-90deg) rotateZ(90deg) translate3d(1px, -1px, 8.62vh);
     box-shadow: inset 0 0 .5vh #555;
     height: 20.5vh;
   }

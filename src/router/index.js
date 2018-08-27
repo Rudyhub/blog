@@ -3,7 +3,8 @@ import Router from 'vue-router'
 import home from '@/pages/home'
 import about from '@/pages/about'
 import works from '@/pages/works'
-
+import blog from '@/pages/blog'
+import album from '@/pages/album'
 Vue.use(Router)
 export default new Router({
   routes: [
@@ -20,6 +21,14 @@ export default new Router({
       path: '/works',
       name: 'works',
       component: works
+    }, {
+      path: '/blog',
+      name: 'blog',
+      component: blog
+    }, {
+      path: '/album',
+      name: 'album',
+      component: album
     }
   ]
 })

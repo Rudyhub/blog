@@ -34,8 +34,8 @@ export default {
     user: /[喝呵][,，]?([男女]人|基[佬老])$|基[佬老]$/,
     sys: ['呵，垃圾', '呵，二狗', '呵，基佬']
   }, {
-    user: /(如何|怎么?样?)(操作|进[入去])/,
-    sys: ['输入“帮助”看看']
+    user: /(如何|怎么?样?)(操作|进[入去]|访问)|(进[入去]|访问).{2,}/,
+    sys: ['输入“帮助”看看正确指令']
   }, {
     user: /毕业于|(哪个|什么)学校|基本信息|(哪年|什么时候)毕业|毕业多久了|什么专业|你?(会|擅长|喜欢玩?|爱好是?|玩)什么|你?有什么技能|你?哪方面比较厉害/,
     sys: ['了解基本信息到我的主页去看吧，输入“主页”', '可以输入“主页”到我的主页去看看']
@@ -89,27 +89,10 @@ export default {
     sys: ['嗯哼', '哦嚯', '喝嘤料', '不在']
   }],
   respone (val) {
-    let len, i, _this, c
+    let len, i
+    val = val.trim().toLowerCase()
     len = this.AI.length
     i = 0
-    _this = this
-
-    function count (which) {
-      if (_this.res.prev === which) {
-        _this.res.count++
-      } else {
-        _this.res.prev = which
-        _this.res.count = 0
-      }
-      if (_this.res.count > 3) {
-        if (_this.res.prev === 2) {
-          return '[系统提示 ~]: 输入“-h”或“帮助”了解一下！'
-        } else {
-          return '[令狐长老]: 能不能换点别的？'
-        }
-      }
-    }
-
     for (let page in this.nav) {
       if (this.nav[page].includes(val)) {
         return [page]
@@ -119,13 +102,9 @@ export default {
       if (this.AI[i].user.test(val)) {
         let sysLen = this.AI[i].sys.length
         let index = Math.round(Math.random() * sysLen - 0.5)
-        c = count(1)
-        if (c) return c
         return '[令狐长老]: ' + this.AI[i].sys[index]
       }
     }
-    c = count(2)
-    if (c) return c
     return '[系统回复 ~]: 你说啥？'
   }
 }

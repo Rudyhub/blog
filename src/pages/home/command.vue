@@ -1,6 +1,13 @@
 <template>
     <div class="command">
-      <p class="command-sys">您好，我是小小的互动系统，除了可以输入要访问的页面之外，还可以与我进行简单的交流哦。<br>需要帮助可输入：<span v-html="helpText"></span></p>
+      <div style="font-size: 14px; margin-bottom: 1em;">
+        欢迎进入老夫的互动系统，可与老夫进行简单的交流，想进入其他页面必须输入正确的指令。查看全部指令可输入：<br>
+        <div class="command-sys">
+          <span v-html="helpText"></span><br><br>
+          注意：不是输入上面的一整串，而是竖线之间所有单词的任意一个。<br>
+          举个例：输入“帮助”后Enter。 来试一哈
+        </div>
+      </div>
     </div>
 </template>
 
