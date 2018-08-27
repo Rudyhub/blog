@@ -130,18 +130,20 @@ export default {
         y = curY
         trans()
       } else {
-        clearInterval(timer)
         speed = (speeds[1] - speeds[0]) / 10
         if (speeds[0] > 0 && speeds[1] > 0) {
-          timer = setInterval(easeOut, 16.6)
+          cancelAnimationFrame(timer)
+          timer = requestAnimationFrame(easeOut)
         }
       }
     }
     function easeOut () {
       speed *= 0.96
       curangle += speed
+      cancelAnimationFrame(timer)
+      timer = requestAnimationFrame(easeOut)
       if (Math.abs(speed) < 0.1) {
-        clearInterval(timer)
+        cancelAnimationFrame(timer)
       }
       trans()
       angle = curangle

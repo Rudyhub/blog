@@ -50,12 +50,15 @@ export default {
 
     function easeOut(d, dis, dir){
       if(Math.abs(dis) > 5){
-        if(timer) clearInterval(timer);
-        timer = setInterval(function () {
+        cancelAnimationFrame(timer);
+        timer = requestAnimationFrame(easeOut)
+        function easeOut() {
           d *= .8;
-          if(d < 1) clearInterval(timer);
+          cancelAnimationFrame(timer)
+          timer = requestAnimationFrame(easeOut)
+          if(d < 1) cancelAnimationFrame(timer);
           el[scrollTop] += d*dir;
-        }, 16.6);
+        }
       }
     }
   }

@@ -29,12 +29,8 @@ export default {
   },
   created () {
     this.$video.src = this.src
-    if (typeof this.autoplay !== 'undefined') {
-      this.$video.autoplay = !!this.autoplay
-    }
-    if (typeof this.loop !== 'undefined') {
-      this.$video.loop = !!this.loop
-    }
+    this.$video.autoplay = this.autoplay
+    this.$video.loop = this.loop
   },
   mounted () {
     let _this, timer, w, h, ctx

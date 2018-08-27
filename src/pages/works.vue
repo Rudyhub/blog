@@ -1,13 +1,11 @@
 <template>
-  <div class="stage">
-    <div class="table" ref="table">
-      <div class="book" v-for="(book, index) of books" :key="index" :class="'book-'+(index+1)" :style="'transform: rotateX(-90deg) translate(-21vh, -14.85vh) rotateY('+angelFilter(index)+'deg)'">
-        <div class="cover" >
-          <canvasplayer v-if="book.video" :src="book.video" :autoplay="true" :loop="true" class="cover-img"></canvasplayer>
-          <img class="cover-img" :src="book.cover" draggable="false">
-          <h1>{{book.title}}</h1>
-          <p class="cover-text">{{book.subtitle}}</p>
-        </div>
+  <div class="stage" :style="'perspective: '+stagePerspective+'vh'">
+    <div class="table" :style="{
+         transition: tableTransition,
+         transform: 'translateY('+tableTranslateY+'vh) rotateX(' + tableRotateX + 'deg) rotateZ(' + tableRotateZ + 'deg)',
+         }">
+      <div class="book" v-for="(book, index) of books" :key="index" @click="readBook(index)" :style="book.transform[book.status]">
+        <bookcover :book="book" class="cover"/>
         <div class="spine spine-a">
           <span class="spine-title" v-html="spineTextFilter(book.title)"></span>
           <small class="text-dir-90">{{book.subtitle}}</small>
@@ -15,100 +13,133 @@
         <div class="spine spine-b"></div>
         <div class="spine spine-c"></div>
         <div class="spine spine-d"></div>
-        <div class="back-cover">
-          <canvasplayer v-if="book.video" :src="book.video" :autoplay="true" :loop="true" class="cover-img"></canvasplayer>
-          <img v-else class="cover-img" :src="book.cover" draggable="false">
-          <h1>{{book.title}}</h1>
-          <p class="cover-text">{{book.subtitle}}</p>
-        </div>
+        <bookcover :book="book" class="back-cover"/>
       </div>
     </div>
-    <div class="table-leg"></div>
+    <div class="table-leg" :style="'transform: rotateX('+(tableRotateX+90)+'deg) translate3d(0, -'+(49.5+tableTranslateY)+'vh, -20vh);'"></div>
   </div>
 </template>
 
 <script>
-import canvasplayer from '../components/canvasplayer'
+import bookcover from './works/bookcover'
 export default {
   name: 'works',
-  components: {canvasplayer},
+  components: {bookcover},
   data () {
-    return {
-      books: [
-        {
-          title: '规划设计类',
-          subtitle: '2008 在学校',
-          cover: '../../static/works/01/01.jpg'
-        }, {
-          title: '效果图类',
-          subtitle: '2012 在朗形',
-          cover: '../../static/works/02/01.jpg'
-        }, {
-          title: '景观方案设计类',
-          subtitle: '2014 在溪林峰',
-          cover: '../../static/works/03/01.jpg'
-        }, {
-          title: 'Web网站网页类',
-          subtitle: '2016 在文汇',
-          cover: '../../static/works/cover01.jpg'
-        }, {
-          title: '小游戏H5类',
-          subtitle: '2016 在文汇',
-          video: '../../static/works/v03.mp4'
-        }, {
-          title: '桌面APP类',
-          subtitle: '2016 在文汇',
-          video: '../../static/works/v02.mp4'
-        }
+    let books, len, i
+    books = [
+      {
+        title: '规划设计类',
+        subtitle: '2008 在学校',
+        cover: '../../static/works/01/01.jpg'
+      }, {
+        title: '效果图类',
+        subtitle: '2012 在朗形',
+        cover: '../../static/works/02/01.jpg'
+      }, {
+        title: '景观方案设计类',
+        subtitle: '2014 在溪林峰',
+        cover: '../../static/works/03/01.jpg'
+      }, {
+        title: 'Web网站网页类',
+        subtitle: '2016 在文汇',
+        cover: '../../static/works/cover01.jpg'
+      }, {
+        title: '小游戏H5类',
+        subtitle: '2016 在文汇',
+        video: '../../static/works/v03.mp4'
+      }, {
+        title: '桌面APP类',
+        subtitle: '2016 在文汇',
+        video: '../../static/works/v02.mp4'
+      }
+    ]
+    len = books.length
+    for (i = 0; i < len; i++) {
+      books[i].rotateY = Math.round(i * (360 / len))
+      books[i].status = 0
+      books[i].transform = [
+        'transform: rotateX(-90deg) rotateY(' + books[i].rotateY + 'deg) translate3d(-21vh, -14.85vh, 0)',
+        'transform: rotateX(-90deg) rotateY(' + (books[i].rotateY - 90) + 'deg) translate3d(0, -14.85vh, 35vh)'
       ]
+    }
+    return {
+      stagePerspective: 100,
+      books,
+      booksLen: len,
+      tableRotateX: 60,
+      tableRotateZ: 130,
+      tableTranslateY: 0,
+      tableTransition: 'all 1s'
     }
   },
   mounted () {
-    let table, startX, z, curZ, speedsX, spX, timerX
-    table = this.$refs.table
-    curZ = z = 130
+    let _this, startX, z, curZ, speedsX, spX, timerX
+    _this = this
+    curZ = z = this.tableRotateZ
     speedsX = [0, 0]
     spX = 0
     this.$el.addEventListener('mousedown', down)
     function down (e) {
       startX = e.clientX
       speedsX[0] = speedsX[1] = spX = 0
+      curZ = z = _this.tableRotateZ
+      _this.tableTransition = 'none'
       document.addEventListener('mousemove', move)
     }
     function move (e) {
+      _this.tableTransition = 'none'
       curZ = z + (startX - e.clientX) / 10
       speedsX.push(e.clientX)
       speedsX.shift()
-      trans()
+      _this.tableRotateZ = curZ
     }
     document.addEventListener('mouseup', up)
     function up () {
+      _this.tableTransition = 'all 1s'
       document.removeEventListener('mousemove', move)
       spX = (speedsX[0] - speedsX[1]) / 10
-      clearInterval(timerX)
       if (speedsX[0] > 0 && speedsX[1] > 0) {
-        timerX = setInterval(easeOutX, 16.6)
+        cancelAnimationFrame(timerX)
+        timerX = requestAnimationFrame(easeOutX)
       }
     }
     function easeOutX () {
       spX *= 0.96
       curZ += spX
+      _this.tableTransition = 'none'
+      cancelAnimationFrame(timerX)
+      timerX = requestAnimationFrame(easeOutX)
       if (Math.abs(spX) < 0.1) {
-        clearInterval(timerX)
+        cancelAnimationFrame(timerX)
+        _this.tableTransition = 'all 1s'
       }
-      trans()
+      _this.tableRotateZ = curZ
       z = curZ
-    }
-    function trans () {
-      table.style.transform = 'rotateX(60deg) rotateZ(' + curZ + 'deg)'
     }
   },
   methods: {
     spineTextFilter (val) {
       return val.split('').join('<br>')
     },
-    angelFilter (index) {
-      return Math.round(index * (360 / this.books.length))
+    readBook (index) {
+      for (let i = 0; i < this.booksLen; i++) {
+        if (i !== index) {
+          this.books[i].status = 0
+        }
+      }
+      if (this.books[index].status) {
+        this.books[index].status = 0
+        this.tableRotateX = 60
+        this.tableTranslateY = 0
+        this.stagePerspective = 100
+      } else {
+        this.books[index].status = 1
+        this.tableRotateX = 90
+        this.tableRotateZ = this.books[index].rotateY - 90 + Math.round(this.tableRotateZ / 360) * 360
+        this.tableTranslateY = 11
+        this.stagePerspective = 40
+      }
     }
   }
 }
@@ -131,6 +162,7 @@ export default {
     justify-content: center;
     align-content: center;
     overflow: hidden;
+    transition: all 1s;
   }
   .table{
     width: 80vh;
@@ -164,12 +196,14 @@ export default {
     position: absolute;
     width: 3vh;
     height: 30vh;
-    background: #888;
+    background: linear-gradient(90deg, #555 10%, #000000 30%, #bbd5ee 80%, #555);
     top: 31vh;
     transform-origin: top;
     transform: rotateX(150deg) translate3d(0, -49.5vh, -20vh);
     z-index: 1;
     transform-style: preserve-3d;
+    border-radius: 1vh 1vh 0 0;
+    transition: transform 1s;
   }
   .table-leg:before{
     content: '';
@@ -188,7 +222,7 @@ export default {
     width: 30vh;
     height: 30vh;
     border-radius: 50%;
-    background: #555;
+    background: linear-gradient(90deg, #101010, #707e95);
     transform: rotateX(90deg) translate3d(-13.5vh, 0, 15vh);
     top: 0;
     left: 0;
@@ -196,9 +230,9 @@ export default {
   .book{
     transform-style: preserve-3d;
     position: absolute;
-    transform-origin: 150% center;
     user-select: none;
     cursor: pointer;
+    transition: transform 1s;
   }
   .cover,
   .back-cover{
@@ -291,16 +325,5 @@ export default {
     top: 3vh;
     position: absolute;
     transform: translateZ(1px);
-  }
-  .book-out{
-    animation: book-out 5s forwards;
-  }
-  @keyframes book-out {
-    0%{
-      transform: inherit;
-    }
-    100%{
-      transform: translate3d(0, 0, 29.7vh) rotate3d(1, 0, 0, 90deg);
-    }
   }
 </style>

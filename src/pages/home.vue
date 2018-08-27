@@ -1,14 +1,17 @@
 <template>
   <div class="home">
     <div class="computer">
-      <div class="computer-logo"><img class="logo" src="../../static/face.png" alt=""></div>
       <div class="computer-cover">
+        <div class="computer-back-cover">
+          <img class="logo" src="../../static/face.png" alt="">
+          <p>RUDY</p>
+        </div>
         <div class="computer-screen">
-          <commad></commad>
+          <commad/>
         </div>
       </div>
       <div class="computer-keyboard">
-        <keyboard></keyboard>
+        <keyboard/>
       </div>
     </div>
   </div>
@@ -36,6 +39,7 @@ export default {
   }
   .logo{
     width: 10%;
+    opacity: .5;
   }
   .computer{
     transform-style: preserve-3d;
@@ -46,7 +50,7 @@ export default {
   }
   .computer-cover,
   .computer-keyboard,
-  .computer-logo{
+  .computer-back-cover{
     height: 50vh;
     width: 88vh;
     position: absolute;
@@ -54,18 +58,18 @@ export default {
     box-sizing: border-box;
     box-shadow: inset 0 0 0.2vh #8a8583;
     overflow: hidden;
+    transform-style: preserve-3d;
   }
-  .computer-logo{
+  .computer-back-cover{
     background: linear-gradient(#333, #272224);
-    transform: rotateX(-108.8deg);
-    transform-origin: bottom;
-    animation: computer-cover-in 3s 1s forwards;
-    border-radius: 6px 6px 0 0;
+    transform: translateZ(-1px);
     top: 0;
     display: flex;
+    flex-direction: column;
     align-items: center;
     align-content: center;
     justify-content: center;
+    color: #888;
   }
   .computer-cover{
     background: linear-gradient(#333, #272224);
@@ -97,7 +101,6 @@ export default {
     margin: 1% 1% 2%;
     background: #111;
     color: #fff;
-    backface-visibility: hidden;
     position: absolute;
   }
   @keyframes computer-cover-in {
