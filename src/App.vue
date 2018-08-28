@@ -51,6 +51,14 @@ export default {
     align-items: center;
     flex-direction: column;
   }
+  .fade-enter-active,
+  .fade-leave-active{
+    transition: opacity .8s;
+  }
+  .fade-enter,
+  .fade-leave-to{
+    opacity: 0;
+  }
   @keyframes fade-in {
     0%{
       opacity: 0;

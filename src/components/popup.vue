@@ -1,6 +1,7 @@
 <template>
-  <div class="popup" :class="show ? 'popup-show' : 'popup-hide'" :style="options.mask" @click="onclick" @animationStart="onAnimationStart" @animationEnd="onAnimationEnd">
-    <div ref="wrapper" class="popup-wrapper" :style="options.wrapper">
+  <div class="popup" :style="maskStyle" @click="onclick">
+    <div class="popup-wrapper" :style="wrapperStyle">
+      <b class="popup-close fs18">&times;</b>
       <slot></slot>
     </div>
   </div>
@@ -9,33 +10,10 @@
 <script>
 export default {
   name: 'popup',
-  props: {
-    options: {
-      type: [Object],
-      default () {
-        return {
-          mask: 'background: rgba(0,0,0,0.6)',
-          wrapper: ''
-        }
-      }
-    }
-  },
-  data () {
-    return {show: false}
-  },
+  props: ['maskStyle', 'wrapperStyle'],
   methods: {
     onclick (e) {
-      if (e.target === this.$el || e.target.classList.contains('popup-close')) {
-        this.show = false
-      }
-    },
-    onAnimationStart (e) {
-      console.log(this.show)
-      this.show ? this.$emit('beforeShow', e) : this.$emit('beforeHide', e)
-    },
-    onAnimationEnd (e) {
-      console.log(this.show)
-      this.show ? this.$emit('showEnd', e) : this.$emit('hideEnd', e)
+      this.$emit('click', e)
     }
   }
 }
@@ -52,26 +30,26 @@ export default {
     top: 0;
     left: 0;
     z-index: 100;
-    display: none;
+    display: flex;
+    color: #333;
+    background: rgba(0,0,0,0.6)
   }
   .popup-wrapper{
     border-radius: 6px;
     border: 1px solid #eee;
-    background: #fff;
     padding: 10px;
     min-width: 120px;
     min-height: 60px;
     box-shadow: 0 0 5px;
-    opacity: 0;
     position: relative;
+    max-width: 360px;
+    background: rgba(200, 240, 255, 0.8);
   }
-  .popup-show{
-    display: flex;
-  }
-  .popup-show .popup-wrapper{
-    animation: fade-in 0.5s forwards;
-  }
-  .popup-hide .popup-wrapper{
-    animation: fade-out 0.5s forwards;
+  .popup-close{
+    position: absolute;
+    line-height: 0.5;
+    padding: .2em;
+    right: 0;
+    top: 0;
   }
 </style>

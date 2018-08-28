@@ -1,7 +1,7 @@
 <template>
-  <nav class="nav" ref="nav">
-    <router-link class="nav-item" v-for="(navItem, name) of nav" :key="name" :to="'/'+name" tag="a">{{navItem[0]}}</router-link>
-    <a class="nav-item" href="javascript:void(0)" @click="toggleHelp">指南</a>
+  <nav class="nav">
+    <router-link class="nav-item" v-for="(navItem, name) of nav" :key="name" :to="'/'+name" tag="a" @click="onclick($event, name)">{{navItem[0]}}</router-link>
+    <a class="nav-item" href="javascript:void(0)" @click="onclick($event, 'help')">指南</a>
   </nav>
 </template>
 
@@ -21,11 +21,8 @@ export default {
     }
   },
   methods: {
-    toggleHelp () {
-      this.$parent.toggleHelp()
-    },
-    fadeIn () {
-      this.$el.classList.add('nav-show')
+    onclick (e, name) {
+      this.$emit('click', e, name)
     }
   }
 }
@@ -42,10 +39,6 @@ export default {
     color: #888;
     z-index: 99;
     perspective: 50vw;
-    opacity: 0;
-  }
-  .nav-show{
-    animation: fade-in 1s forwards;
   }
   .nav-item{
     background: rgba(200, 240, 255, 0.3);

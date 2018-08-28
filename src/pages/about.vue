@@ -1,58 +1,61 @@
 <template>
   <div class="about">
-    <navbar class="flex-column"/>
-    <popup @beforeShow="onPopupShow">
-      <b class="popup-close fs18">&times;</b>
-      <p><b>操作指南：</b></p>
-      <p>这是炫酷的css3 3D：<br>
-        鼠标左键左右拖动 = 旋转<br>
-        ctrl键 + 鼠标左键上下左右拖动 = 移动<br>
-        al键 + 鼠标滚轮 = 缩放<br>
-        shift键 = 禁止3D变换。
-      </p>
-      <p>页面内容溢出时，滚动条虽是隐藏的，但支持上下拖动，也支持滚轮。</p>
-    </popup>
-    <div class="about-glass-box" ref="glassBox">
-      <div class="about-glass about-glass-1 flex-column">
-        <p class="about-p"><img class="about-face" src="/static/face.png" alt="Rudy" draggable="false"></p>
-        <p class="fs18 about-p">我是谁并不重要，重要的是我能做什么。</p>
-        <p class="fs18 about-p">It's not important who I am, but what I can do.</p>
-      </div>
-      <div ref="glassSkill" class="about-glass about-glass-2">
-        <h3 class="fs16 about-title">技能篇</h3>
-        <div class="fs10 chart-header">为了避免使用精通、熟练、掌握、了解等这类模糊概念容易词，以图表试展示不仅更直观，而且结合各项详细描述的话更能准确评估。知识往深了学，便不敢轻易使用“精通”二字。</div>
-        <div class="chart fs9">
-          <div class="chart-line" v-for="(skill, index) of skills" :key="index" @click="toggleDetail">
-            <div class="chart-hd">{{skill.name}}</div>
-            <div class="chart-td">
-              <span class="chart-progress" :title="skill.name">
-                <i class="chart-progress-value" :style="'width:' + skill.value + '%;background:'+chartColor[skill.type].color">{{skill.value}}%</i>
-              </span>
-              <div class="chart-detail fs10" v-html="skill.detail"></div>
+    <transition-group name="fade" @beforeEnter="onPopupShow" @afterLeave="onPopupHide">
+      <navbar v-show="navbarShow" class="flex-column" key="navbar" @click="navbarClick"/>
+      <popup v-show="popupShow" @click="popupClick" key="popup">
+        <p><b>操作指南：</b></p>
+        <p>这是炫酷的css3 3D：<br>
+          鼠标左键左右拖动 = 旋转<br>
+          ctrl键 + 鼠标左键上下左右拖动 = 移动<br>
+          al键 + 鼠标滚轮 = 缩放<br>
+          shift键 = 禁止3D变换。
+        </p>
+        <p>页面内容溢出时，滚动条虽是隐藏的，但支持上下拖动，也支持滚轮。</p>
+      </popup>
+    </transition-group>
+    <transition name="about-in">
+      <div v-show="aboutShow" class="about-glass-box" :style="{transform: glassBoxTransform}" @animationend="onGlassBoxInEnd">
+        <div class="about-glass about-glass-1 flex-column">
+          <p class="about-p"><img class="about-face" src="/static/face.png" alt="Rudy" draggable="false"></p>
+          <p class="fs18 about-p">我是谁并不重要，重要的是我能做什么。</p>
+          <p class="fs18 about-p">It's not important who I am, but what I can do.</p>
+        </div>
+        <div ref="glassSkill" class="about-glass about-glass-2">
+          <h3 class="fs16 about-title">技能篇</h3>
+          <div class="fs10 chart-header">为了避免使用精通、熟练、掌握、了解等这类模糊概念容易词，以图表试展示不仅更直观，而且结合各项详细描述的话更能准确评估。知识往深了学，便不敢轻易使用“精通”二字。</div>
+          <div class="chart fs9">
+            <div class="chart-line" v-for="(skill, index) of skills" :key="index" @click="toggleDetail">
+              <div class="chart-hd">{{skill.name}}</div>
+              <div class="chart-td">
+                <span class="chart-progress" :title="skill.name">
+                  <i class="chart-progress-value" :style="'width:' + skill.value + '%;background:'+chartColor[skill.type].color">{{skill.value}}%</i>
+                </span>
+                <div class="chart-detail fs10" v-html="skill.detail"></div>
+              </div>
+              <div class="fs18 chart-more"><b class="chart-more-icon">&#187;</b></div>
             </div>
-            <div class="fs18 chart-more"><b class="chart-more-icon">&#187;</b></div>
+          </div>
+          <div class="chart-legendbar fs10">
+            <div class="chart-legend" v-for="(item, index) of chartColor" :key="index">
+              <i class="chart-legend-color" :style="'background:'+item.color" :title="item.text"></i>
+              <span class="chart-legend-text">{{item.text}}</span>
+            </div>
           </div>
         </div>
-        <div class="chart-legendbar fs10">
-          <div class="chart-legend" v-for="(item, index) of chartColor" :key="index">
-            <i class="chart-legend-color" :style="'background:'+item.color" :title="item.text"></i>
-            <span class="chart-legend-text">{{item.text}}</span>
-          </div>
+        <div ref="glassCareer" class="about-glass  about-glass-3">
+          <h3 class="about-title">工作经历篇</h3>
+          <section class="career">
+            <article class="career-item" v-for="(item, index) in career" :key="index">
+              <h4><span class="career-date">{{item.date}}</span><span class="career-job">{{item.job}}</span></h4>
+              <img v-if="item.logo" class="career-logo" :src="item.logo">
+              <div v-else class="career-no-logo">?</div>
+              <p class="career-company">{{item.company}}</p>
+              <p class="career-harvest">{{item.harvest}}</p>
+            </article>
+          </section>
         </div>
       </div>
-      <div ref="glassCareer" class="about-glass  about-glass-3">
-        <h3 class="about-title">工作经历篇</h3>
-        <section class="career">
-          <article class="career-item" v-for="(item, index) in career" :key="index">
-            <h4><span class="career-date">{{item.date}}</span><span class="career-job">{{item.job}}</span></h4>
-            <img v-if="item.logo" class="career-logo" :src="item.logo">
-            <div v-else class="career-no-logo">?</div>
-            <p class="career-company">{{item.company}}</p>
-            <p class="career-harvest">{{item.harvest}}</p>
-          </article>
-        </section>
-      </div>
-    </div>
+    </transition>
   </div>
 </template>
 
@@ -65,6 +68,10 @@ export default {
   components: {navbar, popup},
   data () {
     return {
+      aboutShow: false,
+      navbarShow: false,
+      popupShow: false,
+      glassBoxTransform: 'translate3d(0, 0, -20vh) rotateY(0)',
       chartColor: [
         {color: 'rgba(111,174,9,.5)', text: '程序编程语言及框架'},
         {color: 'rgba(211, 108, 16, 0.5)', text: 'UI、工程设计及动画软件应用'},
@@ -252,10 +259,9 @@ export default {
     }
   },
   mounted () {
-    let _this, el, glassBox, prevTransX, transX, prevTransY, transY, prevRotateY, rotateY, z, allowWheel, scrollPrevent, listen
+    let _this, el, prevTransX, transX, prevTransY, transY, prevRotateY, rotateY, z, allowWheel, scrollPrevent, listen
     _this = this
     el = _this.$el
-    glassBox = _this.$refs.glassBox
     prevTransX = transX = prevTransY = transY = prevRotateY = rotateY = 0
     z = -20
     scrollPrevent = ['altKey', 'ctrlKey']
@@ -282,22 +288,12 @@ export default {
         prevRotateY = rotateY
       },
       easeOut (spX) {
-        if (this.shiftKey) return
+        if (this.shiftKey || this.ctrlKey) return
         rotateY += this.directionX * spX
         trans()
         prevRotateY = rotateY
       }
     })
-
-    el.classList.add('about-in')
-    glassBox.addEventListener('animationend', animateEnd, false)
-    function animateEnd (e) {
-      this.removeEventListener(e.type, animateEnd, false)
-      _this.$children[0].fadeIn()
-      _this.$children[1].show = true
-      el.addEventListener('mousewheel', wheel)
-      listen.on()
-    }
 
     function wheel (e) {
       if (e.altKey && allowWheel) {
@@ -307,22 +303,45 @@ export default {
     }
 
     function trans () {
-      glassBox.style.transform = 'translate3d(' + transX + 'px, ' + transY + 'px, ' + z + 'vh) rotateY(' + rotateY + 'deg)'
+      _this.glassBoxTransform = 'translate3d(' + transX + 'px, ' + transY + 'px, ' + z + 'vh) rotateY(' + rotateY + 'deg)'
     }
 
+    this.aboutShow = true
+    this.$on('popupHide', () => {
+      el.addEventListener('mousewheel', wheel)
+      listen.on()
+    })
+    this.$on('popupShow', () => {
+      el.addEventListener('mousewheel', wheel)
+      listen.off()
+    })
     utils.scroll(this.$refs.glassSkill, '', scrollPrevent)
     utils.scroll(this.$refs.glassCareer, '', scrollPrevent)
   },
   methods: {
+    onGlassBoxInEnd () {
+      this.navbarShow = true
+      this.popupShow = true
+    },
+    onPopupShow () {
+      this.$emit('popupShow')
+    },
+    onPopupHide () {
+      this.$emit('popupHide')
+    },
+    popupClick (e) {
+      if (e.target === e.currentTarget || e.target.classList.contains('popup-close')) {
+        this.popupShow = !this.popupShow
+      }
+    },
+    navbarClick (e, name) {
+      if (name === 'help') {
+        this.popupShow = !this.popupShow
+      }
+    },
     toggleDetail (e) {
       if (e.shiftKey) return
       e.currentTarget.classList.toggle('chart-detail-show')
-    },
-    toggleHelp () {
-      this.$children[1].show = !this.$children[1].show
-    },
-    onPopupShow (e) {
-      console.log(e)
     }
   }
 }
@@ -338,24 +357,11 @@ export default {
     color: #ccd;
     user-select: none;
   }
-  .popup{
-    color: #333;
-  }
-  .popup-wrapper{
-    max-width: 360px;
-    background: rgba(200, 240, 255, 0.8) !important;
-  }
-  .popup-close{
-    position: absolute;
-    line-height: 0.5;
-    padding: .2em;
-    right: 0;
-    top: 0;
-  }
   .about-glass-box{
     transform-style: preserve-3d;
     transform-origin: left;
     position: relative;
+    transform: translate3d(0, 0, -20vh) rotateY(0);
   }
   .about-glass{
     background: rgba(200, 240, 255, 0.2);
@@ -379,10 +385,13 @@ export default {
   .about-glass-3{
     transform: rotateY(240deg);
   }
-  .about-in .about-glass-box{
-    animation: rotate-zoom-in 5s forwards;
+  .about-in-enter-active {
+    animation: about-in 5s;
   }
-  @keyframes rotate-zoom-in {
+  .about-in-leave-active {
+    animation: about-in 5s reverse;
+  }
+  @keyframes about-in {
     0%{
       transform: translate3d(50vw, 0, -3000vh) rotateY(-360deg);
     }
