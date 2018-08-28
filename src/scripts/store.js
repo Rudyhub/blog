@@ -1,5 +1,5 @@
 export default {
-  nav: {
+  nav: Object.freeze({
     home: ['首页', 'home', 'index', '/'],
     about: ['个人', 'about', 'me', '关于'],
     works: ['作品', 'works'],
@@ -7,18 +7,8 @@ export default {
     album: ['相册', 'album', 'photo', 'picture', '相片'],
     help: ['帮助', '-h', '-?', '--help', 'help'],
     clear: ['清除', 'clear', 'cls']
-  },
-  getCommonNav () {
-    let nav = {}
-    for (let key in this.nav) {
-      if (key !== 'help' && key !== 'clear') {
-        nav[key] = this.nav[key]
-      }
-    }
-    return nav
-  },
-  res: {count: 0, prev: 0},
-  AI: [{
+  }),
+  AI: Object.freeze([{
     user: /早|(早上|晚上|你|中午|下午)\s*[好早]/i,
     sys: ['嗯', '嗯嗯']
   }, {
@@ -87,7 +77,7 @@ export default {
   }, {
     user: /^(大叔|你|Rudy|令狐(长老)*|大神|长老)$|((大叔|你|Rudy|令狐(长老)*|大神|长老)*在[吗吧啊?？]*)/,
     sys: ['嗯哼', '哦嚯', '喝嘤料', '不在']
-  }],
+  }]),
   respone (val) {
     let len, i
     val = val.trim().toLowerCase()

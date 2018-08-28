@@ -19,6 +19,7 @@ export default {
     }
 
     function startFn (e) {
+      setKeys(e)
       cancelAnimationFrame(timer)
       for (i = 0; i < len; i++) {
         if (e[opt.preventKeys[i]]) return false
@@ -29,12 +30,14 @@ export default {
       startY = evt.clientY
       prevX = startX
       prevY = startY
+      speedX = speedY = 0
       if (opt.start) opt.start(0, 0, startX, startY)
       el.addEventListener(events[1], moveFn, capture)
       document.addEventListener(events[2], endFn)
     }
 
     function moveFn (e) {
+      setKeys(e)
       e.preventDefault()
       let evt = isTouch ? e.targetTouches[0] : e
       endX = evt.clientX
@@ -45,47 +48,48 @@ export default {
       prevX = endX
     }
 
-    function endFn () {
+    function endFn (e) {
+      setKeys(e)
       el.removeEventListener(events[1], moveFn, capture)
       document.removeEventListener(events[2], endFn)
       opt.directionX = endX - startX > 0 ? 1 : -1
       opt.directionY = endY - startY > 0 ? 1 : -1
       if (opt.end) opt.end(endX - startX, endY - startY, endX, endY, speedX, speedY)
-      easeOut(speedX)
-      easeOut(speedY)
+      easeOut(speedX, speedY)
     }
 
-    function easeOut (endSpeed) {
-      endSpeed = Math.abs(endSpeed)
+    function easeOut (spx, spy) {
+      spx = Math.abs(spx)
+      spy = Math.abs(spy)
       function play () {
-        endSpeed *= opt.reduction
-        if (opt.easeOutX) opt.easeOutX(endSpeed)
-        if (opt.easeOutY) opt.easeOutY(endSpeed)
+        spx *= opt.reduction
+        spy *= opt.reduction
+        if (opt.easeOut) opt.easeOut(spx, spy)
         cancelAnimationFrame(timer)
         timer = requestAnimationFrame(play)
-        if (endSpeed <= 0.01) {
+        if (spx <= 0.01 && spy <= 0.01) {
           cancelAnimationFrame(timer)
-          if (opt.easeEndY) opt.easeEndY(endSpeed)
+          if (opt.easeEnd) opt.easeEnd(spx, spy)
         }
       }
-      if (endSpeed > 5) {
-        cancelAnimationFrame(timer)
-        timer = requestAnimationFrame(play)
-      }
+      cancelAnimationFrame(timer)
+      timer = requestAnimationFrame(play)
     }
 
-    function bind () {
+    function setKeys (e) {
+      opt.ctrlKey = e.ctrlKey
+      opt.shiftKey = e.shiftKey
+      opt.altKey = e.altKey
+    }
+
+    opt.on = function on () {
       el.addEventListener(events[0], startFn, capture)
     }
 
-    function unbind () {
+    opt.off = function off () {
       el.removeEventListener(events[0], startFn, capture)
     }
-
-    return {
-      on: bind,
-      off: unbind
-    }
+    return opt
   },
   scroll (el, direction, preventKeys = []) {
     let isTouch, events, start, end, startTop, prev, speed, prevent, scroll, client, len, i, timer
@@ -180,5 +184,7 @@ export default {
       on: bind,
       off: unbind
     }
+  },
+  chain () {
   }
 }

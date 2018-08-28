@@ -32,9 +32,10 @@
 
 <script>
 import bookcover from './works/bookcover'
+import popup from '../components/popup'
 export default {
   name: 'works',
-  components: {bookcover},
+  components: {bookcover, popup},
   data () {
     let books, len, i, inits
     books = [
@@ -152,18 +153,19 @@ export default {
         this.stagePerspective = 50
         this.bookScale = 0.32
       }
+    },
+    toggleHelp () {
+      if (this.$refs.helpPopup.isShow) {
+        this.$refs.helpPopup.hide()
+      } else {
+        this.$refs.helpPopup.show()
+      }
     }
   }
 }
 </script>
 
-<style>
-  .flex-center{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    align-content: center;
-  }
+<style scoped>
   .stage{
     perspective: 100vh;
     height: 100vh;

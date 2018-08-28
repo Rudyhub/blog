@@ -2,8 +2,8 @@
   <div class="home">
     <div class="computer">
       <div class="computer-cover">
-        <div class="computer-back-cover">
-          <img class="logo" src="../../static/face.png" alt="">
+        <div class="computer-back-cover flex-column">
+          <img class="computer-logo" src="../../static/face.png" alt="">
           <p>RUDY</p>
         </div>
         <div class="computer-screen">
@@ -27,9 +27,6 @@ export default {
 </script>
 
 <style>
-  body{
-    background: #111;
-  }
   .home{
     perspective: 150vh;
     width: 150vh;
@@ -37,7 +34,7 @@ export default {
     margin: 0 auto;
     overflow: hidden;
   }
-  .logo{
+  .computer-logo{
     width: 10%;
     opacity: .5;
   }
@@ -62,11 +59,6 @@ export default {
   .computer-back-cover{
     background: linear-gradient(#333, #272224);
     top: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    align-content: center;
-    justify-content: center;
     color: #888;
     transform: scaleX(-1);
   }

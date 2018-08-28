@@ -1,5 +1,5 @@
 <template>
-  <div class="popup" :style="options.mask">
+  <div class="popup" :class="show ? 'popup-show' : 'popup-hide'" :style="options.mask" @click="onclick" @animationStart="onAnimationStart" @animationEnd="onAnimationEnd">
     <div ref="wrapper" class="popup-wrapper" :style="options.wrapper">
       <slot></slot>
     </div>
@@ -21,46 +21,21 @@ export default {
     }
   },
   data () {
-    return {isShow: false}
-  },
-  mounted () {
-    let _this, el
-    _this = this
-    el = this.$el
-    el.addEventListener('click', function (e) {
-      _this.$emit('click')
-      if (e.target === el || e.target.classList.contains('popup-close')) {
-        _this.hide()
-      }
-    })
+    return {show: false}
   },
   methods: {
-    show (fn) {
-      let _this, el
-      _this = this
-      el = this.$el
-      _this.$emit('beforeShow')
-      el.classList.add('popup-show')
-      _this.isShow = true
-      el.addEventListener('animationend', function end () {
-        el.removeEventListener('animationend', end, false)
-        if (fn) fn()
-        _this.$emit('showEnd')
-      }, false)
+    onclick (e) {
+      if (e.target === this.$el || e.target.classList.contains('popup-close')) {
+        this.show = false
+      }
     },
-    hide (fn) {
-      let _this, el
-      _this = this
-      el = this.$el
-      _this.$emit('beforeHide')
-      el.classList.add('popup-hide')
-      _this.isShow = false
-      el.addEventListener('animationend', function end () {
-        el.removeEventListener('animationend', end, false)
-        _this.$emit('hideEnd')
-        el.classList.remove('popup-hide', 'popup-show')
-        if (fn) fn()
-      }, false)
+    onAnimationStart (e) {
+      console.log(this.show)
+      this.show ? this.$emit('beforeShow', e) : this.$emit('beforeHide', e)
+    },
+    onAnimationEnd (e) {
+      console.log(this.show)
+      this.show ? this.$emit('showEnd', e) : this.$emit('hideEnd', e)
     }
   }
 }
@@ -98,21 +73,5 @@ export default {
   }
   .popup-hide .popup-wrapper{
     animation: fade-out 0.5s forwards;
-  }
-  @keyframes fade-in {
-    0%{
-      opacity: 0;
-    }
-    100%{
-      opacity: 1;
-    }
-  }
-  @keyframes fade-out {
-    0%{
-      opacity: 1;
-    }
-    100%{
-      opacity: 0;
-    }
   }
 </style>
