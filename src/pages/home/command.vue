@@ -1,6 +1,6 @@
 <template>
     <div class="command">
-      <div style="font-size: 14px; margin-bottom: 1em;">
+      <div style="margin-bottom: 1em;">
         欢迎进入老夫的互动系统，可与老夫进行简单的交流，想进入其他页面必须输入正确的指令。查看全部指令可输入：<br>
         <div class="command-sys">
           <span v-html="helpText"></span><br><br>

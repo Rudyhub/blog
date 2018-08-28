@@ -1,45 +1,184 @@
 export default {
-  scroll (el) {
-    let scrollTop, startY, endY, prevY, speed, timer
+  listener (el, opt) {
+    let isTouch, events, startX, endX, prevX, speedX, startY, endY, prevY, speedY, capture, len, i, timer
 
-    el.addEventListener('wheel', function (e) {
-      e.preventDefault()
-      this.scrollTop += e.deltaY
-    }, {passive: false})
+    if (!el || !opt || typeof opt !== 'object') return
+    opt.preventKeys = opt.preventKeys || []
+    opt.reduction = opt.reduction || 0.9
+    isTouch = 'ontouchstart' in document
+    events = ['mousedown', 'mousemove', 'mouseup']
+    startX = endX = prevX = speedX = 0
+    startY = endY = prevY = speedY = 0
+    capture = {passive: false}
+    len = opt.preventKeys.length
 
-    el.addEventListener('touchstart', startFn, false)
+    if (isTouch) {
+      events[0] = 'touchstart'
+      events[1] = 'touchmove'
+      events[2] = 'touchend'
+    }
 
     function startFn (e) {
-      startY = e.targetTouches[0].clientY
-      endY = startY
+      cancelAnimationFrame(timer)
+      for (i = 0; i < len; i++) {
+        if (e[opt.preventKeys[i]]) return false
+      }
+      e.preventDefault()
+      let evt = isTouch ? e.targetTouches[0] : e
+      startX = evt.clientX
+      startY = evt.clientY
+      prevX = startX
       prevY = startY
-      scrollTop = el.scrollTop
-      el.addEventListener('touchmove', moveFn, false)
-      document.addEventListener('touchend', endFn, false)
+      if (opt.start) opt.start(0, 0, startX, startY)
+      el.addEventListener(events[1], moveFn, capture)
+      document.addEventListener(events[2], endFn)
     }
 
     function moveFn (e) {
-      endY = e.targetTouches[0].clientY
-      el.scrollTop = scrollTop + startY - endY
-      speed = endY - prevY
-      prevY = endY
+      e.preventDefault()
+      let evt = isTouch ? e.targetTouches[0] : e
+      endX = evt.clientX
+      endY = evt.clientY
+      speedX = endX - prevX
+      speedY = endY - prevY
+      if (opt.move) opt.move(endX - startX, endY - startY, endX, endY)
+      prevX = endX
     }
 
     function endFn () {
-      el.removeEventListener('touchmove', moveFn, false)
-      document.removeEventListener('touchend', endFn, false)
-      let d, dis, dir
-      d = Math.abs(speed)
-      dis = endY - startY
-      dir = dis < 0 ? 1 : -1
-      if (Math.abs(dis) > 5) {
-        if (timer) clearInterval(timer)
-        timer = setInterval(function () {
-          d *= 0.8
-          if (d < 1) clearInterval(timer)
-          el.scrollTop += d * dir
-        }, 16.6)
+      el.removeEventListener(events[1], moveFn, capture)
+      document.removeEventListener(events[2], endFn)
+      opt.directionX = endX - startX > 0 ? 1 : -1
+      opt.directionY = endY - startY > 0 ? 1 : -1
+      if (opt.end) opt.end(endX - startX, endY - startY, endX, endY, speedX, speedY)
+      easeOut(speedX)
+      easeOut(speedY)
+    }
+
+    function easeOut (endSpeed) {
+      endSpeed = Math.abs(endSpeed)
+      function play () {
+        endSpeed *= opt.reduction
+        if (opt.easeOutX) opt.easeOutX(endSpeed)
+        if (opt.easeOutY) opt.easeOutY(endSpeed)
+        cancelAnimationFrame(timer)
+        timer = requestAnimationFrame(play)
+        if (endSpeed <= 0.01) {
+          cancelAnimationFrame(timer)
+          if (opt.easeEndY) opt.easeEndY(endSpeed)
+        }
       }
+      if (endSpeed > 5) {
+        cancelAnimationFrame(timer)
+        timer = requestAnimationFrame(play)
+      }
+    }
+
+    function bind () {
+      el.addEventListener(events[0], startFn, capture)
+    }
+
+    function unbind () {
+      el.removeEventListener(events[0], startFn, capture)
+    }
+
+    return {
+      on: bind,
+      off: unbind
+    }
+  },
+  scroll (el, direction, preventKeys = []) {
+    let isTouch, events, start, end, startTop, prev, speed, prevent, scroll, client, len, i, timer
+
+    isTouch = 'ontouchstart' in document
+    events = ['mousedown', 'mousemove', 'mouseup']
+    start = 0
+    end = 0
+    startTop = 0
+    prev = 0
+    speed = 0
+    prevent = {passive: false}
+    scroll = 'scrollTop'
+    client = 'clientY'
+    len = preventKeys.length
+
+    if (isTouch) {
+      events[0] = 'touchstart'
+      events[1] = 'touchmove'
+      events[2] = 'touchend'
+    }
+
+    if (direction && direction.toLowerCase() === 'x') {
+      scroll = 'scrollLeft'
+      client = 'clientX'
+    }
+
+    function startFn (e) {
+      for (i = 0; i < len; i++) {
+        if (e[preventKeys[i]]) return false
+      }
+      e.preventDefault()
+      start = isTouch ? e.targetTouches[0][client] : e[client]
+      startTop = el[scroll]
+      prev = start
+      el.addEventListener(events[1], moveFn, prevent)
+      document.addEventListener(events[2], endFn)
+    }
+
+    function moveFn (e) {
+      e.preventDefault()
+      end = isTouch ? e.targetTouches[0][client] : e[client]
+      speed = end - prev
+      prev = end
+      el[scroll] = startTop + (start - end)
+    }
+
+    function endFn () {
+      el.removeEventListener(events[1], moveFn, prevent)
+      document.removeEventListener(events[2], endFn)
+      easeOut(Math.abs(speed), end - start, end - start < 0 ? 1 : -1)
+    }
+
+    function wheel (e) {
+      for (i = 0; i < len; i++) {
+        if (e[preventKeys[i]]) {
+          return false
+        }
+      }
+      let dir = e.wheelDelta < 0 ? 1 : -1
+      el[scroll] += dir * 10
+      easeOut(10, 6, dir)
+    }
+
+    function easeOut (d, dis, dir) {
+      function play () {
+        d *= 0.9
+        cancelAnimationFrame(timer)
+        timer = requestAnimationFrame(play)
+        if (d < 1) cancelAnimationFrame(timer)
+        el[scroll] += d * dir
+      }
+      if (Math.abs(dis) > 5) {
+        cancelAnimationFrame(timer)
+        timer = requestAnimationFrame(play)
+      }
+    }
+
+    function bind () {
+      el.addEventListener(events[0], startFn, prevent)
+      if (!isTouch) el.addEventListener('mousewheel', wheel)
+    }
+
+    function unbind () {
+      el.removeEventListener(events[0], startFn, prevent)
+      el.addEventListener('mousewheel', wheel)
+    }
+
+    bind()
+
+    return {
+      on: bind,
+      off: unbind
     }
   }
 }

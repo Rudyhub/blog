@@ -146,6 +146,7 @@ export default {
   padding: 0 .2em;
   border-radius: 3px;
   border-bottom: .7vh solid #000;
+  overflow: hidden;
 }
 .keyboard-item.active{
   color: #00bcff;

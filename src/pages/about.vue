@@ -60,7 +60,7 @@
 </template>
 
 <script>
-import Scrollbar from '../lib/Scrollbar.js'
+import utils from '../scripts/utils.js'
 import aboutStore from './about/aboutStore.js'
 import popup from '../components/popup'
 export default {
@@ -73,6 +73,64 @@ export default {
     document.body.appendChild(aboutStore.mask)
   },
   mounted () {
+    let _this, ulisten, rotateY, curRotateY, screens, el, preventKeys, allowWheel, x, curX, y, curY, z
+    _this = this
+    screens = this.$refs.screens
+    el = this.$el
+    rotateY = curRotateY = x = curX = y = curY = 0
+    preventKeys = ['altKey', 'ctrlKey']
+    allowWheel = false
+    z = -20
+    console.log(x, curX, y, curY)
+    function trans () {
+      console.log(z)
+      screens.style.transform = 'translate3d(0, 0, ' + z + 'vh) rotateY(' + curRotateY + 'deg)'
+    }
+    ulisten = utils.listener(this.$refs.screens, {
+      client: 'clientX',
+      preventKeys: ['shiftKey'],
+      start (dis) {
+        curRotateY = rotateY + dis / 10
+        allowWheel = true
+        trans()
+      },
+      move (dis) {
+        curRotateY = rotateY + dis / 10
+        trans()
+      },
+      end () {
+        rotateY = curRotateY
+      },
+      easeOut (s) {
+        curRotateY += this.direction * s / 10
+        trans()
+        rotateY = curRotateY
+      },
+      easeEnd () {
+        rotateY = curRotateY
+      }
+    })
+    screens.addEventListener('animationend', animateEnd, false)
+    function animateEnd (e) {
+      this.removeEventListener(e.type, animateEnd, false)
+      document.body.removeChild(aboutStore.mask)
+      _this.$refs.nav.classList.add('nav-show')
+      _this.$refs.helpPopup.show()
+      el.addEventListener('mousewheel', wheel)
+      el.classList.remove('about-in')
+      trans()
+      ulisten.on()
+    }
+    function wheel (e) {
+      if (e.altKey && allowWheel) {
+        z += 20 * (e.wheelDelta < 0 ? -1 : 1)
+        trans()
+      }
+    }
+    el.classList.add('about-in')
+    utils.scroll(this.$refs.screen2, '', preventKeys)
+    utils.scroll(this.$refs.screen3, '', preventKeys)
+    /*
     let _this, el, screens, startX, startY, endX, endY, x, curX, y, curY, angle, curangle, z, speeds, speed, allowWheel, timer, scrollPrevent
     _this = this
     el = _this.$el
@@ -151,8 +209,7 @@ export default {
     function trans () {
       screens.style.transform = 'translate3d(' + curX + 'px, ' + curY + 'px, ' + z + 'vh) rotateY(' + curangle + 'deg)'
     }
-    Scrollbar.scroll(_this.$refs.screen2, '', scrollPrevent)
-    Scrollbar.scroll(_this.$refs.screen3, '', scrollPrevent)
+    */
   },
   methods: {
     toggleDetail (e) {
