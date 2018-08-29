@@ -184,7 +184,5 @@ export default {
       on: bind,
       off: unbind
     }
-  },
-  chain () {
   }
 }

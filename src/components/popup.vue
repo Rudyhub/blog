@@ -51,5 +51,6 @@ export default {
     padding: .2em;
     right: 0;
     top: 0;
+    cursor: pointer;
   }
 </style>

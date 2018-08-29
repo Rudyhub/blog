@@ -1,15 +1,17 @@
 <template>
   <div class="home">
     <div class="computer">
-      <div class="computer-cover">
-        <div class="computer-back-cover flex-column">
-          <img class="computer-logo" src="../../static/face.png" alt="">
-          <p>RUDY</p>
+      <transition name="computer-cover" @afterEnter="commandShow = true">
+        <div v-show="show" class="computer-cover">
+          <div class="computer-back-cover flex-column">
+            <img class="computer-logo" src="../../static/face.png" alt="">
+            <p>RUDY</p>
+          </div>
+          <div class="computer-screen">
+            <command :show="commandShow"/>
+          </div>
         </div>
-        <div class="computer-screen">
-          <commad/>
-        </div>
-      </div>
+      </transition>
       <div class="computer-keyboard">
         <keyboard/>
       </div>
@@ -18,11 +20,20 @@
 </template>
 
 <script>
-import commad from './home/command'
+import command from './home/command'
 import keyboard from './home/keyboard'
 export default {
   name: 'home',
-  components: {commad, keyboard}
+  components: {command, keyboard},
+  data () {
+    return {
+      show: false,
+      commandShow: false
+    }
+  },
+  mounted () {
+    this.show = true
+  }
 }
 </script>
 
@@ -64,27 +75,40 @@ export default {
   }
   .computer-cover{
     background: linear-gradient(#333, #272224);
-    transform: rotateX(-109deg);
+    transform: rotateX(0);
     transform-origin: bottom;
     top: 0;
-    border-radius: 6px 6px 0 0;
-    animation: computer-cover-in 3s 1s forwards;
+  }
+  .computer-back-cover, .computer-cover{
+    border-radius: 1vh 1vh 0 0;
+  }
+  .computer-cover-enter-active,
+  .computer-cover-leave-active{
+    transition: transform 3s 1s;
+  }
+  .computer-cover-enter,
+  .computer-leave-to{
+    transform: rotateX(-109deg);
   }
   .computer-keyboard{
     background: linear-gradient(135deg, #222, #17151c);
     transform: rotateX(70deg);
     top: 50vh;
     transform-origin: top;
-    border-radius: 0 0 6px 6px;
   }
   .computer-keyboard:after{
     content: '';
     display: block;
     position: absolute;
-    width: 100%;
     bottom: 0;
     left: 0;
+    width: 100%;
+    height: 100%;
     border-bottom: 1vh solid;
+    box-shadow: inset 0 -0.1vh 0.2vh #686361;
+  }
+  .computer-keyboard, .computer-keyboard:after{
+    border-radius: 0 0 2.5vh 2.5vh;
   }
   .computer-screen{
     width: 98%;
@@ -95,13 +119,5 @@ export default {
     position: absolute;
     z-index: 1;
     transform: translate3d(0,0,1px);
-  }
-  @keyframes computer-cover-in {
-    0%{
-      transform: rotateX(-109deg);
-    }
-    100%{
-      transform: rotateX(0);
-    }
   }
 </style>

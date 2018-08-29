@@ -1,17 +1,28 @@
 <template>
-  <div class="stage flex-center" :style="'perspective: '+stagePerspective+'vh'">
+  <div class="stage flex-center" :style="'perspective: '+stagePerspective+'vh'" @transitionend="stageTransEnd">
+    <transition name="fade">
+      <navbar v-show="navbarShow" class="flex-column" @click="navbarClick"/>
+    </transition>
+    <transition name="fade" @beforeEnter="onPopupShow" @afterLeave="onPopupHide">
+      <popup v-show="popupShow" @click="popupClick">
+        <p><b>操作指南：</b></p>
+        <p>
+          鼠标左键左右拖动 = 旋转<br>
+          双击书本 = 进入查看作品
+        </p>
+      </popup>
+    </transition>
     <div class="table flex-center"
          :style="{
          transition: allTransition,
-         transform: 'translateY('+tableTranslateY+'vh) rotateX(' + tableRotateX + 'deg) rotateZ(' + tableRotateZ + 'deg)'
+         transform: 'translateY('+tableTranslateY+'vh) rotateX(' + tableRotateX + 'deg) rotateZ(' + (-tableRotateZ) + 'deg)'
          }">
       <div class="book" v-for="(book, index) of books" :key="index" @dblclick="readBook(index)"
            :style="{
            transition: allTransition,
-           transform: 'scale3d('+bookScale+','+bookScale+','+bookScale+') rotateX(-90deg) rotateY(' + book.rotateY + 'deg) translate3d('+
-           (status ? '-100vh' : '-80vh') + ',-50vh,0)'
+           transform: 'scale3d('+book.scale+','+book.scale+','+book.scale+') rotateX(-90deg) rotateY(' + book.rotateY + 'deg) translate3d('+book.translateX+'vh,-50vh,0)'
            }">
-        <bookcover :book="book" class="cover flex-center"/>
+        <bookcover :book="book" class="cover flex-center" :style="{transform: 'rotateY('+book.coverRotateY+'deg)'}" @transitionend="bookCloseEnd"/>
         <div class="spine spine-a flex-center">
           <div class="spine-title" v-html="spineTextFilter(book.title)"></div>
           <div class="spine-subtitle" v-html="spineTextFilter(book.subtitle)"></div>
@@ -33,9 +44,11 @@
 <script>
 import bookcover from './works/bookcover'
 import popup from '../components/popup'
+import utils from '../scripts/utils.js'
+import navbar from '../components/navbar'
 export default {
   name: 'works',
-  components: {bookcover, popup},
+  components: {bookcover, popup, navbar},
   data () {
     let books, len, i, inits
     books = [
@@ -68,6 +81,9 @@ export default {
     len = books.length
     for (i = 0; i < len; i++) {
       books[i].rotateY = Math.round(i * (360 / len))
+      books[i].coverRotateY = -90
+      books[i].scale = 0.25
+      books[i].translateX = -80
     }
     inits = Object.freeze({
       stagePerspective: 100,
@@ -75,90 +91,117 @@ export default {
       tableTranslateY: 0
     })
     return {
+      popupShow: false,
+      navbarShow: false,
       books,
+      activeBook: null,
       inits,
-      status: 0,
       stagePerspective: inits.stagePerspective,
-      tableRotateX: inits.tableRotateX,
+      tableRotateX: 90,
       tableRotateZ: 180,
       tableTranslateY: inits.tableTranslateY,
-      allTransition: 'transform 1s',
-      bookScale: 0.25
+      allTransition: 'all 1s'
     }
   },
   mounted () {
-    let _this, startX, z, curZ, speedsX, spX, timerX, allowEaseOut
+    let _this, z, curZ, allowEaseOut, listener, timer
     _this = this
     curZ = z = this.tableRotateZ
-    speedsX = [0, 0]
-    spX = 0
-    this.$el.addEventListener('mousedown', down)
-    function down (e) {
-      startX = e.clientX
-      speedsX[0] = speedsX[1] = spX = 0
-      curZ = z = _this.tableRotateZ
-      allowEaseOut = false
-      cancelAnimationFrame(timerX)
-      document.addEventListener('mousemove', move)
-    }
-    function move (e) {
-      _this.allTransition = 'none'
-      curZ = z + (startX - e.clientX) / 10
-      speedsX.push(e.clientX)
-      speedsX.shift()
-      allowEaseOut = true
-      _this.tableRotateZ = curZ
-    }
-    document.addEventListener('mouseup', up)
-    function up () {
-      _this.allTransition = 'transform 1s'
-      document.removeEventListener('mousemove', move)
-      spX = (speedsX[0] - speedsX[1]) / 10
-      if (speedsX[0] > 0 && speedsX[1] > 0 && allowEaseOut) {
-        cancelAnimationFrame(timerX)
-        timerX = requestAnimationFrame(easeOutX)
-      }
-    }
-    function easeOutX () {
-      _this.allTransition = 'none'
-      spX *= 0.9
-      curZ += spX
-      cancelAnimationFrame(timerX)
-      timerX = requestAnimationFrame(easeOutX)
-      if (Math.abs(spX) < 0.1) {
-        cancelAnimationFrame(timerX)
+    listener = utils.listener(this.$el, {
+      start () {
+        curZ = z = _this.tableRotateZ
         allowEaseOut = false
-        _this.allTransition = 'transform 1s'
+      },
+      move (disX) {
+        _this.allTransition = 'none'
+        curZ = z + disX / 10
+        _this.tableRotateZ = curZ
+        allowEaseOut = true
+      },
+      end () {
+        _this.allTransition = 'all 1s'
+      },
+      easeOut (spX) {
+        if (allowEaseOut) {
+          _this.allTransition = 'none'
+          curZ += this.directionX * spX / 10
+          _this.tableRotateZ = curZ
+          z = curZ
+        }
+      },
+      easeOutEnd () {
+        allowEaseOut = false
+        _this.allTransition = 'all 1s'
       }
-      _this.tableRotateZ = curZ
-      z = curZ
-    }
+    })
+    timer = setTimeout(() => {
+      clearTimeout(timer)
+      this.allTransition = 'all 3s'
+      this.tableRotateX = 60
+      timer = setTimeout(() => {
+        clearTimeout(timer)
+        this.allTransition = 'all 1s'
+        this.popupShow = this.navbarShow = true
+      }, 3100)
+    }, 500)
+    this.$on('preventControl', () => {
+      listener.off()
+    })
+    this.$on('allowControl', () => {
+      listener.on()
+    })
   },
   methods: {
+    popupClick (e) {
+      if (e.target === e.currentTarget || e.target.classList.contains('popup-close')) {
+        this.popupShow = false
+      }
+    },
+    navbarClick (e, name) {
+      if (name === 'help') {
+        this.popupShow = !this.popupShow
+      }
+    },
     spineTextFilter (val) {
       return val.split('').join('<br>')
     },
     readBook (index) {
-      if (this.status) {
-        this.status = 0
+      this.activeBook = this.books[index]
+      if (this.stagePerspective === this.inits.stagePerspective) {
+        this.tableRotateX = 90
+        this.tableRotateZ = Math.round(this.tableRotateZ / 360) * 360 - (this.activeBook.rotateY - 90)
+        this.tableTranslateY = 16
+        this.stagePerspective = 50
+        this.activeBook.scale = 0.32
+        this.navbarShow = false
+        this.$emit('preventControl')
+      } else {
         this.tableRotateX = this.inits.tableRotateX
         this.tableTranslateY = this.inits.tableTranslateY
         this.stagePerspective = this.inits.stagePerspective
-        this.bookScale = 0.25
-      } else {
-        this.status = 1
-        this.tableRotateX = 90
-        this.tableRotateZ = (this.books[index].rotateY - 90) + Math.round(this.tableRotateZ / 360) * 360
-        this.tableTranslateY = 16
-        this.stagePerspective = 50
-        this.bookScale = 0.32
+        this.activeBook.scale = 0.25
+        this.activeBook.translateX = -80
+        this.navbarShow = true
+        this.$emit('allowControl')
       }
     },
-    toggleHelp () {
-      if (this.$refs.helpPopup.isShow) {
-        this.$refs.helpPopup.hide()
-      } else {
-        this.$refs.helpPopup.show()
+    onPopupShow () {
+      this.$emit('preventControl')
+    },
+    onPopupHide () {
+      this.$emit('allowControl')
+    },
+    bookCloseEnd () {
+      console.log('bookEnd')
+    },
+    stageTransEnd (e) {
+      if (e.target === e.currentTarget) {
+        if (this.stagePerspective !== this.inits.stagePerspective) {
+          this.activeBook.coverRotateY = -270
+          this.activeBook.translateX = -100
+        } else {
+          this.activeBook.coverRotateY = -90
+        }
       }
     }
   }
@@ -257,6 +300,7 @@ export default {
     text-align: center;
     transform-origin: left;
     transform: rotateY(-90deg);
+    transition: transform 1s;
   }
   .back-cover{
     transform-origin: left;

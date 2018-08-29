@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div @transitionend="transitionEnd">
     <canvasplayer v-if="book.video" :src="book.video" :autoplay="true" :loop="true" class="cover-img"></canvasplayer>
     <img class="cover-img" :src="book.cover" draggable="false">
     <h1 class="cover-title">{{book.title}}</h1>
@@ -12,7 +12,12 @@ import canvasplayer from '../../components/canvasplayer'
 export default {
   name: 'bookcover',
   components: {canvasplayer},
-  props: ['book']
+  props: ['book'],
+  methods: {
+    transitionEnd (e) {
+      this.$emit('transitionend', e)
+    }
+  }
 }
 </script>
 <style>

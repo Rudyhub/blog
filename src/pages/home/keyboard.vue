@@ -45,7 +45,6 @@ export default {
     reg = /^F([1-4]|[6-9]|11)$/i
     function itemAnimateEnd () {
       this.classList.remove('active')
-      this.style.color = ''
     }
     for (let i = 0, len = els.length; i < len; i++) {
       items[els[i].dataset.code] = els[i]

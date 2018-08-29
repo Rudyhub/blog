@@ -1,13 +1,13 @@
 <template>
-    <div class="command">
-      <div style="margin-bottom: 1em;">
-        欢迎进入老夫的互动系统，可与老夫进行简单的交流，想进入其他页面必须输入正确的指令。查看全部指令可输入：<br>
-        <div class="command-sys">
-          <span v-html="helpText"></span><br><br>
+    <div class="command" @click="input.focus()">
+      <transition name="fade" @afterEnter="input.focus()">
+        <div v-show="show" class="command-sys">
+          欢迎进入老夫的互动系统，可与老夫进行简单的交流，想进入其他页面必须输入正确的指令。<br><br>
+          查看全部指令可输入：<span v-html="helpText"></span><br><br>
           注意：不是输入上面的一整串，而是竖线之间所有单词的任意一个。<br>
           举个例：输入“帮助”后Enter。 来试一哈
         </div>
-      </div>
+      </transition>
     </div>
 </template>
 
@@ -21,6 +21,12 @@ lineIndex = 0
 
 export default {
   name: 'command',
+  props: {
+    show: {
+      type: [Boolean],
+      default: false
+    }
+  },
   data () {
     return {
       helpText: store.nav.help.join(' &nbsp; |  &nbsp; '),
@@ -141,19 +147,5 @@ export default {
     box-sizing: border-box;
     vertical-align: middle;
     padding: 0;
-  }
-  @keyframes flicker {
-    0%{
-      opacity: 0;
-    }
-    20%{
-      opacity: 1;
-    }
-    60%{
-      opacity: 1;
-    }
-    100%{
-      opacity: 0;
-    }
   }
 </style>

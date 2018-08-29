@@ -13,8 +13,8 @@
         <p>页面内容溢出时，滚动条虽是隐藏的，但支持上下拖动，也支持滚轮。</p>
       </popup>
     </transition-group>
-    <transition name="about-in">
-      <div v-show="aboutShow" class="about-glass-box" :style="{transform: glassBoxTransform}" @animationend="onGlassBoxInEnd">
+    <transition name="about-in" @afterEnter="onGlassBoxInEnd">
+      <div v-show="aboutShow" class="about-glass-box" :style="{transform: glassBoxTransform}">
         <div class="about-glass about-glass-1 flex-column">
           <p class="about-p"><img class="about-face" src="/static/face.png" alt="Rudy" draggable="false"></p>
           <p class="fs18 about-p">我是谁并不重要，重要的是我能做什么。</p>
@@ -331,7 +331,7 @@ export default {
     },
     popupClick (e) {
       if (e.target === e.currentTarget || e.target.classList.contains('popup-close')) {
-        this.popupShow = !this.popupShow
+        this.popupShow = false
       }
     },
     navbarClick (e, name) {
