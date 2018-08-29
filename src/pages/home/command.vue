@@ -116,7 +116,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
   .command{
     height: 100%;
     max-width: 1200px;

@@ -68,7 +68,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .keyboard{
   width: 88vh;
   margin: 3vh auto;

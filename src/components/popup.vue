@@ -13,6 +13,9 @@ export default {
   props: ['maskStyle', 'wrapperStyle'],
   methods: {
     onclick (e) {
+      if (e.target === e.currentTarget || e.target.classList.contains('popup-close')) {
+        this.$parent.popupShow = false
+      }
       this.$emit('click', e)
     }
   }
@@ -31,19 +34,20 @@ export default {
     left: 0;
     z-index: 100;
     display: flex;
-    color: #333;
-    background: rgba(0,0,0,0.6)
+    color: #eef;
+    text-shadow: #1b3651 0 0 2px;
+    background: rgba(0,0,0,0.6);
   }
   .popup-wrapper{
     border-radius: 6px;
-    border: 1px solid #eee;
+    border: 2px solid #2e6881;
     padding: 10px;
     min-width: 120px;
     min-height: 60px;
-    box-shadow: 0 0 5px;
     position: relative;
     max-width: 360px;
-    background: rgba(200, 240, 255, 0.8);
+    background: rgba(200, 240, 255, 0.4);
+    line-height: 1.6;
   }
   .popup-close{
     position: absolute;
@@ -52,5 +56,22 @@ export default {
     right: 0;
     top: 0;
     cursor: pointer;
+  }
+  .popup-fs18{
+    font-size: 18px;
+  }
+  .popup-fs16{
+    font-size: 16px;
+  }
+  .popup-fs14{
+    font-size: 14px;
+  }
+  .popup-fs12{
+    font-size: 12px;
+  }
+  .popup-color-1{
+    color: #b26821;
+    display: inline-block;
+    padding: 0 1em;
   }
 </style>

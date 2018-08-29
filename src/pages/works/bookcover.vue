@@ -4,6 +4,7 @@
     <img class="cover-img" :src="book.cover" draggable="false">
     <h1 class="cover-title">{{book.title}}</h1>
     <h2 class="cover-subtitle">{{book.subtitle}}</h2>
+    <slot></slot>
   </div>
 </template>
 
@@ -20,7 +21,7 @@ export default {
   }
 }
 </script>
-<style>
+<style scoped>
   .cover-title{
     font-size: 6vh;
     line-height: 1;

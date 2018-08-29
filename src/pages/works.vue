@@ -4,25 +4,28 @@
       <navbar v-show="navbarShow" class="flex-column" @click="navbarClick"/>
     </transition>
     <transition name="fade" @beforeEnter="onPopupShow" @afterLeave="onPopupHide">
-      <popup v-show="popupShow" @click="popupClick">
-        <p><b>操作指南：</b></p>
-        <p>
-          鼠标左键左右拖动 = 旋转<br>
-          双击书本 = 进入查看作品
+      <popup v-show="popupShow">
+        <p class="popup-fs18"><b>操作指南：</b></p>
+        <p class="popup-fs14">
+          鼠标左键左右拖动<b class="popup-color-1">=</b>旋转<br>
+          点击书本<b class="popup-color-1">=</b>进入查看作品<br/>
+          书本被打开后，双击<b class="popup-color-1">=</b>关闭书本
         </p>
       </popup>
     </transition>
     <div class="table flex-center"
          :style="{
          transition: allTransition,
-         transform: 'translateY('+tableTranslateY+'vh) rotateX(' + tableRotateX + 'deg) rotateZ(' + (-tableRotateZ) + 'deg)'
+         transform: 'translateY('+tableTranslateY+'vh) rotateX(' + tableRotateX + 'deg) rotateZ(' + tableRotateZ + 'deg)'
          }">
-      <div class="book" v-for="(book, index) of books" :key="index" @dblclick="readBook(index)"
+      <div class="book" v-for="(book, index) of books" :key="index" @click="readBook(index)"
            :style="{
            transition: allTransition,
            transform: 'scale3d('+book.scale+','+book.scale+','+book.scale+') rotateX(-90deg) rotateY(' + book.rotateY + 'deg) translate3d('+book.translateX+'vh,-50vh,0)'
            }">
-        <bookcover :book="book" class="cover flex-center" :style="{transform: 'rotateY('+book.coverRotateY+'deg)'}" @transitionend="bookCloseEnd"/>
+        <bookcover :book="book" class="cover flex-center" :style="{transform: 'rotateY('+book.coverRotateY+'deg)'}">
+          <div class="cover-inner" @dblclick="closeBook(index)">左面</div>
+        </bookcover>
         <div class="spine spine-a flex-center">
           <div class="spine-title" v-html="spineTextFilter(book.title)"></div>
           <div class="spine-subtitle" v-html="spineTextFilter(book.subtitle)"></div>
@@ -30,7 +33,9 @@
         <div class="spine spine-b"></div>
         <div class="spine spine-c"></div>
         <div class="spine spine-d"></div>
-        <bookcover :book="book" class="back-cover flex-center"/>
+        <bookcover :book="book" class="back-cover flex-center">
+          <div class="back-cover-inner" @dblclick="closeBook(index)">右面</div>
+        </bookcover>
       </div>
     </div>
     <div class="table-leg"
@@ -94,69 +99,63 @@ export default {
       popupShow: false,
       navbarShow: false,
       books,
-      activeBook: null,
+      activeIndex: -1,
       inits,
       stagePerspective: inits.stagePerspective,
       tableRotateX: 90,
       tableRotateZ: 180,
       tableTranslateY: inits.tableTranslateY,
-      allTransition: 'all 1s'
+      allTransition: 'all 0.8s',
+      isRotateTable: false,
+      isBookOpened: false
     }
   },
   mounted () {
-    let _this, z, curZ, allowEaseOut, listener, timer
+    let _this, z, listener, timer
     _this = this
-    curZ = z = this.tableRotateZ
+    z = this.tableRotateZ
     listener = utils.listener(this.$el, {
       start () {
-        curZ = z = _this.tableRotateZ
-        allowEaseOut = false
+        z = _this.tableRotateZ
+        _this.isRotateTable = false
       },
       move (disX) {
         _this.allTransition = 'none'
-        curZ = z + disX / 10
-        _this.tableRotateZ = curZ
-        allowEaseOut = true
+        _this.tableRotateZ = z - disX / 10
+        _this.isRotateTable = true
       },
       end () {
-        _this.allTransition = 'all 1s'
+        _this.allTransition = 'all 0.8s'
       },
       easeOut (spX) {
-        if (allowEaseOut) {
+        if (_this.isRotateTable) {
           _this.allTransition = 'none'
-          curZ += this.directionX * spX / 10
-          _this.tableRotateZ = curZ
-          z = curZ
+          _this.tableRotateZ -= this.directionX * spX / 10
         }
       },
       easeOutEnd () {
-        allowEaseOut = false
-        _this.allTransition = 'all 1s'
+        _this.isRotateTable = false
+        _this.allTransition = 'all 0.8s'
       }
     })
     timer = setTimeout(() => {
       clearTimeout(timer)
-      this.allTransition = 'all 3s'
+      this.allTransition = 'all 1.5s'
       this.tableRotateX = 60
       timer = setTimeout(() => {
         clearTimeout(timer)
-        this.allTransition = 'all 1s'
+        this.allTransition = 'all 0.8s'
         this.popupShow = this.navbarShow = true
-      }, 3100)
-    }, 500)
-    this.$on('preventControl', () => {
+      }, 1500)
+    }, 200)
+    this.$on('offRotate', () => {
       listener.off()
     })
-    this.$on('allowControl', () => {
+    this.$on('onRotate', () => {
       listener.on()
     })
   },
   methods: {
-    popupClick (e) {
-      if (e.target === e.currentTarget || e.target.classList.contains('popup-close')) {
-        this.popupShow = false
-      }
-    },
     navbarClick (e, name) {
       if (name === 'help') {
         this.popupShow = !this.popupShow
@@ -166,43 +165,46 @@ export default {
       return val.split('').join('<br>')
     },
     readBook (index) {
-      this.activeBook = this.books[index]
+      // 事件冒泡：book的click和旋转控制的mousedown->mouseup(touchstart->touchend)相互冲突，通过isRotateTable判断鼠标/手指是否触发了move事件来判断是否是旋转操作
+      if (this.isRotateTable) return
+      if (this.isBookOpened) return
+      this.isBookOpened = true
+      this.activeIndex = index
       if (this.stagePerspective === this.inits.stagePerspective) {
+        this.$emit('offRotate')
         this.tableRotateX = 90
-        this.tableRotateZ = Math.round(this.tableRotateZ / 360) * 360 - (this.activeBook.rotateY - 90)
+        this.tableRotateZ = this.books[index].rotateY - 90
         this.tableTranslateY = 16
         this.stagePerspective = 50
-        this.activeBook.scale = 0.32
+        this.books[index].scale = 0.32
         this.navbarShow = false
-        this.$emit('preventControl')
-      } else {
-        this.tableRotateX = this.inits.tableRotateX
-        this.tableTranslateY = this.inits.tableTranslateY
-        this.stagePerspective = this.inits.stagePerspective
-        this.activeBook.scale = 0.25
-        this.activeBook.translateX = -80
-        this.navbarShow = true
-        this.$emit('allowControl')
       }
     },
     onPopupShow () {
-      this.$emit('preventControl')
+      this.$emit('offRotate')
     },
     onPopupHide () {
-      this.$emit('allowControl')
-    },
-    bookCloseEnd () {
-      console.log('bookEnd')
+      this.$emit('onRotate')
     },
     stageTransEnd (e) {
       if (e.target === e.currentTarget) {
         if (this.stagePerspective !== this.inits.stagePerspective) {
-          this.activeBook.coverRotateY = -270
-          this.activeBook.translateX = -100
+          this.books[this.activeIndex].coverRotateY = -270
+          this.books[this.activeIndex].translateX = -100
         } else {
-          this.activeBook.coverRotateY = -90
+          this.$emit('onRotate')
+          this.isBookOpened = false
         }
       }
+    },
+    closeBook (index) {
+      this.tableRotateX = this.inits.tableRotateX
+      this.tableTranslateY = this.inits.tableTranslateY
+      this.stagePerspective = this.inits.stagePerspective
+      this.books[index].scale = 0.25
+      this.books[index].translateX = -80
+      this.books[index].coverRotateY = -90
+      this.navbarShow = true
     }
   }
 }
@@ -214,7 +216,7 @@ export default {
     height: 100vh;
     background: #07080d;
     overflow: hidden;
-    transition: all 1s;
+    transition: all 0.8s;
   }
   .table{
     width: 80vh;
@@ -288,6 +290,7 @@ export default {
     height: 100vh;
     flex-direction: column;
     color: #333;
+    transform-style: preserve-3d;
   }
   .spine,
   .back-cover{
@@ -300,12 +303,27 @@ export default {
     text-align: center;
     transform-origin: left;
     transform: rotateY(-90deg);
-    transition: transform 1s;
+    transition: transform 0.6s;
   }
   .back-cover{
     transform-origin: left;
     transform: rotateY(-90deg) scaleX(-1) translate3d(-88vh, 0, -10vh);
     background: linear-gradient(0, #c8c7d7, #c1b8ac);
+  }
+  .cover-inner,
+  .back-cover-inner{
+    background: linear-gradient(45deg, #cccccc, #ffffff);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+  .cover-inner{
+    transform: translateZ(-2px) scaleX(-1);
+  }
+  .back-cover-inner{
+    transform: translateZ(calc(10vh - 2px)) scaleX(-1);
   }
   .spine{
     text-align: center;
@@ -347,7 +365,7 @@ export default {
   .spine-title{
     margin: 0 auto;
   }
-  .spine-subtitle{
+  .spine-subtitle {
     background: #333;
     color: #fff;
     padding: 1vh;

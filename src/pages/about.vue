@@ -2,15 +2,15 @@
   <div class="about">
     <transition-group name="fade" @beforeEnter="onPopupShow" @afterLeave="onPopupHide">
       <navbar v-show="navbarShow" class="flex-column" key="navbar" @click="navbarClick"/>
-      <popup v-show="popupShow" @click="popupClick" key="popup">
-        <p><b>操作指南：</b></p>
-        <p>这是炫酷的css3 3D：<br>
-          鼠标左键左右拖动 = 旋转<br>
-          ctrl键 + 鼠标左键上下左右拖动 = 移动<br>
-          al键 + 鼠标滚轮 = 缩放<br>
-          shift键 = 禁止3D变换。
+      <popup v-show="popupShow" key="popup">
+        <p class="popup-fs18"><b>操作指南：</b></p>
+        <p class="popup-fs14">这是炫酷的css3 3D：<br>
+          鼠标左键左右拖动 <b class="popup-color-1"> = </b> 旋转<br>
+          ctrl键 + 鼠标左键上下左右拖动 <b class="popup-color-1"> = </b> 移动<br>
+          al键 + 鼠标滚轮 <b class="popup-color-1"> = </b> 缩放<br>
+          shift键 <b class="popup-color-1"> = </b> 禁止3D变换。
         </p>
-        <p>页面内容溢出时，滚动条虽是隐藏的，但支持上下拖动，也支持滚轮。</p>
+        <p class="popup-fs14">页面内容溢出时，滚动条虽是隐藏的，但支持上下拖动，也支持滚轮。</p>
       </popup>
     </transition-group>
     <transition name="about-in" @afterEnter="onGlassBoxInEnd">
@@ -328,11 +328,6 @@ export default {
     },
     onPopupHide () {
       this.$emit('popupHide')
-    },
-    popupClick (e) {
-      if (e.target === e.currentTarget || e.target.classList.contains('popup-close')) {
-        this.popupShow = false
-      }
     },
     navbarClick (e, name) {
       if (name === 'help') {

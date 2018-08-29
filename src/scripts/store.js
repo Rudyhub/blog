@@ -8,6 +8,72 @@ export default {
     help: ['帮助', '-h', '-?', '--help', 'help'],
     clear: ['清除', 'clear', 'cls']
   }),
+  works: {
+    gamesh5: [{
+      title: 'H5睇新闻',
+      href: 'http://sp.wenweipo.com/h5/',
+      date: 20161024
+    }, {
+      title: '2016国庆H5',
+      href: 'http://sp.wenweipo.com/2016gqh5/',
+      date: 20160929
+    }, {
+      title: '立法会投票站地图指引H5',
+      href: 'http://sp.wenweipo.com/2016lcmap/',
+      date: 20160830
+    }],
+    webs: [{
+      title: '20161209top10========='
+    }, {
+      title: '大文全媒体访谈Talk',
+      href: 'http://sp.wenweipo.com/all-media/interview/',
+      date: 20161128
+    }, {
+      title: '大文全媒体图说香港Hong Kong Pic',
+      href: 'http://sp.wenweipo.com/all-media/hongkong_pic/',
+      date: 20161128
+    }, {
+      title: '大文全媒体视频Hong Kong Video',
+      href: 'http://sp.wenweipo.com/all-media/video/',
+      date: 20161128
+    }, {
+      title: '香港各界紀念孫中山先生誕辰150周年大會',
+      href: 'http://sp.wenweipo.com/2016szs/',
+      date: 20161101
+    }, {
+      title: '2016里约奥运会',
+      href: 'http://sp.wenweipo.com/2016ol/',
+      date: 20160801
+    }, {
+      title: '2016范长江行动',
+      href: 'http://sp.wenweipo.com/2016cj/',
+      date: 20160701
+    }, {
+      title: '2016年香港立法会选举',
+      href: 'http://sp.wenweipo.com/2016lc/',
+      date: 20160630
+    }, {
+      title: '李太「港」本土',
+      href: 'http://sp.wenweipo.com/2016lt/',
+      date: 20160629
+    }, {
+      title: '未来之星',
+      href: 'http://sp.wenweipo.com/2016fs/',
+      date: 20170627
+    }, {
+      title: '香港回归19周年',
+      href: 'http://sp.wenweipo.com/201620/',
+      date: 20160624
+    }, {
+      title: '張德江赴港出席「一帶一路」高峰論壇並視察香港特區',
+      href: 'http://sp.wenweipo.com/2016zdj/',
+      date: 20160512
+    }, {
+      title: '习近平出访捷克并赴美核峰会',
+      href: 'http://sp.wenweipo.com/2016fj/',
+      date: 20160325
+    }]
+  },
   AI: Object.freeze([{
     user: /早|(早上|晚上|你|中午|下午)\s*[好早]/i,
     sys: ['嗯', '嗯嗯']
