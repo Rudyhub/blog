@@ -1,22 +1,35 @@
 <template>
-  <div class="popup" :style="maskStyle" @click="onclick">
-    <div class="popup-wrapper" :style="wrapperStyle">
-      <b class="popup-close fs18">&times;</b>
-      <slot></slot>
+  <transition name="fade" @beforeEnter="beforeEnter" @afterLeave="afterLeave">
+    <div v-show="show" class="popup" :style="maskStyle" @click="onclick">
+      <div class="popup-wrapper" :style="wrapperStyle">
+        <b class="popup-close fs18">&times;</b>
+        <slot></slot>
+      </div>
     </div>
-  </div>
+  </transition>
 </template>
 
 <script>
 export default {
   name: 'popup',
   props: ['maskStyle', 'wrapperStyle'],
+  data () {
+    return {
+      show: false
+    }
+  },
   methods: {
     onclick (e) {
       if (e.target === e.currentTarget || e.target.classList.contains('popup-close')) {
-        this.$parent.popupShow = false
+        this.show = false
       }
       this.$emit('click', e)
+    },
+    beforeEnter (e) {
+      this.$emit('beforeEnter', e)
+    },
+    afterLeave (e) {
+      this.$emit('afterLeave', e)
     }
   }
 }

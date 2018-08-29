@@ -1,18 +1,16 @@
 <template>
   <div class="about">
-    <transition-group name="fade" @beforeEnter="onPopupShow" @afterLeave="onPopupHide">
-      <navbar v-show="navbarShow" class="flex-column" key="navbar" @click="navbarClick"/>
-      <popup v-show="popupShow" key="popup">
-        <p class="popup-fs18"><b>操作指南：</b></p>
-        <p class="popup-fs14">这是炫酷的css3 3D：<br>
-          鼠标左键左右拖动 <b class="popup-color-1"> = </b> 旋转<br>
-          ctrl键 + 鼠标左键上下左右拖动 <b class="popup-color-1"> = </b> 移动<br>
-          al键 + 鼠标滚轮 <b class="popup-color-1"> = </b> 缩放<br>
-          shift键 <b class="popup-color-1"> = </b> 禁止3D变换。
-        </p>
-        <p class="popup-fs14">页面内容溢出时，滚动条虽是隐藏的，但支持上下拖动，也支持滚轮。</p>
-      </popup>
-    </transition-group>
+    <navbar ref="navbar" class="flex-column" @click="navbarClick"/>
+    <popup ref="popup" @beforeEnter="onPopupShow" @afterLeave="onPopupHide">
+      <p class="popup-fs18"><b>操作指南：</b></p>
+      <p class="popup-fs14">这是炫酷的css3 3D：<br>
+        鼠标左键左右拖动 <b class="popup-color-1"> = </b> 旋转<br>
+        ctrl键 + 鼠标左键上下左右拖动 <b class="popup-color-1"> = </b> 移动<br>
+        al键 + 鼠标滚轮 <b class="popup-color-1"> = </b> 缩放<br>
+        shift键 <b class="popup-color-1"> = </b> 禁止3D变换。
+      </p>
+      <p class="popup-fs14">页面内容溢出时，滚动条虽是隐藏的，但支持上下拖动，也支持滚轮。</p>
+    </popup>
     <transition name="about-in" @afterEnter="onGlassBoxInEnd">
       <div v-show="aboutShow" class="about-glass-box" :style="{transform: glassBoxTransform}">
         <div class="about-glass about-glass-1 flex-column">
@@ -69,8 +67,6 @@ export default {
   data () {
     return {
       aboutShow: false,
-      navbarShow: false,
-      popupShow: false,
       glassBoxTransform: 'translate3d(0, 0, -20vh) rotateY(0)',
       chartColor: [
         {color: 'rgba(111,174,9,.5)', text: '程序编程语言及框架'},
@@ -320,8 +316,8 @@ export default {
   },
   methods: {
     onGlassBoxInEnd () {
-      this.navbarShow = true
-      this.popupShow = true
+      this.$refs.navbar.show = true
+      this.$refs.popup.show = true
     },
     onPopupShow () {
       this.$emit('popupShow')
@@ -331,7 +327,7 @@ export default {
     },
     navbarClick (e, name) {
       if (name === 'help') {
-        this.popupShow = !this.popupShow
+        this.$refs.popup.show = !this.$refs.popup.show
       }
     },
     toggleDetail (e) {

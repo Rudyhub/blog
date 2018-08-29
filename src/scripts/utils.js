@@ -73,7 +73,9 @@ export default {
         }
       }
       cancelAnimationFrame(timer)
-      timer = requestAnimationFrame(play)
+      if (spx > 1 || spy > 1) {
+        timer = requestAnimationFrame(play)
+      }
     }
 
     function setKeys (e) {

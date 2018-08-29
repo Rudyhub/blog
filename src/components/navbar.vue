@@ -1,8 +1,10 @@
 <template>
-  <nav class="nav">
-    <router-link class="nav-item" v-for="(navItem, name) of nav" :key="name" :to="'/'+name" tag="a" @click="onclick($event, name)">{{navItem[0]}}</router-link>
-    <a class="nav-item" href="javascript:void(0)" @click="onclick($event, 'help')">指南</a>
-  </nav>
+  <transition name="fade" @beforeEnter="beforeEnter" @afterLeave="afterLeave">
+    <nav v-show="show" class="nav">
+      <router-link class="nav-item" v-for="(navItem, name) of nav" :key="name" :to="'/'+name" tag="a" @click="onclick($event, name)">{{navItem[0]}}</router-link>
+      <a class="nav-item" href="javascript:void(0)" @click="onclick($event, 'help')">指南</a>
+    </nav>
+  </transition>
 </template>
 
 <script>
@@ -17,12 +19,19 @@ export default {
       }
     }
     return {
-      nav
+      nav,
+      show: false
     }
   },
   methods: {
     onclick (e, name) {
       this.$emit('click', e, name)
+    },
+    beforeEnter (e) {
+      this.$emit('beforeEnter', e)
+    },
+    afterLeave (e) {
+      this.$emit('afterLeave', e)
     }
   }
 }

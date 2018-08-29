@@ -9,7 +9,7 @@ export default {
     clear: ['清除', 'clear', 'cls']
   }),
   works: {
-    gamesh5: [{
+    games: [{
       title: 'H5睇新闻',
       href: 'http://sp.wenweipo.com/h5/',
       date: 20161024
@@ -59,7 +59,7 @@ export default {
     }, {
       title: '未来之星',
       href: 'http://sp.wenweipo.com/2016fs/',
-      date: 20170627
+      date: 20160627
     }, {
       title: '香港回归19周年',
       href: 'http://sp.wenweipo.com/201620/',

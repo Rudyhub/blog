@@ -1,18 +1,14 @@
 <template>
   <div class="stage flex-center" :style="'perspective: '+stagePerspective+'vh'" @transitionend="stageTransEnd">
-    <transition name="fade">
-      <navbar v-show="navbarShow" class="flex-column" @click="navbarClick"/>
-    </transition>
-    <transition name="fade" @beforeEnter="onPopupShow" @afterLeave="onPopupHide">
-      <popup v-show="popupShow">
-        <p class="popup-fs18"><b>操作指南：</b></p>
-        <p class="popup-fs14">
-          鼠标左键左右拖动<b class="popup-color-1">=</b>旋转<br>
-          点击书本<b class="popup-color-1">=</b>进入查看作品<br/>
-          书本被打开后，双击<b class="popup-color-1">=</b>关闭书本
-        </p>
-      </popup>
-    </transition>
+    <navbar ref="navbar" class="flex-column" @click="navbarClick"/>
+    <popup ref="popup" @beforeEnter="onPopupShow" @afterLeave="onPopupHide">
+      <p class="popup-fs18"><b>操作指南：</b></p>
+      <p class="popup-fs14">
+        鼠标左键左右拖动<b class="popup-color-1">=</b>旋转<br>
+        点击书本<b class="popup-color-1">=</b>进入查看作品<br/>
+        书本被打开后，双击<b class="popup-color-1">=</b>关闭书本
+      </p>
+    </popup>
     <div class="table flex-center"
          :style="{
          transition: allTransition,
@@ -24,7 +20,9 @@
            transform: 'scale3d('+book.scale+','+book.scale+','+book.scale+') rotateX(-90deg) rotateY(' + book.rotateY + 'deg) translate3d('+book.translateX+'vh,-50vh,0)'
            }">
         <bookcover :book="book" class="cover flex-center" :style="{transform: 'rotateY('+book.coverRotateY+'deg)'}">
-          <div class="cover-inner" @dblclick="closeBook(index)">左面</div>
+          <div class="cover-inner" @dblclick="closeBook(index)">
+            <workslist :name="book.name" :title="book.title"></workslist>
+          </div>
         </bookcover>
         <div class="spine spine-a flex-center">
           <div class="spine-title" v-html="spineTextFilter(book.title)"></div>
@@ -51,33 +49,40 @@ import bookcover from './works/bookcover'
 import popup from '../components/popup'
 import utils from '../scripts/utils.js'
 import navbar from '../components/navbar'
+import workslist from './works/workslist'
 export default {
   name: 'works',
-  components: {bookcover, popup, navbar},
+  components: {bookcover, popup, navbar, workslist},
   data () {
     let books, len, i, inits
     books = [
       {
+        name: 'school',
         title: '规划设计类',
         subtitle: '2008在学校',
         cover: '../../static/works/01/01.jpg'
       }, {
+        name: 'sketch',
         title: '效果图类',
         subtitle: '2012 在朗形',
         cover: '../../static/works/02/01.jpg'
       }, {
+        name: 'landscape',
         title: '景观方案设计类',
         subtitle: '2014 在溪林峰',
         cover: '../../static/works/03/01.jpg'
       }, {
+        name: 'webs',
         title: 'Web网站网页类',
         subtitle: '2016 在文汇',
         cover: '../../static/works/cover01.jpg'
       }, {
+        name: 'games',
         title: '小游戏H5类',
         subtitle: '2016 在文汇',
         video: '../../static/works/v02.mp4'
       }, {
+        name: 'app',
         title: '桌面APP类',
         subtitle: '2016 在文汇',
         video: '../../static/works/v03.mp4'
@@ -96,8 +101,6 @@ export default {
       tableTranslateY: 0
     })
     return {
-      popupShow: false,
-      navbarShow: false,
       books,
       activeIndex: -1,
       inits,
@@ -145,7 +148,7 @@ export default {
       timer = setTimeout(() => {
         clearTimeout(timer)
         this.allTransition = 'all 0.8s'
-        this.popupShow = this.navbarShow = true
+        this.$refs.popup.show = this.$refs.navbar.show = true
       }, 1500)
     }, 200)
     this.$on('offRotate', () => {
@@ -158,7 +161,7 @@ export default {
   methods: {
     navbarClick (e, name) {
       if (name === 'help') {
-        this.popupShow = !this.popupShow
+        this.$refs.popup.show = !this.$refs.popup.show
       }
     },
     spineTextFilter (val) {
@@ -177,7 +180,7 @@ export default {
         this.tableTranslateY = 16
         this.stagePerspective = 50
         this.books[index].scale = 0.32
-        this.navbarShow = false
+        this.$refs.navbar.show = false
       }
     },
     onPopupShow () {
@@ -204,7 +207,7 @@ export default {
       this.books[index].scale = 0.25
       this.books[index].translateX = -80
       this.books[index].coverRotateY = -90
-      this.navbarShow = true
+      this.$refs.navbar.show = true
     }
   }
 }

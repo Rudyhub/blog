@@ -36,14 +36,40 @@ export default {
   mounted () {
     let _this = this
     this.input.className = 'command-input'
+    document.addEventListener('keydown', function (e) {
+      switch (e.key) {
+        case 'Enter': _this.addLine(); break
+        case 'ArrowUp':
+          if (lineIndex > 0) lineIndex--
+          _this.input.value = lines[lineIndex]
+          break
+        case 'ArrowDown':
+          if (lines[lineIndex + 1]) {
+            _this.input.value = lines[++lineIndex]
+          }
+          break
+      }
+    })
+    utils.scroll(this.$el)
+    _this.$el.addEventListener('click', () => {
+      _this.input.focus()
+    })
+    _this.$watch('show', (e) => {
+      if (e) _this.addLine()
+    })
+  },
+  methods: {
+    addLine () {
+      let _this, line, head, val
+      _this = this
+      line = document.createElement('div')
+      head = document.createElement('span')
+      val = _this.input.value
 
-    function addLine () {
-      let line = document.createElement('div')
-      let head = document.createElement('span')
-      let val = _this.input.value
       line.className = 'command-line-user'
       head.className = 'command-head'
       head.innerText = '[Guest ~]: '
+
       if (_this.input.parentNode) {
         _this.input.parentNode.insertBefore(document.createTextNode(val), _this.input)
         if (val) {
@@ -78,28 +104,7 @@ export default {
       _this.input.value = ''
       _this.$el.scrollTop = _this.$el.scrollHeight
       _this.input.focus()
-    }
-    addLine()
-    document.addEventListener('keydown', function (e) {
-      switch (e.key) {
-        case 'Enter': addLine(); break
-        case 'ArrowUp':
-          if (lineIndex > 0) lineIndex--
-          _this.input.value = lines[lineIndex]
-          break
-        case 'ArrowDown':
-          if (lines[lineIndex + 1]) {
-            _this.input.value = lines[++lineIndex]
-          }
-          break
-      }
-    })
-    utils.scroll(this.$el)
-    _this.$el.addEventListener('click', () => {
-      _this.input.focus()
-    })
-  },
-  methods: {
+    },
     clear () {
       lines = []
       lineIndex = 0
@@ -116,7 +121,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
   .command{
     height: 100%;
     max-width: 1200px;

@@ -1,22 +1,19 @@
 <template>
-    <div class="welcome">
-      <span class="welcome-char" v-for="(char, index) of content" :key="index">{{char}}</span>
-    </div>
+  <div class="welcome">
+    <span class="welcome-char" v-for="(char, index) of chars" :key="index">{{char}}</span>
+  </div>
 </template>
 
 <script>
 export default {
   name: 'welcome',
-  mounted () {
-    this.animateIn()
-  },
   data () {
     return {
-      content: 'Welcome Rudy\'s Zone'.split('')
+      chars: 'Welcome Rudy\'s Zone'.split('')
     }
   },
-  methods: {
-    animateIn (fn) {
+  mounted () {
+    this.$parent.welcomeShow = (fn) => {
       let _this, children, len, last
       _this = this
       children = _this.$el.children
@@ -25,14 +22,13 @@ export default {
       for (let i = 0; i < len; i++) {
         let timer = setTimeout(function () {
           clearTimeout(timer)
-          children[i].classList.add('welcome-animate')
+          children[i].classList.add('welcome-in')
         }, 100 * i)
       }
       last.addEventListener('animationend', animateEnd, false)
       function animateEnd (e) {
         last.removeEventListener(e.type, animateEnd, false)
         if (fn) fn('welcome', e.animationName)
-        _this.$emit('animate-in-end', 'welcome', e.animationName)
       }
     }
   }
@@ -43,22 +39,25 @@ export default {
   .welcome{
     font-size: 2.8vw;
     text-align: center;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    position: absolute;
   }
   .welcome-char{
     min-width: .5em;
     opacity: 0;
+    transform: translateX(100%);
   }
-  .welcome-animate{
-    animation: char-animate 5s forwards;
+  .welcome-in{
+    animation: char-animate 5s;
   }
   @keyframes char-animate {
     0%{
-      transform: translateX(50vw);
+      transform: translateX(100%);
       opacity: 0;
     }
     20%{
@@ -76,7 +75,7 @@ export default {
       opacity: 1;
     }
     100%{
-      transform: translateX(-50vw);
+      transform: translateX(-100%);
       opacity: 0;
     }
   }

@@ -1,13 +1,14 @@
 <template>
   <div class="home">
     <div class="computer">
-      <transition name="computer-cover" @afterEnter="commandShow = true">
+      <transition name="computer-cover" @afterEnter="coverAfterEnd">
         <div v-show="show" class="computer-cover">
           <div class="computer-back-cover flex-column">
             <img class="computer-logo" src="../../static/face.png" alt="">
             <p>RUDY</p>
           </div>
           <div class="computer-screen">
+            <welcome v-if="!commandShow"/>
             <command :show="commandShow"/>
           </div>
         </div>
@@ -20,11 +21,12 @@
 </template>
 
 <script>
+import welcome from '../components/welcome'
 import command from './home/command'
 import keyboard from './home/keyboard'
 export default {
   name: 'home',
-  components: {command, keyboard},
+  components: {welcome, command, keyboard},
   data () {
     return {
       show: false,
@@ -33,6 +35,13 @@ export default {
   },
   mounted () {
     this.show = true
+  },
+  methods: {
+    coverAfterEnd () {
+      this.welcomeShow(() => {
+        this.commandShow = true
+      })
+    }
   }
 }
 </script>
@@ -84,7 +93,7 @@ export default {
   }
   .computer-cover-enter-active,
   .computer-cover-leave-active{
-    transition: transform 3s 1s;
+    transition: transform 2s .3s;
   }
   .computer-cover-enter,
   .computer-leave-to{
