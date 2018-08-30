@@ -1,6 +1,6 @@
 <template>
   <div class="link-list">
-    <h1>{{title}}</h1>
+    <h1>{{title}} {{items.length}}</h1>
     <ul ref="list" v-if="items">
       <li v-for="(item, index) of items" :key="index" :class="item.thumb ? 'has-thumb' : ''">
         <img class="thumb" v-if="item.thumb" :src="item.thumb" alt="">
@@ -95,7 +95,7 @@ export default {
     bottom: -1px;
     left: 0;
     transform: scaleX(0);
-    border: 1px solid;
+    border-bottom: 1px solid;
     opacity: 0.5;
   }
   a:hover:after{

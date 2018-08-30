@@ -26,65 +26,80 @@ export default {
     }, {
       title: '评选心中最美港姐',
       href: 'https://wii-c.com/gangjie_election_game/',
-      date: 20180808
+      date: 20180808,
+      thumb: 'https://wii-c.com/gangjie_election_game/img/cover.jpg'
     }, {
       title: '改革开放40周年之岁月如歌',
       href: 'http://assets.wenweipo.com/sp/2018h510/',
-      date: 20180808
+      date: 20180808,
+      thumb: 'http://assets.wenweipo.com/sp/2018h510/img/cover.jpg'
     }, {
       title: '改革开放40周年之微数据',
       href: 'http://assets.wenweipo.com/sp/2018h509/',
-      date: 20180808
+      date: 20180808,
+      thumb: 'http://assets.wenweipo.com/sp/2018h509/img/cover.jpg'
     }, {
       title: '改革开放40周年之流行语',
       href: 'http://assets.wenweipo.com/sp/2018h508/',
-      date: 20180731
+      date: 20180731,
+      thumb: 'http://assets.wenweipo.com/sp/2018h508/img/cover.jpg'
     }, {
       title: '寻找香港吃货',
       href: 'https://wii-c.com/hk_food_game/',
       date: 20180728,
-      status: 'Github体验地址：https://rudyhub.github.io/HKFoodGame/'
+      status: 'Github体验地址：https://rudyhub.github.io/HKFoodGame/',
+      thumb: 'https://wii-c.com/hk_food_game/img/cover.jpg'
     }, {
       title: '贸易战疯狂进化论',
       href: 'https://wii-c.com/trade_war_chat/',
-      date: 20180718
+      date: 20180718,
+      thumb: 'https://wii-c.com/trade_war_chat/img/cover.jpg'
     }, {
       title: '金句填充我可以，有奖问答',
       href: 'http://sp.wenweipo.com/2018h507/',
-      date: 20180621
+      date: 20180621,
+      thumb: 'http://sp.wenweipo.com/2018h507/img/cover.jpg'
     }, {
       title: '世界杯射门游戏',
       href: 'https://wii-c.com/world_cup_shot_game/',
       status: 'Github体验地址：https://rudyhub.github.io/WorldCupGame2.0/',
-      date: 20180615
+      date: 20180615,
+      thumb: 'https://wii-c.com/world_cup_shot_game/img/cover.jpg'
     }, {
       title: '香港中联办首个公众开放日',
       href: 'http://assets.wenweipo.com/sp/2018h506/',
-      date: 20180428
+      date: 20180428,
+      thumb: 'http://assets.wenweipo.com/sp/2018h506/img/cover.jpg'
     }, {
       title: '广深港高铁知多少',
       href: 'http://assets.wenweipo.com/sp/2018h505/',
-      date: 20180401
+      date: 20180401,
+      thumb: 'http://assets.wenweipo.com/sp/2018h505/img/cover.jpg'
     }, {
       title: '亮出你的出世纸',
       href: 'http://sp.wenweipo.com/2018h504/',
-      date: 20180327
+      date: 20180327,
+      thumb: 'http://sp.wenweipo.com/2018h504/img/cover.jpg'
     }, {
       title: '2018两会微数据',
       href: 'http://assets.wenweipo.com/sp/2018h503/',
-      date: 20180320
+      date: 20180320,
+      thumb: 'http://assets.wenweipo.com/sp/2018h503/img/cover.jpg'
     }, {
       title: '热烈祝贺习近平全票当选国家主席',
       href: 'http://sp.wenweipo.com/2018card01/',
-      date: 20180318
+      date: 20180318,
+      thumb: 'http://sp.wenweipo.com/2018card01/img/cover.jpg'
     }, {
       title: '香港中联办主任王志民的答卷',
       href: 'http://assets.wenweipo.com/sp/2018h502/',
-      date: 20180131
+      date: 20180131,
+      thumb: 'http://assets.wenweipo.com/sp/2018h502/img/cover.jpg'
     }, {
       title: '狗旺财，富入屋',
       href: 'http://assets.wenweipo.com/sp/2018h501/',
-      date: 20180124
+      date: 20180124,
+      thumb: 'http://assets.wenweipo.com/sp/2018h501/img/cover.jpg'
     }, {
       title: '文汇2018招聘',
       href: 'http://sp.wenweipo.com/zhaopin2018/',
@@ -92,7 +107,8 @@ export default {
     }, {
       title: '新年与圣诞贺卡',
       href: 'http://sp.wenweipo.com/2017card01/',
-      date: 20171212
+      date: 20171212,
+      thumb: 'http://sp.wenweipo.com/2017card01/img/cover.jpg'
     }, {
       title: '王志民与网民在线交流',
       href: '',
@@ -101,19 +117,29 @@ export default {
     }, {
       title: '十九大知识知多少',
       href: 'http://sp.wenweipo.com/2017ff/game/',
-      date: 20171023
+      date: 20171023,
+      thumb: 'http://sp.wenweipo.com/2017ff/game/img/cover.jpg'
     }, {
       title: '习近平与三位基层代表亲密互动',
       href: 'http://assets.wenweipo.com/sp/2017xigz/',
-      date: 20171021
+      date: 20171021,
+      thumb: 'http://assets.wenweipo.com/sp/2017xigz/img/cover.jpg'
     }, {
       title: '祝贺十九大贺卡',
       href: 'http://sp.wenweipo.com/greeting_card/',
-      date: 20171018
+      date: 20171018,
+      thumb: 'http://sp.wenweipo.com/greeting_card/img/cover.jpg'
     }, {
       title: '王志民提「三势」各界认同齐声赞',
       href: 'http://assets.wenweipo.com/sp/2017mwh5/',
-      date: 20170928
+      date: 20170928,
+      thumb: 'http://assets.wenweipo.com/sp/2017mwh5/img/logo.jpg'
+    }, {
+      title: '斩港妖切切乐游戏',
+      href: 'https://rudyhub.github.io/cutfruit-wwp/',
+      date: 20170923,
+      status: '未上线，原因是突然发现有点血腥。另外本人随便替换了UI的另一个在https://rudyhub.github.io/cutfruit/',
+      thumb: 'https://rudyhub.github.io/cutfruit-wwp/img/title.png'
     }, {
       title: '香港回归20周年报纸集锦',
       href: 'http://assets.wenweipo.com/sp/2017hgpapers/',
@@ -131,11 +157,13 @@ export default {
     }, {
       title: '汇眼识鸡',
       href: 'http://sp.wenweipo.com/2017score/',
-      date: 20170119
+      date: 20170119,
+      thumb: 'http://sp.wenweipo.com/2017score/img/logo.jpg'
     }, {
       title: '2016国庆',
       href: 'http://sp.wenweipo.com/2016gqh5/',
-      date: 20160929
+      date: 20160929,
+      thumb: 'http://assets.wenweipo.com/sp/2016gqh5/images/square.jpg'
     }, {
       title: '立法会投票站地图指引',
       href: 'http://sp.wenweipo.com/2016lcmap/',
