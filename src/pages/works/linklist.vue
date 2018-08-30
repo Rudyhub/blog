@@ -2,11 +2,11 @@
   <div class="link-list">
     <h1>{{title}} {{items.length}}</h1>
     <ul ref="list" v-if="items">
-      <li v-for="(item, index) of items" :key="index" :class="item.thumb ? 'has-thumb' : ''">
-        <img class="thumb" v-if="item.thumb" :src="item.thumb" alt="">
-        <time>{{item.date | datemat}} :</time>
-        <a :href="item.href || 'javascript:void(0)'" target="_blank">{{item.title}}</a>
-        <div class="other-info" v-if="item.status" v-html="item.status"></div>
+      <li v-for="(item, index) of items" :key="index">
+        <thumb v-if="item.thumb" :src="item.thumb"/>
+        <div><a :href="item.href || 'javascript:void(0)'" target="_blank">{{item.title}}</a></div>
+        <time>{{item.date | datemat}} </time>
+        <div class="link-item-status" v-if="item.status" v-html="item.status"></div>
       </li>
     </ul>
   </div>
@@ -14,9 +14,11 @@
 
 <script>
 import utils from '../../scripts/utils.js'
+import thumb from '../../components/thumb'
 export default {
   name: 'linklist',
   props: ['items', 'title'],
+  components: {thumb},
   filters: {
     datemat (date) {
       if (!date) return ''
@@ -51,36 +53,32 @@ export default {
   }
   li{
     font-size: 16px;
-    padding: .5em 0;
+    padding: .5em;
     position: relative;
     box-sizing: border-box;
     line-height: 1;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    margin: 1.5em .5em;
+    box-shadow: #ccc 0 1px 2px;
   }
   li:hover{
     transition: all .5s;
     background: rgba(200,200,220,0.3);
   }
-  li.has-thumb{
-    line-height: 1.6;
-  }
-  li.has-thumb time{
-    display: block;
-  }
   .thumb{
+    width: 3em;
     height: 3em;
     margin-right: 1em;
     display: block;
     float: left;
   }
   time{
-    padding: 0 0.5em;
+    display: block;
   }
   a{
     text-decoration: none;
-    position: relative;
   }
   a:link{
     color: #264bb7;
@@ -88,21 +86,7 @@ export default {
   a:visited{
     color: #553a37;
   }
-  a:after{
-    content: '';
-    position: absolute;
-    width: 100%;
-    bottom: -1px;
-    left: 0;
-    transform: scaleX(0);
-    border-bottom: 1px solid;
-    opacity: 0.5;
-  }
-  a:hover:after{
-    transition: all .5s;
-    transform: scaleX(1);
-  }
-  .other-info{
+  .link-item-status{
     font-size: 13px;
     color: #666;
     margin-left: 5.5em;
