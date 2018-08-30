@@ -21,7 +21,7 @@
            }">
         <bookcover :book="book" class="cover flex-center" :style="{transform: 'rotateY('+book.coverRotateY+'deg)'}">
           <div class="cover-inner" @dblclick="closeBook(index)">
-            <workslist :name="book.name" :title="book.title"></workslist>
+            <linklist :items="book.items" :title="book.title"></linklist>
           </div>
         </bookcover>
         <div class="spine spine-a flex-center">
@@ -45,68 +45,46 @@
 </template>
 
 <script>
+import store from '../scripts/store.js'
 import bookcover from './works/bookcover'
 import popup from '../components/popup'
 import utils from '../scripts/utils.js'
 import navbar from '../components/navbar'
-import workslist from './works/workslist'
+import linklist from './works/linklist'
 export default {
   name: 'works',
-  components: {bookcover, popup, navbar, workslist},
+  components: {bookcover, popup, navbar, linklist},
   data () {
-    let books, len, i, inits
-    books = [
-      {
-        name: 'school',
-        title: '规划设计类',
-        subtitle: '2008在学校',
-        cover: '../../static/works/01/01.jpg'
-      }, {
-        name: 'sketch',
-        title: '效果图类',
-        subtitle: '2012 在朗形',
-        cover: '../../static/works/02/01.jpg'
-      }, {
-        name: 'landscape',
-        title: '景观方案设计类',
-        subtitle: '2014 在溪林峰',
-        cover: '../../static/works/03/01.jpg'
-      }, {
-        name: 'webs',
-        title: 'Web网站网页类',
-        subtitle: '2016 在文汇',
-        cover: '../../static/works/cover01.jpg'
-      }, {
-        name: 'games',
-        title: '小游戏H5类',
-        subtitle: '2016 在文汇',
-        video: '../../static/works/v02.mp4'
-      }, {
-        name: 'app',
-        title: '桌面APP类',
-        subtitle: '2016 在文汇',
-        video: '../../static/works/v03.mp4'
-      }
-    ]
-    len = books.length
+    let works, books, len, i, inits
+    works = store.works
+    len = works.length
+    books = []
+
     for (i = 0; i < len; i++) {
-      books[i].rotateY = Math.round(i * (360 / len))
-      books[i].coverRotateY = -90
-      books[i].scale = 0.25
-      books[i].translateX = -80
+      books[i] = {
+        rotateY: Math.round(i * (360 / len)),
+        coverRotateY: -90,
+        scale: 0.25,
+        translateX: -80
+      }
+      for (let k in works[i]) {
+        books[i][k] = works[i][k]
+      }
     }
+
     inits = Object.freeze({
       stagePerspective: 100,
       tableRotateX: 60,
       tableTranslateY: 0
     })
+
     return {
       books,
       activeIndex: -1,
       inits,
       stagePerspective: inits.stagePerspective,
       tableRotateX: 90,
-      tableRotateZ: 180,
+      tableRotateZ: 0,
       tableTranslateY: inits.tableTranslateY,
       allTransition: 'all 0.8s',
       isRotateTable: false,
@@ -238,7 +216,7 @@ export default {
     top: 0;
     width: 100%;
     height: 100%;
-    background: url("../../static/works/01/table-bg.png") no-repeat;
+    background: url("../../static/works/table-bg.png") no-repeat;
     background-size: cover;
     border-radius: 50%;
     overflow: hidden;

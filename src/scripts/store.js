@@ -8,8 +8,18 @@ export default {
     help: ['帮助', '-h', '-?', '--help', 'help'],
     clear: ['清除', 'clear', 'cls']
   }),
-  works: {
-    games: [{
+  works: [{
+    name: 'app',
+    title: '桌面APP类',
+    subtitle: '2016 在文汇',
+    video: '../../static/works/v03.mp4',
+    items: []
+  }, {
+    name: 'games',
+    title: '小游戏H5类',
+    subtitle: '2016 在文汇',
+    video: '../../static/works/v02.mp4',
+    items: [{
       title: 'H5睇新闻',
       href: 'http://sp.wenweipo.com/h5/',
       date: 20161024
@@ -21,8 +31,13 @@ export default {
       title: '立法会投票站地图指引H5',
       href: 'http://sp.wenweipo.com/2016lcmap/',
       date: 20160830
-    }],
-    webs: [{
+    }]
+  }, {
+    name: 'webs',
+    title: 'Web网站网页类',
+    subtitle: '2016 在文汇',
+    cover: '../../static/works/cover01.jpg',
+    items: [{
       title: '20161209top10========='
     }, {
       title: '大文全媒体访谈Talk',
@@ -73,7 +88,31 @@ export default {
       href: 'http://sp.wenweipo.com/2016fj/',
       date: 20160325
     }]
-  },
+  }, {
+    name: 'landscape',
+    title: '景观方案设计类',
+    subtitle: '2014 在溪林峰',
+    cover: '../../static/works/03/01.jpg',
+    items: []
+  }, {
+    name: 'effects',
+    title: '效果图类',
+    subtitle: '2012 在朗形',
+    cover: '../../static/works/02/01.jpg',
+    items: []
+  }, {
+    name: 'homework',
+    title: '规划设计类',
+    subtitle: '2008在学校',
+    cover: '../../static/works/01/01.jpg',
+    items: [{
+      title: '模型课作业：《欧式别墅花园设计》',
+      thumb: '../../static/works/01/01.jpg',
+      href: '',
+      date: 20110210,
+      items: ['../../static/works/01/01.jpg', '../../static/works/01/02.jpg']
+    }]
+  }],
   AI: Object.freeze([{
     user: /早|(早上|晚上|你|中午|下午)\s*[好早]/i,
     sys: ['嗯', '嗯嗯']
