@@ -48,18 +48,17 @@ export default {
     z-index: 100;
     display: flex;
     color: #eef;
-    text-shadow: #1b3651 0 0 2px;
     background: rgba(0,0,0,0.6);
   }
   .popup-wrapper{
     border-radius: 6px;
-    border: 2px solid #2e6881;
+    border: 2px solid #444444;
     padding: 10px;
     min-width: 120px;
     min-height: 60px;
     position: relative;
     max-width: 360px;
-    background: rgba(200, 240, 255, 0.4);
+    background: #6b7082;
     line-height: 1.6;
   }
   .popup-close{
@@ -69,6 +68,9 @@ export default {
     right: 0;
     top: 0;
     cursor: pointer;
+  }
+  .popup p{
+    margin-top: 0;
   }
   .popup-fs18{
     font-size: 18px;
@@ -83,7 +85,7 @@ export default {
     font-size: 12px;
   }
   .popup-color-1{
-    color: #b26821;
+    color: #ffb900;
     display: inline-block;
     padding: 0 1em;
   }

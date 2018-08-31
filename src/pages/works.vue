@@ -21,7 +21,7 @@
            }">
         <bookcover :book="book" class="cover flex-center" :style="{transform: 'rotateY('+book.coverRotateY+'deg)'}">
           <div class="cover-inner" @dblclick="closeBook(index)">
-            <linklist :items="book.items" :title="book.title"></linklist>
+            <linklist :items="book.items" apart="left" :title="book.title"></linklist>
           </div>
         </bookcover>
         <div class="spine spine-a flex-center">
@@ -32,7 +32,9 @@
         <div class="spine spine-c"></div>
         <div class="spine spine-d"></div>
         <bookcover :book="book" class="back-cover flex-center">
-          <div class="back-cover-inner" @dblclick="closeBook(index)">右面</div>
+          <div class="back-cover-inner" @dblclick="closeBook(index)">
+            <linklist :items="book.items" apart="right"  :title="book.title"></linklist>
+          </div>
         </bookcover>
       </div>
     </div>
@@ -88,7 +90,7 @@ export default {
       tableTranslateY: inits.tableTranslateY,
       allTransition: 'all 0.8s',
       isRotateTable: false,
-      isBookOpened: false
+      isBookOpened: true
     }
   },
   mounted () {
@@ -105,7 +107,10 @@ export default {
         _this.tableRotateZ = z - disX / 10
         _this.isRotateTable = true
       },
-      end () {
+      end (disX, disY) {
+        if (Math.abs(disX) < 3 && Math.abs(disY) < 3) {
+          _this.isRotateTable = false
+        }
         _this.allTransition = 'all 0.8s'
       },
       easeOut (spX) {
@@ -134,6 +139,7 @@ export default {
     })
     this.$on('onRotate', () => {
       listener.on()
+      this.isBookOpened = false
     })
   },
   methods: {
@@ -146,7 +152,7 @@ export default {
       return val.split('').join('<br>')
     },
     readBook (index) {
-      // 事件冒泡：book的click和旋转控制的mousedown->mouseup(touchstart->touchend)相互冲突，通过isRotateTable判断鼠标/手指是否触发了move事件来判断是否是旋转操作
+      // 事件冒泡：book的click和旋转控制的mousedown->mouseup(touchstart->touchend)相互冲突，通过isRotateTable判断鼠标/手指是否触发了move事件和鼠标移动距离来判断是否是旋转操作
       if (this.isRotateTable) return
       if (this.isBookOpened) return
       this.isBookOpened = true

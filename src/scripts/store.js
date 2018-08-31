@@ -140,7 +140,7 @@ export default {
       title: '王志民与网民在线交流',
       href: [],
       date: 20171103,
-      desc: '白忙乎，领导没去直播，所以没上线',
+      desc: '白忙活，领导没去直播，所以没上线',
       online: 0
     }, {
       title: '十九大知识知多少',
@@ -168,7 +168,8 @@ export default {
       date: 20170923,
       desc: '未上线，原因是突然发现有点血腥。但可体验本人随便替换了UI的版本：https://rudyhub.github.io/cutfruit/',
       thumb: 'https://rudyhub.github.io/cutfruit-wwp/img/title.png',
-      online: 0
+      online: 0,
+      level: 1
     }, {
       title: '香港回归20周年报纸集锦',
       href: ['http://assets.wenweipo.com/sp/2017hgpapers/'],

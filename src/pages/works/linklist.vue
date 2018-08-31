@@ -1,9 +1,13 @@
 <template>
   <div class="link-list">
     <h1>{{title}}</h1>
-    <div class="link-info">总数：{{items.length}} | 老夫推荐：<span v-for="(r,rindex) of recommend" :key="rindex">{{r}}</span></div>
+    <div class="link-info">
+      特别推荐：
+      <span v-for="(rec, rindex) of recommend" :key="rindex">{{rec}}</span>
+    </div>
     <ul ref="list" v-if="items">
-      <li v-for="(item, index) of items" :key="index">
+      <li v-for="(item, index) of items" :key="index" v-if="index >= start && index < end">
+        <div class="link-num">{{index+1}} / {{total}}</div>
         <thumb v-if="item.thumb" :src="item.thumb"/>
         <h2>{{item.title}}
           <sup class="link-not-online" v-if="item.online === 0">未上线</sup>
@@ -30,17 +34,37 @@ import thumb from '../../components/thumb'
 const siteReg = {
   'http://wenweipo.com': /wenweipo\.com/,
   'https://rudyhub.github.io': /rudyhub\.github\.io/,
-  'https://gitserv.wenweipo.com': /gitserv\.wenweipo\.com/,
   'https://github.com': /github\.com/,
   'https://wii-c.com': /wii-c\.com/
 }
 export default {
   name: 'linklist',
-  props: ['items', 'title'],
+  props: ['items', 'title', 'apart'],
   components: {thumb},
   data () {
+    let len, recommend, start, end
+    recommend = []
+    if (this.items) {
+      this.items.forEach((item, index) => {
+        if (item.level === 1) recommend.push(index + 1)
+      })
+    }
+    if (recommend.length < 1) {
+      recommend.push('无，没有一个能入我的眼。')
+    }
+    len = this.items.length
+    if (this.apart === 'left') {
+      start = 0
+      end = Math.round(len / 2)
+    } else {
+      start = Math.round(len / 2)
+      end = len
+    }
     return {
-      recommend: []
+      recommend,
+      total: len,
+      start,
+      end
     }
   },
   filters: {
@@ -76,6 +100,7 @@ export default {
   }
   h1{
     font-size: 22px;
+    text-align: center;
   }
   h2{
     font-size: 16px;
@@ -90,6 +115,16 @@ export default {
     color: #fff;
     font-weight: normal;
     font-size: 12px;
+  }
+  .link-info{
+    font-size: 14px;
+    text-align: left;
+    margin: 0 3em;
+  }
+  .link-info span{
+    display: inline-block;
+    vertical-align: top;
+    margin: 0 .4em;
   }
   .link-not-online{
     background: #787677;
@@ -119,13 +154,19 @@ export default {
     box-shadow: #ccc 0 1px 2px;
     background: #fff;
   }
-  li:hover{
-    transition: all .5s;
-    box-shadow: #aaa 0 1px 4px;
+  .link-num{
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: .2em .4em;
+    line-height: 1;
+    background: #dae9f7;
+    border-bottom-left-radius: .4em;
+    color: #111;
   }
   .thumb{
-    width: 3em;
-    height: 3em;
+    width: 3.6em;
+    height: 3.6em;
     margin-right: 1em;
     display: block;
     float: left;
@@ -147,35 +188,33 @@ export default {
   .link-source-item{
     display: inline-block;
     font-size: 12px;
-    background: #f0f0f0;
     vertical-align: middle;
     margin: 0 .3em;
     border-radius: 6px;
     overflow: hidden;
-    border: 1px solid;
+    opacity: .8;
+    box-sizing: border-box;
+  }
+  .link-href-item:hover,
+  .link-source-item:hover{
+    transition: opacity .3s;
+    opacity: 1;
   }
   .link-href-item{
-    border-color: #6f4940;
+    background: linear-gradient(90deg, #6f4940 60%, #eee 60%);
   }
   .link-source-item{
-    border-color: #477a4d;
+    background: linear-gradient(90deg, #477a4d 60%, #eee 60%);
+  }
+  .link-favicon,
+  .link-favhd{
+    display: inline-block;
+    vertical-align: middle;
+    margin: .3em;
+    color: #fff;
   }
   .link-favicon{
     height: 1.2em;
-    vertical-align: middle;
-    margin: 0 .3em;
-  }
-  .link-favhd{
-    color: #fff;
-    display: inline-block;
-    vertical-align: middle;
-    padding: .2em;
-  }
-  .link-href-item .link-favhd{
-    background: #6f4940;
-  }
-  .link-source-item .link-favhd{
-    background: #477a4d;
   }
   .link-desc{
     font-size: 13px;

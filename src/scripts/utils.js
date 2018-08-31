@@ -123,8 +123,8 @@ export default {
       for (i = 0; i < len; i++) {
         if (e[preventKeys[i]]) return false
       }
-      e.preventDefault()
       start = isTouch ? e.targetTouches[0][client] : e[client]
+      end = start
       startTop = el[scroll]
       prev = start
       el.addEventListener(events[1], moveFn, prevent)
@@ -171,12 +171,12 @@ export default {
     }
 
     function bind () {
-      el.addEventListener(events[0], startFn, prevent)
+      el.addEventListener(events[0], startFn)
       if (!isTouch) el.addEventListener('mousewheel', wheel)
     }
 
     function unbind () {
-      el.removeEventListener(events[0], startFn, prevent)
+      el.removeEventListener(events[0], startFn)
       el.addEventListener('mousewheel', wheel)
     }
 
