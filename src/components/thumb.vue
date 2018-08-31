@@ -17,6 +17,7 @@ export default {
 <style>
   .thumb{
     overflow: hidden;
+    position: relative;
   }
   .thumb-img{
     opacity: 0;
