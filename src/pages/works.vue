@@ -11,12 +11,12 @@
     </popup>
     <div class="works-table flex-center"
          :style="{
-         transition: allTransition,
+         transition: (allTransition ? 'all '+allTransition+'s' : 'none'),
          transform: 'translateY('+(tableTranslateY/10)+'rem) rotateX(' + tableRotateX + 'deg) rotateZ(' + tableRotateZ + 'deg)'
          }">
       <div class="book" v-for="(book, index) of books" :key="index" @click="readBook(index)"
            :style="{
-           transition: allTransition,
+           transition: (allTransition ? 'transform '+allTransition+'s' : 'none'),
            transform: 'scale3d('+book.scale+','+book.scale+','+book.scale+') rotateX(-90deg) rotateY(' + book.rotateY + 'deg) translate3d('+(book.translateX/10)+'rem,-5rem,0)'
            }">
         <bookcover :book="book" class="book-cover flex-center" :style="{transform: 'rotateY('+book.coverRotateY+'deg)'}">
@@ -40,7 +40,7 @@
     </div>
     <div class="works-table-leg"
          :style="{
-         transition: allTransition,
+         transition: (allTransition ? 'transform '+allTransition+'s' : 'none'),
          transform: 'rotateX('+(tableRotateX+90)+'deg) translate3d(0, -'+(4.2+tableTranslateY/10)+'rem, -2rem)'
          }"></div>
   </div>
@@ -88,7 +88,7 @@ export default {
       tableRotateX: 90,
       tableRotateZ: 0,
       tableTranslateY: inits.tableTranslateY,
-      allTransition: 'all 0.8s',
+      allTransition: 0.8,
       isRotateTable: false,
       isBookOpened: true
     }
@@ -103,7 +103,7 @@ export default {
         _this.isRotateTable = false
       },
       move (disX) {
-        _this.allTransition = 'none'
+        _this.allTransition = 0
         _this.tableRotateZ = z - disX / 10
         _this.isRotateTable = true
       },
@@ -111,26 +111,26 @@ export default {
         if (Math.abs(disX) < 3 && Math.abs(disY) < 3) {
           _this.isRotateTable = false
         }
-        _this.allTransition = 'all 0.8s'
+        _this.allTransition = 0.8
       },
       easeOut (spX) {
         if (_this.isRotateTable) {
-          _this.allTransition = 'none'
+          _this.allTransition = 0
           _this.tableRotateZ -= this.directionX * spX / 10
         }
       },
       easeOutEnd () {
         _this.isRotateTable = false
-        _this.allTransition = 'all 0.8s'
+        _this.allTransition = 0.8
       }
     })
     timer = setTimeout(() => {
       clearTimeout(timer)
-      this.allTransition = 'all 1.5s'
+      this.allTransition = 1.5
       this.tableRotateX = 60
       timer = setTimeout(() => {
         clearTimeout(timer)
-        this.allTransition = 'all 0.8s'
+        this.allTransition = 0.8
         this.$refs.popup.show = this.$refs.navbar.show = true
       }, 1500)
     }, 200)
@@ -310,7 +310,8 @@ export default {
     transform: translateZ(-2px) scaleX(-1);
   }
   .book-back-cover-inner{
-    transform: translateZ(calc(1rem - 2px)) scaleX(-1);
+    transform-origin: left;
+    transform: translate3d(100%, 0, calc(1rem - 2px)) scaleX(-1);
   }
   .book-spine{
     text-align: center;
