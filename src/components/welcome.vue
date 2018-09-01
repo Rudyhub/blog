@@ -37,7 +37,7 @@ export default {
 
 <style>
   .welcome{
-    font-size: 2vw;
+    font-size: 0.42rem;
     text-align: center;
     width: 100%;
     height: 100%;

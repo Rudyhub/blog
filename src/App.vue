@@ -28,28 +28,28 @@ export default {
     color: #553a37;
   }
   .fs20{
-    font-size: 2vw;
+    font-size: .42rem;
   }
   .fs18{
-    font-size: 1.8vw;
+    font-size: .378rem;
   }
   .fs16{
-    font-size: 1.6vw;
+    font-size: .336rem;
   }
   .fs14{
-    font-size: 1.4vw;
+    font-size: .294rem;
   }
   .fs12{
-    font-size: 1.2vw;
+    font-size: .252rem;
   }
   .fs10{
-    font-size: 1vw;
+    font-size: .21rem;
   }
   .fs9{
-    font-size: .9vw;
+    font-size: .189rem;
   }
   .fs8{
-    font-size: .8vw;
+    font-size: .168rem;
   }
   .flex-center{
     display: flex;

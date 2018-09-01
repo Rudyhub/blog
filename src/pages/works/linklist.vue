@@ -6,8 +6,8 @@
       <span v-for="(rec, rindex) of recommend" :key="rindex">{{rec}}</span>
     </div>
     <ul class="linklist-ul" ref="list" v-if="items">
-      <li class="linklist-li" v-for="(item, index) of items" :key="index" v-if="index >= start && index < end">
-        <div class="linklist-num">{{index+1}} / {{total}}</div>
+      <li class="linklist-li" v-for="(item, index) of thisItems" :key="index">
+        <div class="linklist-num">{{start+index+1}} / {{total}}</div>
         <thumb class="linklist-thumb" v-if="item.thumb" :src="item.thumb"/>
         <h2 class="linklist-h2">{{item.title}}
           <sup class="linklist-sup linklist-not-online" v-if="item.online === 0">未上线</sup>
@@ -45,16 +45,9 @@ export default {
   props: ['items', 'title', 'apart'],
   components: {thumb},
   data () {
-    let len, recommend, start, end
+    let len, recommend, thisItems, start, end
     recommend = []
-    if (this.items) {
-      this.items.forEach((item, index) => {
-        if (item.level === 1) recommend.push(index + 1)
-      })
-    }
-    if (recommend.length < 1) {
-      recommend.push('无')
-    }
+    thisItems = []
     len = this.items.length
     if (this.apart === 'left') {
       start = 0
@@ -63,9 +56,19 @@ export default {
       start = Math.round(len / 2)
       end = len
     }
+    if (this.items) {
+      this.items.forEach((item, index) => {
+        if (index >= start && index < end) thisItems.push(item)
+        if (item.level === 1) recommend.push(index + 1)
+      })
+    }
+    if (recommend.length < 1) {
+      recommend.push('无')
+    }
     return {
       recommend,
       total: len,
+      thisItems,
       start,
       end
     }
@@ -110,6 +113,8 @@ export default {
     margin-top: 0;
     margin-bottom: 1em;
     font-weight: normal;
+    white-space: nowrap;
+    position: relative;
   }
   .linklist-sup{
     border-radius: 1em;
@@ -157,9 +162,7 @@ export default {
     position: relative;
     box-sizing: border-box;
     line-height: 1;
-    white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;
     margin: 0 .5em 1.5em;
     box-shadow: #ccc 0 1px 2px;
     background: #fff;
@@ -213,7 +216,7 @@ export default {
   .linklist-favhd{
     display: inline-block;
     vertical-align: middle;
-    margin: .3em;
+    margin: .1em .3em;
     color: #fff;
   }
   .linklist-favicon{
@@ -229,5 +232,19 @@ export default {
     line-height: 1.5;
     text-indent: 2em;
     border-top: #eee solid 1px;
+  }
+  .linklist-desc p{
+    margin: 0;
+  }
+  @media (max-width: 767px) {
+    .linklist-h1{
+      font-size: 20px;
+    }
+    .linklist-h2{
+      font-size: 14px;
+    }
+    .linklist-li {
+      font-size: 13px;
+    }
   }
 </style>

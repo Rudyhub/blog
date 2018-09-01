@@ -5,6 +5,21 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <title>rudyhub.github.io</title>
+    <script>
+      (function viewport () {
+        var scale, html, w, h, fs
+        scale = 0.4759
+        html = document.documentElement
+        w = window.innerWidth
+        h = window.innerHeight
+        if (h / w < scale) {
+          fs = h * .625 + '%'
+        } else {
+          fs = w * scale * .625 + '%'
+        }
+        html.style.fontSize = fs
+      })()
+    </script>
   </head>
   <body>
     <div id="app"></div>

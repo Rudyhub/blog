@@ -23,14 +23,14 @@ export default {
 </script>
 <style>
   .bookcover-title{
-    font-size: 6vh;
+    font-size: .6rem;
     line-height: 1;
     padding: .5em;
     border-bottom: 1px solid;
   }
   .bookcover-subtitle{
     text-transform: uppercase;
-    font-size: 5vh;
+    font-size: .5rem;
     margin: 0;
   }
   .bookcover-img{

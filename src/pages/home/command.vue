@@ -124,11 +124,10 @@ export default {
 <style>
   .command{
     height: 100%;
-    max-width: 1200px;
     margin: 0 auto;
     padding: 1em;
     overflow: hidden;
-    font-size: 12px;
+    font-size: 13px;
     box-sizing: border-box;
     line-height: 1.4;
   }

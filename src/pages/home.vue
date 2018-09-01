@@ -48,9 +48,9 @@ export default {
 
 <style>
   .home{
-    perspective: 150vh;
-    width: 150vh;
-    height: 100vh;
+    perspective: 15rem;
+    width: 15rem;
+    height: 10rem;
     margin: 0 auto;
     overflow: hidden;
   }
@@ -60,20 +60,20 @@ export default {
   }
   .computer{
     transform-style: preserve-3d;
-    transform: translateY(10vh);
-    width: 88vh;
-    height: 120vh;
+    transform: translateY(1rem);
+    width: 8.8rem;
+    height: 12rem;
     margin: 0 auto;
   }
   .computer-cover,
   .computer-keyboard,
   .computer-back-cover{
-    height: 50vh;
-    width: 88vh;
+    height: 5rem;
+    width: 8.8rem;
     position: absolute;
     left: 0;
     box-sizing: border-box;
-    box-shadow: inset 0 0 0.2vh #8a8583;
+    box-shadow: inset 0 0 .02rem #8a8583;
     transform-style: preserve-3d;
   }
   .computer-back-cover{
@@ -89,7 +89,7 @@ export default {
     top: 0;
   }
   .computer-back-cover, .computer-cover{
-    border-radius: 1vh 1vh 0 0;
+    border-radius: .1rem .1rem 0 0;
   }
   .computer-cover-enter-active,
   .computer-cover-leave-active{
@@ -102,7 +102,7 @@ export default {
   .computer-keyboard{
     background: linear-gradient(135deg, #222, #17151c);
     transform: rotateX(70deg);
-    top: 50vh;
+    top: 5rem;
     transform-origin: top;
   }
   .computer-keyboard:after{
@@ -113,11 +113,11 @@ export default {
     left: 0;
     width: 100%;
     height: 100%;
-    border-bottom: 1vh solid;
-    box-shadow: inset 0 -0.1vh 0.2vh #686361;
+    border-bottom: .1rem solid;
+    box-shadow: inset 0 -.01rem .02rem #686361;
   }
   .computer-keyboard, .computer-keyboard:after{
-    border-radius: 0 0 2.5vh 2.5vh;
+    border-radius: 0 0 .25rem .25rem;
   }
   .computer-screen{
     width: 98%;

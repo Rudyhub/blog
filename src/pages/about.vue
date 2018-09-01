@@ -67,7 +67,7 @@ export default {
   data () {
     return {
       aboutShow: false,
-      glassBoxTransform: 'translate3d(0, 0, -20vh) rotateY(0)',
+      glassBoxTransform: 'translate3d(0, 0, -2rem) rotateY(0)',
       chartColor: [
         {color: 'rgba(111,174,9,.5)', text: '程序编程语言及框架'},
         {color: 'rgba(211, 108, 16, 0.5)', text: 'UI、工程设计及动画软件应用'},
@@ -299,7 +299,7 @@ export default {
     }
 
     function trans () {
-      _this.glassBoxTransform = 'translate3d(' + transX + 'px, ' + transY + 'px, ' + z + 'vh) rotateY(' + rotateY + 'deg)'
+      _this.glassBoxTransform = 'translate3d(' + transX + 'px, ' + transY + 'px, ' + (z / 10) + 'rem) rotateY(' + rotateY + 'deg)'
     }
 
     this.aboutShow = true
@@ -340,11 +340,11 @@ export default {
 
 <style scoped>
   .about{
-    height: 100vh;
+    height: 10rem;
     position: relative;
     overflow: hidden;
     background: #07080d;
-    perspective: 100vw;
+    perspective: 21rem;
     color: #ccd;
     user-select: none;
   }
@@ -352,13 +352,13 @@ export default {
     transform-style: preserve-3d;
     transform-origin: left;
     position: relative;
-    transform: translate3d(0, 0, -20vh) rotateY(0);
+    transform: translate3d(0, 0, -2rem) rotateY(0);
   }
   .about-glass{
     background: rgba(200, 240, 255, 0.2);
     position: absolute;
     width: 100%;
-    height: 100vh;
+    height: 10rem;
     top: 0;
     left: 0;
     transform-origin: left;
@@ -384,13 +384,13 @@ export default {
   }
   @keyframes about-in {
     0%{
-      transform: translate3d(50vw, 0, -3000vh) rotateY(-360deg);
+      transform: translate3d(10.5rem, 0, -300rem) rotateY(-360deg);
     }
     80%{
-      transform: translate3d(50vw, 0, -20vh) rotateY(0);
+      transform: translate3d(10.5rem, 0, -2rem) rotateY(0);
     }
     100%{
-      transform: translate3d(0, 0, -20vh) rotateY(0);
+      transform: translate3d(0, 0, -2rem) rotateY(0);
     }
   }
   .about-face{

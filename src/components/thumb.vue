@@ -1,6 +1,6 @@
 <template>
   <div class="thumb" :style="{background: 'url('+src+') no-repeat center', backgroundSize: (size || 'cover')}">
-    <img class="thumb-img" :src="src" :alt="alt" :title="title">
+    <img class="thumb-img" :src="src" :alt="alt" :title="title" draggable="false">
   </div>
 </template>
 

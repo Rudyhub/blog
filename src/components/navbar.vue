@@ -47,7 +47,7 @@ export default {
     height: 100%;
     color: #888;
     z-index: 99;
-    perspective: 50vw;
+    perspective: 10.5rem;
   }
   .navbar-item{
     background: rgba(200, 240, 255, 0.3);

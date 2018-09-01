@@ -38,7 +38,7 @@ export default {
 <style>
   .popup{
     width: 100%;
-    height: 100vh;
+    height: 100%;
     align-items: center;
     justify-content: center;
     align-content: center;

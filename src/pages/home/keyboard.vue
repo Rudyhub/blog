@@ -70,61 +70,61 @@ export default {
 
 <style>
 .keyboard{
-  width: 88vh;
-  margin: 3vh auto;
-  padding: .5vh;
+  width: 100%;
+  margin: .3rem auto;
+  padding: .05rem;
   box-sizing: border-box;
   color: #910101;
 }
 .keyboard-row{
-  height: 6vh;
-  margin: .5vh 0;
+  height: .6rem;
+  margin: .05rem 0;
 }
 .keyboard-item{
   box-sizing: border-box;
   float: left;
-  width: 5.3vh;
-  height: 5.3vh;
-  margin:0 .3vh;
+  width: .53rem;
+  height: .53rem;
+  margin:0 .03rem;
   vertical-align: middle;
   border-radius: 4px;
   line-height: 1.2;
   position: relative;
-  font-size: 1.8vh;
-  box-shadow: 0 .1vh 0.4vh .1vh;
+  font-size: .18rem;
+  box-shadow: 0 .01rem .04rem .01rem;
 }
 .keyboard-Escape{
-  margin-right: 1.5vh;
+  margin-right: 0.15rem;
 }
 .keyboard-Delete{
-  width: 7vh;
-  margin-left: 1.5vh;
+  width: .7rem;
+  margin-left: .15rem;
 }
 .keyboard-Backspace{
-  width: 9.4vh;
-  font-size: 1.6vh;
+  width: .94rem;
+  font-size: .16rem;
 }
 .keyboard-Tab,
 .keyboard-Backslash{
-  width: 7.3vh;
+  width: .73rem;
 }
 .keyboard-CapsLock,
 .keyboard-Enter{
-  width: 10.2vh;
+  width: 1.02rem;
 }
 .keyboard-ShiftLeft,
 .keyboard-ShiftRight{
-  width: 13.1vh;
+  width: 1.31rem;
 }
 .keyboard-ControlLeft,
 .keyboard-ControlRight{
-  width: 6.5vh;
+  width: .65rem;
 }
 .keyboard-Space{
-  width: 34.5vh;
+  width: 3.45rem;
 }
 .keyboard-PrintScreen{
-  width: 7vh;
+  width: .7rem;
 }
 .keyboard-Delete,
 .keyboard-Backspace,
@@ -134,17 +134,17 @@ export default {
 .keyboard-ShiftLeft,
 .keyboard-ShiftRight,
 .keyboard-row:last-child .keyboard-item{
-  line-height: 4.2vh;
+  line-height: .42rem;
   text-align: center;
 }
 .keyboard-content{
   width: 100%;
   height: 100%;
-  box-shadow: inset 0 0 0.2vh #afaaa8;
+  box-shadow: inset 0 0 .02rem #afaaa8;
   box-sizing: border-box;
   padding: 0 .2em;
   border-radius: 3px;
-  border-bottom: .7vh solid #000;
+  border-bottom: .07rem solid #000;
   overflow: hidden;
 }
 .keyboard-item.active{
@@ -153,22 +153,22 @@ export default {
 }
 .active .keyboard-content{
   height: 98%;
-  border-width: .3vh;
+  border-width: .03rem;
 }
 @keyframes bright {
   0%{
-    box-shadow: 0 .1vh .4vh;
+    box-shadow: 0 .01rem .04rem;
   }
   20%{
     border: 1px solid #00bcff;
-    box-shadow: 0 .2vh 1.4vh;
+    box-shadow: 0 .02rem .14rem;
   }
   80%{
     border: 1px solid #00bcff;
-    box-shadow: 0 .2vh 1.4vh;
+    box-shadow: 0 .02rem .14rem;
   }
   100%{
-    box-shadow: 0 .1vh .4vh;
+    box-shadow: 0 .01rem .04rem;
   }
 }
 </style>
