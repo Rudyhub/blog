@@ -16,10 +16,12 @@ export default {
     items: [{
       title: 'RMedia媒体处理器',
       source: ['https://github.com/Rudyhub/RMedia'],
+      docs: ['https://rudyhub.github.io/RMedia'],
       date: 20180226,
       desc: `这是一个node-webkit + ffmpeg的桌面应用，初衷只是为了解决视频压缩问题，但发现公司视频部还遇到各种奇怪问题，
       比如电脑上或ios手机上播放视频有声音，但安卓播放没有却死活没有声音或者某段声音喳喳的响到后面又正常等。
-      本软件就是为了处理这些问题。另外还外加了处理图片以及pdf转图片然后自动拼接等。`
+      本软件就是为了处理这些问题。另外还外加了处理图片以及pdf转图片然后自动拼接等。`,
+      level: 1
     }, {
       title: 'FupConvert视频转码压缩',
       source: ['https://github.com/Rudyhub/FupConvert'],
@@ -30,7 +32,8 @@ export default {
       href: ['https://rudyhub.github.io/Reditor/'],
       source: ['https://github.com/Rudyhub/Reditor'],
       date: 20170825,
-      desc: '由于中途有其他事更急迫，故未完成，但一般后台常功能都可用。本编辑器是针对后台的，侧重于图片、视频及其他文件的上传功能的体验。'
+      desc: '由于中途有其他事更急迫，故未完成，但一般后台常功能都可用。本编辑器是针对后台的，侧重于图片、视频及其他文件的上传功能的体验。',
+      level: 1
     }]
   }, {
     name: 'games',
@@ -85,7 +88,9 @@ export default {
       title: '世界杯射门游戏',
       href: ['https://rudyhub.github.io/WorldCupGame2.0/', 'https://wii-c.com/world_cup_shot_game/'],
       source: ['https://github.com/Rudyhub/WorldCupGame2.0', 'http://gitserv.wenweipo.com/fentoo/world_cup_shot_game'],
-      desc: '优秀作品，用2D模拟3D运动、keyframe动画、匀减速算法、碰撞检测等',
+      desc: `优秀作品。
+      这是dom+css3写游戏的尝试，用2D模拟3D运动、keyframe动画、匀减速、碰撞检测等，虽然碰撞检测用了canvas，但也仅仅只是个隐藏的标签而已。
+      当然，最后得出结论：canvas写游戏更好，尤其在低配手机上可以看出渲染的差别，dom+css3有时有卡顿现象。`,
       date: 20180615,
       thumb: 'https://wii-c.com/world_cup_shot_game/img/cover.jpg',
       level: 1
@@ -166,7 +171,9 @@ export default {
       title: '斩港妖切切乐游戏',
       href: ['https://rudyhub.github.io/cutfruit-wwp/'],
       date: 20170923,
-      desc: '未上线，原因是突然发现有点血腥。但可体验本人随便替换了UI的版本：https://rudyhub.github.io/cutfruit/',
+      desc: `
+      <p>产品未上线，原因是突然发现有点血腥，虽然针对港独分子，政治对立，但还是要讲人道主义的。
+      但可体验本人随便替换了UI的切水果版本：https://rudyhub.github.io/cutfruit/</p>`,
       thumb: 'https://rudyhub.github.io/cutfruit-wwp/img/title.png',
       online: 0,
       level: 1
@@ -319,7 +326,7 @@ export default {
       title: '文汇后台系统',
       href: [],
       date: 20170926,
-      desc: '未上线，原因可能是手台没人搞，人手不够，或者还没有完成，人手不够进度慢。',
+      desc: '未上线，原因可能是后台人手不够，或者还没有完成，人手不够进度慢。',
       online: 0
     }, {
       title: '中共十九大',

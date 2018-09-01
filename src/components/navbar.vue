@@ -1,8 +1,8 @@
 <template>
   <transition name="fade" @beforeEnter="beforeEnter" @afterLeave="afterLeave">
-    <nav v-show="show" class="nav">
-      <router-link class="nav-item" v-for="(navItem, name) of nav" :key="name" :to="'/'+name" tag="a" @click="onclick($event, name)">{{navItem[0]}}</router-link>
-      <a class="nav-item" href="javascript:void(0)" @click="onclick($event, 'help')">指南</a>
+    <nav v-show="show" class="navbar">
+      <router-link class="navbar-item" v-for="(navItem, name) of nav" :key="name" :to="'/'+name" tag="a" @click="onclick($event, name)">{{navItem[0]}}</router-link>
+      <a class="navbar-item" href="javascript:void(0)" @click="onclick($event, 'help')">指南</a>
     </nav>
   </transition>
 </template>
@@ -37,8 +37,8 @@ export default {
 }
 </script>
 
-<style scoped>
-  .nav{
+<style>
+  .navbar{
     text-align: right;
     position: fixed;
     top: 0;
@@ -49,9 +49,8 @@ export default {
     z-index: 99;
     perspective: 50vw;
   }
-  .nav-item{
+  .navbar-item{
     background: rgba(200, 240, 255, 0.3);
-    color: #ccc;
     border-radius: 4px;
     display: block;
     padding: .5em;
@@ -65,7 +64,10 @@ export default {
     transform-origin: right;
     margin: .2em 0;
   }
-  .nav-item:hover{
+  a.navbar-item{
+    color: #fff;
+  }
+  .navbar-item:hover{
     background: rgba(200, 240, 255, 0.5);
     transform: rotateY(-10deg);
   }

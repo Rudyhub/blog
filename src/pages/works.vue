@@ -1,5 +1,5 @@
 <template>
-  <div class="stage flex-center" :style="'perspective: '+stagePerspective+'vh'" @transitionend="stageTransEnd">
+  <div class="works flex-center" :style="'perspective: '+stagePerspective+'vh'" @transitionend="stageTransEnd">
     <navbar ref="navbar" class="flex-column" @click="navbarClick"/>
     <popup ref="popup" @beforeEnter="onPopupShow" @afterLeave="onPopupHide">
       <p class="popup-fs18"><b>操作指南：</b></p>
@@ -9,7 +9,7 @@
         书本被打开后，双击<b class="popup-color-1">=</b>关闭书本
       </p>
     </popup>
-    <div class="table flex-center"
+    <div class="works-table flex-center"
          :style="{
          transition: allTransition,
          transform: 'translateY('+tableTranslateY+'vh) rotateX(' + tableRotateX + 'deg) rotateZ(' + tableRotateZ + 'deg)'
@@ -19,26 +19,26 @@
            transition: allTransition,
            transform: 'scale3d('+book.scale+','+book.scale+','+book.scale+') rotateX(-90deg) rotateY(' + book.rotateY + 'deg) translate3d('+book.translateX+'vh,-50vh,0)'
            }">
-        <bookcover :book="book" class="cover flex-center" :style="{transform: 'rotateY('+book.coverRotateY+'deg)'}">
-          <div class="cover-inner" @dblclick="closeBook(index)">
+        <bookcover :book="book" class="book-cover flex-center" :style="{transform: 'rotateY('+book.coverRotateY+'deg)'}">
+          <div class="book-cover-inner" @dblclick="closeBook(index)">
             <linklist :items="book.items" apart="left" :title="book.title"></linklist>
           </div>
         </bookcover>
-        <div class="spine spine-a flex-center">
-          <div class="spine-title" v-html="spineTextFilter(book.title)"></div>
-          <div class="spine-subtitle" v-html="spineTextFilter(book.subtitle)"></div>
+        <div class="book-spine book-spine-a flex-center">
+          <div class="book-spine-title" v-html="spineTextFilter(book.title)"></div>
+          <div class="book-spine-subtitle" v-html="spineTextFilter(book.subtitle)"></div>
         </div>
-        <div class="spine spine-b"></div>
-        <div class="spine spine-c"></div>
-        <div class="spine spine-d"></div>
-        <bookcover :book="book" class="back-cover flex-center">
-          <div class="back-cover-inner" @dblclick="closeBook(index)">
+        <div class="book-spine book-spine-b"></div>
+        <div class="book-spine book-spine-c"></div>
+        <div class="book-spine book-spine-d"></div>
+        <bookcover :book="book" class="book-back-cover flex-center">
+          <div class="book-back-cover-inner" @dblclick="closeBook(index)">
             <linklist :items="book.items" apart="right"  :title="book.title"></linklist>
           </div>
         </bookcover>
       </div>
     </div>
-    <div class="table-leg"
+    <div class="works-table-leg"
          :style="{
          transition: allTransition,
          transform: 'rotateX('+(tableRotateX+90)+'deg) translate3d(0, -'+(42+tableTranslateY)+'vh, -20vh)'
@@ -197,15 +197,15 @@ export default {
 }
 </script>
 
-<style scoped>
-  .stage{
+<style>
+  .works{
     perspective: 100vh;
     height: 100vh;
     background: #07080d;
     overflow: hidden;
     transition: all 0.8s;
   }
-  .table{
+  .works-table{
     width: 80vh;
     height: 80vh;
     border-radius: 50%;
@@ -215,7 +215,7 @@ export default {
     position: absolute;
     z-index: 2;
   }
-  .table:after{
+  .works-table:after{
     content: '';
     display: block;
     left: 0;
@@ -230,7 +230,7 @@ export default {
     position: absolute;
     z-index: 1;
   }
-  .table-leg{
+  .works-table-leg{
     position: absolute;
     width: 3vh;
     height: 30vh;
@@ -240,7 +240,7 @@ export default {
     z-index: 0;
     top: 8vh;
   }
-  .table-leg:before{
+  .works-table-leg:before{
     content: '';
     position: absolute;
     width: 10vh;
@@ -251,7 +251,7 @@ export default {
     bottom: 0;
     left: 0;
   }
-  .table-leg:after{
+  .works-table-leg:after{
     content: '';
     position: absolute;
     width: 30vh;
@@ -271,34 +271,34 @@ export default {
     height: 100vh;
     z-index: 1;
   }
-  .cover,
-  .back-cover{
+  .book-cover,
+  .book-back-cover{
     width: 88vh;
     height: 100vh;
     flex-direction: column;
     color: #333;
     transform-style: preserve-3d;
   }
-  .spine,
-  .back-cover{
+  .book-spine,
+  .book-back-cover{
     position: absolute;
     top: 0;
     left: 0;
   }
-  .cover{
+  .book-cover{
     background: linear-gradient(45deg, #888, #ccc);
     text-align: center;
     transform-origin: left;
     transform: rotateY(-90deg);
     transition: transform 0.6s;
   }
-  .back-cover{
+  .book-back-cover{
     transform-origin: left;
     transform: rotateY(-90deg) scaleX(-1) translate3d(-88vh, 0, -10vh);
     background: linear-gradient(0, #c8c7d7, #c1b8ac);
   }
-  .cover-inner,
-  .back-cover-inner{
+  .book-cover-inner,
+  .book-back-cover-inner{
     background: linear-gradient(45deg, #cccccc, #ffffff);
     width: 100%;
     height: 100%;
@@ -306,25 +306,26 @@ export default {
     left: 0;
     top: 0;
   }
-  .cover-inner{
+  .book-cover-inner{
     transform: translateZ(-2px) scaleX(-1);
   }
-  .back-cover-inner{
+  .book-back-cover-inner{
     transform: translateZ(calc(10vh - 2px)) scaleX(-1);
   }
-  .spine{
+  .book-spine{
     text-align: center;
     font-size: 5vh;
     color: #333;
+    line-height: 1;
   }
-  .spine-b,
-  .spine-c,
-  .spine-d{
+  .book-spine-b,
+  .book-spine-c,
+  .book-spine-d{
     width: calc(10vh - 2px);
     background: linear-gradient(90deg, #b9c3dd, #b9c3dd 50%, #c1b8ac 50%, #c1b8ac);
     background-size: 10% 100%;
   }
-  .spine-a{
+  .book-spine-a{
     width: 10vh;
     box-shadow: inset 0 0 2vh #fff;
     height: 100vh;
@@ -332,27 +333,27 @@ export default {
     flex-direction: column;
     transform: scaleX(-1);
   }
-  .spine-b{
+  .book-spine-b{
     transform: translate3d(0, 0, 88vh);
     box-shadow: inset 0 0 2vh #555;
     height: 100vh;
   }
-  .spine-c{
+  .book-spine-c{
     transform-origin: top;
     transform: rotateX(90deg);
     box-shadow: inset 0 0 2vh #555;
     height: 88vh;
   }
-  .spine-d{
+  .book-spine-d{
     transform-origin: top;
     transform:  rotateX(90deg) translate3d(0, 0, -100vh);
     box-shadow: inset 0 0 2vh #555;
     height: 88vh;
   }
-  .spine-title{
+  .book-spine-title{
     margin: 0 auto;
   }
-  .spine-subtitle {
+  .book-spine-subtitle {
     background: #333;
     color: #fff;
     padding: 1vh;

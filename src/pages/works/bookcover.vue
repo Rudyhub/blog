@@ -1,9 +1,9 @@
 <template>
   <div @transitionend="transitionEnd">
-    <canvasplayer v-if="book.video" :src="book.video" :autoplay="true" :loop="true" class="cover-img"></canvasplayer>
-    <img class="cover-img" :src="book.cover" draggable="false">
-    <h1 class="cover-title">{{book.title}}</h1>
-    <h2 class="cover-subtitle">{{book.subtitle}}</h2>
+    <canvasplayer v-if="book.video" :src="book.video" :autoplay="true" :loop="true" class="bookcover-img"></canvasplayer>
+    <img class="bookcover-img" :src="book.cover" draggable="false">
+    <h1 class="bookcover-title">{{book.title}}</h1>
+    <h2 class="bookcover-subtitle">{{book.subtitle}}</h2>
     <slot></slot>
   </div>
 </template>
@@ -21,19 +21,19 @@ export default {
   }
 }
 </script>
-<style scoped>
-  .cover-title{
+<style>
+  .bookcover-title{
     font-size: 6vh;
     line-height: 1;
     padding: .5em;
     border-bottom: 1px solid;
   }
-  .cover-subtitle{
+  .bookcover-subtitle{
     text-transform: uppercase;
     font-size: 5vh;
     margin: 0;
   }
-  .cover-img{
+  .bookcover-img{
     width: 80%;
     border-radius: 6px;
   }

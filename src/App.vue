@@ -9,11 +9,23 @@ export default {
 </script>
 
 <style>
+  html{
+    font-size: 625%;
+  }
   body{
     margin: 0;
     font-family: "Source Sans Pro", "Helvetica Neue", Arial, "Microsoft YaHei", "微软雅黑", SimSun, "宋体", sans-serif;
     font-size: 16px;
     background: #111;
+  }
+  a{
+    text-decoration: none;
+  }
+  a:link{
+    color: #264bb7;
+  }
+  a:visited{
+    color: #553a37;
   }
   .fs20{
     font-size: 2vw;

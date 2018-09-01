@@ -1,28 +1,31 @@
 <template>
-  <div class="link-list">
-    <h1>{{title}}</h1>
-    <div class="link-info">
+  <div class="linklist">
+    <h1 class="linklist-h1">{{title}}</h1>
+    <div class="linklist-info">
       特别推荐：
       <span v-for="(rec, rindex) of recommend" :key="rindex">{{rec}}</span>
     </div>
-    <ul ref="list" v-if="items">
-      <li v-for="(item, index) of items" :key="index" v-if="index >= start && index < end">
-        <div class="link-num">{{index+1}} / {{total}}</div>
-        <thumb v-if="item.thumb" :src="item.thumb"/>
-        <h2>{{item.title}}
-          <sup class="link-not-online" v-if="item.online === 0">未上线</sup>
-          <sup class="link-recommend" v-if="item.level === 1">推荐</sup>
+    <ul class="linklist-ul" ref="list" v-if="items">
+      <li class="linklist-li" v-for="(item, index) of items" :key="index" v-if="index >= start && index < end">
+        <div class="linklist-num">{{index+1}} / {{total}}</div>
+        <thumb class="linklist-thumb" v-if="item.thumb" :src="item.thumb"/>
+        <h2 class="linklist-h2">{{item.title}}
+          <sup class="linklist-sup linklist-not-online" v-if="item.online === 0">未上线</sup>
+          <sup class="linklist-sup linklist-recommend" v-if="item.level === 1">推荐</sup>
         </h2>
-        <div class="link-href">
-          <time>{{item.date | datemat}} </time>
-          <a class="link-href-item" v-if="item.href" v-for="(href, hIndex) of item.href" :key="'href'+hIndex" :href="href" target="_blank">
-            <span class="link-favhd">体验</span><img class="link-favicon" :src="getFavicon(href)"/>
+        <div class="linklist-list">
+          <time class="linklist-time">{{item.date | datemat}} </time>
+          <a class="linklist-item linklist-href" v-if="item.href" v-for="(href, hIndex) of item.href" :key="'href'+hIndex" :href="href" target="_blank">
+            <span class="linklist-favhd">体验</span><img class="linklist-favicon" :src="getFavicon(href)"/>
           </a>
-          <a class="link-source-item" v-if="item.source" v-for="(source, sIndex) of item.source" :key="'source'+sIndex" :href="source" target="_blank">
-            <span class="link-favhd">源码</span><img class="link-favicon" :src="getFavicon(source)"/>
+          <a class="linklist-item linklist-source" v-if="item.source" v-for="(source, sIndex) of item.source" :key="'source'+sIndex" :href="source" target="_blank">
+            <span class="linklist-favhd">源码</span><img class="linklist-favicon" :src="getFavicon(source)"/>
+          </a>
+          <a class="linklist-item linklist-docs" v-if="item.docs" v-for="(doc, dIndex) of item.docs" :key="'docs'+dIndex" :href="doc" target="_blank">
+            <span class="linklist-favhd">文档</span><img class="linklist-favicon" :src="getFavicon(doc)"/>
           </a>
         </div>
-        <div class="link-desc" v-if="item.desc" v-html="item.desc"></div>
+        <div class="linklist-desc" v-if="item.desc" v-html="item.desc"></div>
       </li>
     </ul>
   </div>
@@ -50,7 +53,7 @@ export default {
       })
     }
     if (recommend.length < 1) {
-      recommend.push('无，没有一个能入我的眼。')
+      recommend.push('无')
     }
     len = this.items.length
     if (this.apart === 'left') {
@@ -91,24 +94,24 @@ export default {
 }
 </script>
 
-<style scoped>
-  .link-list{
+<style>
+  .linklist{
     cursor: auto;
     overflow: hidden;
     width: 100%;
     height: 100%;
   }
-  h1{
+  .linklist-h1{
     font-size: 22px;
     text-align: center;
   }
-  h2{
+  .linklist-h2{
     font-size: 16px;
     margin-top: 0;
     margin-bottom: 1em;
     font-weight: normal;
   }
-  sup{
+  .linklist-sup{
     border-radius: 1em;
     line-height: 1;
     padding: .1em .5em;
@@ -116,23 +119,30 @@ export default {
     font-weight: normal;
     font-size: 12px;
   }
-  .link-info{
+  .linklist-info{
     font-size: 14px;
     text-align: left;
     margin: 0 3em;
   }
-  .link-info span{
+  .linklist-info span{
     display: inline-block;
     vertical-align: top;
-    margin: 0 .4em;
+    margin: 0 2px;
+    background: #308846;
+    color: #fff;
+    padding: .2em;
+    line-height: 1;
+    border-radius: .2em;
+    min-width: 1em;
+    text-align: center;
   }
-  .link-not-online{
+  .linklist-not-online{
     background: #787677;
   }
-  .link-recommend{
+  .linklist-recommend{
     background: #308846;
   }
-  ul{
+  .linklist-ul{
     list-style: none;
     text-align: left;
     margin: 1.5em 2em;
@@ -141,7 +151,7 @@ export default {
     overflow: hidden;
     box-sizing: border-box;
   }
-  li{
+  .linklist-li{
     font-size: 15px;
     padding: 1em .5em;
     position: relative;
@@ -154,7 +164,7 @@ export default {
     box-shadow: #ccc 0 1px 2px;
     background: #fff;
   }
-  .link-num{
+  .linklist-num{
     position: absolute;
     right: 0;
     top: 0;
@@ -164,28 +174,18 @@ export default {
     border-bottom-left-radius: .4em;
     color: #111;
   }
-  .thumb{
+  .linklist-thumb{
     width: 3.6em;
     height: 3.6em;
     margin-right: 1em;
     display: block;
     float: left;
   }
-  time{
+  .linklist-time{
     display: inline-block;
     vertical-align: middle;
   }
-  a{
-    text-decoration: none;
-  }
-  a:link{
-    color: #264bb7;
-  }
-  a:visited{
-    color: #553a37;
-  }
-  .link-href-item,
-  .link-source-item{
+  .linklist-item{
     display: inline-block;
     font-size: 12px;
     vertical-align: middle;
@@ -194,29 +194,32 @@ export default {
     overflow: hidden;
     opacity: .8;
     box-sizing: border-box;
+    box-shadow: #555 0 0 2px;
   }
-  .link-href-item:hover,
-  .link-source-item:hover{
+  .linklist-item:hover{
     transition: opacity .3s;
     opacity: 1;
   }
-  .link-href-item{
+  .linklist-href{
     background: linear-gradient(90deg, #6f4940 60%, #eee 60%);
   }
-  .link-source-item{
+  .linklist-source{
     background: linear-gradient(90deg, #477a4d 60%, #eee 60%);
   }
-  .link-favicon,
-  .link-favhd{
+  .linklist-docs{
+    background: linear-gradient(90deg, #7a2850 60%, #eee 60%);
+  }
+  .linklist-favicon,
+  .linklist-favhd{
     display: inline-block;
     vertical-align: middle;
     margin: .3em;
     color: #fff;
   }
-  .link-favicon{
+  .linklist-favicon{
     height: 1.2em;
   }
-  .link-desc{
+  .linklist-desc{
     font-size: 13px;
     color: #666;
     margin-top: .5em;
