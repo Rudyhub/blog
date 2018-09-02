@@ -17,8 +17,8 @@ export default {
   mounted () {
   },
   methods: {
-    pageClickFn (e, n) {
-      this.$refs.bookinner[n]()
+    pageClickFn () {
+      this.$refs.bookinner[this.$refs.bookinner.$turn]()
     }
   }
 }

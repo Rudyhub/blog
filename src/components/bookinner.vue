@@ -114,7 +114,7 @@ export default {
   }
   .bookinner-page-front,
   .bookinner-page-back{
-    background: linear-gradient(90deg, #bbd5ee, #888888);
+    background: linear-gradient(45deg, #dbdbdb, #ffffff);
     width: 100%;
     height: 100%;
     position: absolute;
