@@ -1,6 +1,6 @@
 <template>
   <div class="album">
-    <bookinner :pages="pages" class="papers"/>
+    <bookinner ref="bookinner" :pages="pages" class="papers" @pageClick="pageClickFn"/>
   </div>
 </template>
 
@@ -16,7 +16,11 @@ export default {
   },
   mounted () {
   },
-  methods: {}
+  methods: {
+    pageClickFn (e, n) {
+      this.$refs.bookinner[n]()
+    }
+  }
 }
 </script>
 

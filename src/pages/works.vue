@@ -21,7 +21,8 @@
            }">
         <bookcover :book="book" class="book-cover flex-center" :style="{transform: 'rotateY('+book.coverRotateY+'deg)'}">
           <div class="book-cover-inner" @dblclick="closeBook(index)">
-            <linklist :items="book.items" apart="left" :title="book.title"></linklist>
+            <bookinner ref="bookinner" :pages="book.items" @pageClick="pageClickFn($event, index)"/>
+            <!--<linklist :items="book.items" apart="left" :title="book.title"></linklist>-->
           </div>
         </bookcover>
         <div class="book-spine book-spine-a flex-center">
@@ -53,9 +54,10 @@ import popup from '../components/popup'
 import utils from '../scripts/utils.js'
 import navbar from '../components/navbar'
 import linklist from './works/linklist'
+import bookinner from '../components/bookinner'
 export default {
   name: 'works',
-  components: {bookcover, popup, navbar, linklist},
+  components: {bookcover, popup, navbar, linklist, bookinner},
   data () {
     let works, books, len, i, inits
     works = store.works
@@ -192,6 +194,13 @@ export default {
       this.books[index].translateX = -80
       this.books[index].coverRotateY = -90
       this.$refs.navbar.show = true
+    },
+    pageClickFn (e, index) {
+      if (this.isBookOpened) {
+        let bookinner = this.$refs.bookinner[index]
+        bookinner[bookinner.$turn]()
+        // this.$refs.bingames[n]()
+      }
     }
   }
 }

@@ -29,7 +29,7 @@ export default {
     items.push(['', ''])
     return {
       items,
-      total: items.length,
+      total: items.length - 1,
       paperIndex: 1,
       isTransEnd: true
     }
@@ -40,34 +40,37 @@ export default {
     this.$refs.underFront.innerHTML = this.items[this.paperIndex][0]
   },
   methods: {
-    pageClick (e) {
-      let target = e.currentTarget
+    next () {
       if (!this.isTransEnd) return
-      if (target === this.$refs.left) {
-        if (this.paperIndex < this.items.length - 1) {
-          this.isTransEnd = false
-          this.paperIndex++
-          this.$emit('beforeTurn', e, this.paperIndex, 'next')
-          this.$refs.under.classList.add('bookinner-page-under')
-          this.$refs.under.classList.remove('bookinner-page-under-right')
-          this.$refs.underFront.innerHTML = this.items[this.paperIndex][0]
-          target.classList.add('bookinner-page-transition', 'bookinner-page-over-left')
-        } else {
-          this.$emit('toEnd', e)
-        }
+      if (this.paperIndex < this.items.length - 1) {
+        this.isTransEnd = false
+        this.paperIndex++
+        this.$emit('beforeTurn', this.paperIndex)
+        this.$refs.under.classList.add('bookinner-page-under')
+        this.$refs.under.classList.remove('bookinner-page-under-right')
+        this.$refs.underFront.innerHTML = this.items[this.paperIndex][0]
+        this.$refs.left.classList.add('bookinner-page-transition', 'bookinner-page-over-left')
       } else {
-        if (this.paperIndex > 1) {
-          this.isTransEnd = false
-          this.paperIndex--
-          this.$emit('beforeTurn', e, this.paperIndex, 'prev')
-          this.$refs.under.classList.add('bookinner-page-under-right')
-          this.$refs.under.classList.remove('bookinner-page-under')
-          this.$refs.underBack.innerHTML = this.items[this.paperIndex - 1][1]
-          target.classList.add('bookinner-page-transition', 'bookinner-page-over')
-        } else {
-          this.$emit('toStart')
-        }
+        this.$emit('toEnd')
       }
+    },
+    prev () {
+      if (!this.isTransEnd) return
+      if (this.paperIndex > 1) {
+        this.isTransEnd = false
+        this.paperIndex--
+        this.$emit('beforeTurn', this.paperIndex)
+        this.$refs.under.classList.add('bookinner-page-under-right')
+        this.$refs.under.classList.remove('bookinner-page-under')
+        this.$refs.underBack.innerHTML = this.items[this.paperIndex - 1][1]
+        this.$refs.right.classList.add('bookinner-page-transition', 'bookinner-page-over')
+      } else {
+        this.$emit('toStart')
+      }
+    },
+    pageClick (e) {
+      this.$turn = e.currentTarget === this.$refs.left ? 'next' : 'prev'
+      this.$emit('pageClick', e)
     },
     transEnd (e) {
       let target = e.currentTarget
