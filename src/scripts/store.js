@@ -625,25 +625,34 @@ export default {
     name: 'landscape',
     title: '景观方案设计类',
     subtitle: '2014 在溪林峰',
-    cover: '/static/works/03/01.jpg',
+    cover: '/static/landscape/01.jpg',
     items: []
   }, {
     name: 'effects',
     title: '效果图类',
     subtitle: '2012 在朗形',
-    cover: '/static/works/02/01.jpg',
+    cover: '/static/effects/01.jpg',
     items: []
   }, {
     name: 'homework',
     title: '规划设计类',
     subtitle: '2008在学校',
-    cover: '/static/works/01/01.jpg',
+    cover: '/static/homework/01.jpg',
     items: [{
       title: '模型课作业：《欧式别墅花园设计》',
-      thumb: '/static/works/01/01.jpg',
+      thumb: '/static/homework/01.jpg',
       href: [],
       date: 20110210,
-      items: ['/static/works/01/01.jpg', '/static/works/01/02.jpg']
+      items: [{
+        caption: '效果图：别墅夜景',
+        img: '/static/homework/01.jpg'
+      }, {
+        caption: '效果图：别墅日天',
+        img: '/static/homework/02.jpg'
+      }, {
+        caption: '相片：别墅模型',
+        img: '/static/homework/03.jpg'
+      }]
     }]
   }],
   AI: Object.freeze([{

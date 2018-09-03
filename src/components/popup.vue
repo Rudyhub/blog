@@ -2,14 +2,17 @@
   <transition name="fade" @beforeEnter="beforeEnter" @afterLeave="afterLeave">
     <div v-show="show" class="popup" :style="maskStyle" @click="onclick">
       <div class="popup-wrapper" :style="wrapperStyle">
-        <b class="popup-close fs18">&times;</b>
-        <slot></slot>
+        <b class="popup-close">&times;</b>
+        <div ref="popupContent" class="popup-content">
+          <slot></slot>
+        </div>
       </div>
     </div>
   </transition>
 </template>
 
 <script>
+import utils from '../scripts/utils.js'
 export default {
   name: 'popup',
   props: ['maskStyle', 'wrapperStyle'],
@@ -17,6 +20,9 @@ export default {
     return {
       show: false
     }
+  },
+  mounted () {
+    utils.scroll(this.$refs.popupContent)
   },
   methods: {
     onclick (e) {
@@ -51,17 +57,21 @@ export default {
     background: rgba(0,0,0,0.6);
   }
   .popup-wrapper{
+    position: relative;
     border-radius: 6px;
     border: 2px solid #444444;
-    padding: 10px;
+    padding: .2rem;
     min-width: 120px;
     min-height: 60px;
-    position: relative;
     max-width: 360px;
+    max-height: 8rem;
     background: #6b7082;
     line-height: 1.6;
+    overflow: hidden;
+    box-sizing: border-box;
   }
   .popup-close{
+    font-size: 22px;
     position: absolute;
     line-height: 0.5;
     padding: .2em;
@@ -69,24 +79,16 @@ export default {
     top: 0;
     cursor: pointer;
   }
-  .popup p{
+  .popup-content{
+    width: 100%;
+    max-height: 7.6rem;
+    overflow: hidden;
+    position: relative;
+  }
+  .popup-content p{
     margin-top: 0;
-  }
-  .popup-fs18{
-    font-size: 18px;
-  }
-  .popup-fs16{
-    font-size: 16px;
-  }
-  .popup-fs14{
-    font-size: 14px;
-  }
-  .popup-fs12{
-    font-size: 12px;
   }
   .popup-color-1{
     color: #ffb900;
-    display: inline-block;
-    padding: 0 1em;
   }
 </style>

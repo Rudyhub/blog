@@ -48,6 +48,7 @@ export default {
     color: #888;
     z-index: 99;
     perspective: 10.5rem;
+    font-size: .22rem;
   }
   .navbar-item{
     background: rgba(200, 240, 255, 0.3);

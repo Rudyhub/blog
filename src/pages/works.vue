@@ -2,11 +2,11 @@
   <div class="works flex-center" :style="'perspective: '+(stagePerspective/10)+'rem'" @transitionend="stageTransEnd">
     <navbar ref="navbar" class="flex-column" @click="navbarClick"/>
     <popup ref="popup" @beforeEnter="onPopupShow" @afterLeave="onPopupHide">
-      <p class="popup-fs18"><b>操作指南：</b></p>
-      <p class="popup-fs14">
-        鼠标左键左右拖动<b class="popup-color-1">=</b>旋转<br>
-        点击书本<b class="popup-color-1">=</b>进入查看作品<br/>
-        书本被打开后，双击<b class="popup-color-1">=</b>关闭书本
+      <p class="fs12 popup-color-1"><b>操作指南：</b></p>
+      <p class="fs10">
+        鼠标左键左右拖动<b class="popup-color-1">&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&nbsp;&nbsp;&nbsp;</b>旋转<br>
+        点击书本<b class="popup-color-1">&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&nbsp;&nbsp;&nbsp;</b>进入查看作品<br/>
+        书本被打开后，双击<b class="popup-color-1">&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&nbsp;&nbsp;&nbsp;</b>关闭书本
       </p>
     </popup>
     <div class="works-table flex-center"

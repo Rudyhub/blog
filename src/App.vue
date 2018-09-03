@@ -63,6 +63,12 @@ export default {
     align-items: center;
     flex-direction: column;
   }
+  .flex-between{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    align-content: center;
+  }
   .fade-enter-active,
   .fade-leave-active{
     transition: opacity .5s;
