@@ -4,7 +4,7 @@
       <transition name="computer-cover" @afterEnter="coverAfterEnd">
         <div v-show="show" class="computer-cover">
           <div class="computer-back-cover flex-column">
-            <img class="computer-logo" src="../../static/face.png" alt="">
+            <img class="computer-logo" src="/static/face.png" alt="">
             <p>RUDY</p>
           </div>
           <div class="computer-screen">

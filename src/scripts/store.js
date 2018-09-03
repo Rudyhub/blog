@@ -164,14 +164,14 @@ export default {
     career: [{
       date: '2012年7月',
       company: '深圳市朗形数码影像传播有限公司',
-      logo: '../../static/company-logo-lx.png',
+      logo: '/static/company-logo-lx.png',
       job: '后期设计师',
       harvest: `这是毕业后的第一份工作，我在效果图部负责后期。效果图部的职位分三个：建模师，渲染师，后期设计师。
         虽然在学校的时候我的ps能力已经挺强，但在朗形工作后，ps得到了质的提升，自此我从来不敢说自己精通任何知识。`
     }, {
       date: '2014年11月',
       company: '深圳市溪林峰园林绿化工程有限公司',
-      logo: '../../static/company-logo-xlf.png',
+      logo: '/static/company-logo-xlf.png',
       job: '景观设计师',
       harvest: `由于是个小公司，所以身兼多职，一个项目从测量、绘制CAD、建模、效果、报价预算、施工图绘制、竣工决算等全程一人全包。
       期间，CAD、3Dmax、Sketchup等软件的运用也大幅度提升，还自学了vary、lumion两个新的。
@@ -180,7 +180,7 @@ export default {
     }, {
       date: '2016年3月',
       company: '香港文汇网',
-      logo: '../../static/company-logo-wwp.png',
+      logo: '/static/company-logo-wwp.png',
       job: '前端开发工程师',
       harvest: `2015年底因为朋友创业想让我帮做网站，本来想在凡科网那种建站的，发现太丑，于是决定自学代码，从此一发不可收拾。
       立刻，2015年12月离职奔回老家闷在家里自学代码三个月不出门，从html5、css3、js到php、mysql，很快把前端到后台的数据来龙去脉都搞通了。
@@ -200,7 +200,7 @@ export default {
     name: 'app',
     title: '库与框架及APP类',
     subtitle: '2016 在文汇',
-    video: '../../static/works/v03.mp4',
+    video: '/static/works/v03.mp4',
     items: [{
       title: 'RMedia媒体处理器',
       source: ['https://github.com/Rudyhub/RMedia'],
@@ -227,7 +227,7 @@ export default {
     name: 'games',
     title: '小游戏小程序H5类',
     subtitle: '2016 在文汇',
-    video: '../../static/works/v02.mp4',
+    video: '/static/works/v02.mp4',
     items: [{
       title: '测一测别人眼中的你',
       href: ['https://wii-c.com/personality_test/'],
@@ -401,7 +401,7 @@ export default {
     name: 'webs',
     title: 'Web网站网页类',
     subtitle: '2016 在文汇',
-    cover: '../../static/works/cover01.jpg',
+    cover: '/static/works/cover01.jpg',
     items: [{
       title: '改革开放40周年',
       href: ['http://sp.wenweipo.com/2018gk/'],
@@ -625,25 +625,25 @@ export default {
     name: 'landscape',
     title: '景观方案设计类',
     subtitle: '2014 在溪林峰',
-    cover: '../../static/works/03/01.jpg',
+    cover: '/static/works/03/01.jpg',
     items: []
   }, {
     name: 'effects',
     title: '效果图类',
     subtitle: '2012 在朗形',
-    cover: '../../static/works/02/01.jpg',
+    cover: '/static/works/02/01.jpg',
     items: []
   }, {
     name: 'homework',
     title: '规划设计类',
     subtitle: '2008在学校',
-    cover: '../../static/works/01/01.jpg',
+    cover: '/static/works/01/01.jpg',
     items: [{
       title: '模型课作业：《欧式别墅花园设计》',
-      thumb: '../../static/works/01/01.jpg',
+      thumb: '/static/works/01/01.jpg',
       href: [],
       date: 20110210,
-      items: ['../../static/works/01/01.jpg', '../../static/works/01/02.jpg']
+      items: ['/static/works/01/01.jpg', '/static/works/01/02.jpg']
     }]
   }],
   AI: Object.freeze([{

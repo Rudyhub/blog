@@ -222,7 +222,7 @@ export default {
     top: 0;
     width: 100%;
     height: 100%;
-    background: url("../../static/works/table-bg.png") no-repeat;
+    background: url("/static/works/table-bg.png") no-repeat;
     background-size: cover;
     border-radius: 50%;
     overflow: hidden;
