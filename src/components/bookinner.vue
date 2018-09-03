@@ -109,7 +109,6 @@ export default {
     position: absolute;
     left: 50%;
     top: 0;
-    border: 1px solid #00bcff;
     box-sizing: border-box;
   }
   .bookinner-page-front,
@@ -121,8 +120,6 @@ export default {
     left: 0;
     top: 0;
     transform-style: preserve-3d;
-    line-height: 10rem;
-    text-align: center;
   }
   .bookinner-page-front{
     text-align: left;

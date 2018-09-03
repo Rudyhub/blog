@@ -186,5 +186,18 @@ export default {
       on: bind,
       off: unbind
     }
+  },
+  favicon (url) {
+    let sites = {
+      'favicon.ico': /rudyhub\.github\.io/i,
+      'icons/wwp.ico': /(?<!gitserv\.)wenweipo\.com/i,
+      'icons/gitserv.wwp.png': /https?:\/\/gitserv\.wenweipo\.com/i,
+      'icons/wii-c.ico': /wii-c\.com/i
+    }
+    for (let k in sites) {
+      if (sites[k].test(url)) return '/static/' + k
+    }
+    url = url.split(/\/+/)
+    return url[0] + '//' + url[1] + '/favicon.ico'
   }
 }

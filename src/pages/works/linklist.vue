@@ -34,16 +34,11 @@
 <script>
 import utils from '../../scripts/utils.js'
 import thumb from '../../components/thumb'
-const siteReg = {
-  'http://wenweipo.com': /wenweipo\.com/,
-  'https://rudyhub.github.io': /rudyhub\.github\.io/,
-  'https://github.com': /github\.com/,
-  'https://wii-c.com': /wii-c\.com/
-}
+import bookinner from '../../components/bookinner'
 export default {
   name: 'linklist',
   props: ['items', 'title', 'apart'],
-  components: {thumb},
+  components: {bookinner, thumb},
   data () {
     let len, recommend, thisItems, start, end
     recommend = []
@@ -84,15 +79,7 @@ export default {
     utils.scroll(this.$refs.list)
   },
   methods: {
-    getFavicon (href) {
-      if (href) {
-        for (let site in siteReg) {
-          if (siteReg[site].test(href)) {
-            return site + '/favicon.ico'
-          }
-        }
-      }
-    }
+    getFavicon: utils.favicon
   }
 }
 </script>
