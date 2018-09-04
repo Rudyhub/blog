@@ -59,19 +59,21 @@ export default {
   data () {
     let works, books, len, i, inits
     works = store.works
-    len = works.length
-    books = []
+    len = Object.keys(works).length
+    books = {}
+    i = 0
 
-    for (i = 0; i < len; i++) {
-      books[i] = {
+    for (let name in works) {
+      books[name] = {
         rotateY: Math.round(i * (360 / len)),
         coverRotateY: -90,
         scale: 0.25,
         translateX: -80
       }
-      for (let k in works[i]) {
-        books[i][k] = works[i][k]
+      for (let k in works[name]) {
+        books[name][k] = works[name][k]
       }
+      i++
     }
 
     inits = Object.freeze({
