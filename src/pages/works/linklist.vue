@@ -35,10 +35,11 @@
 import utils from '../../scripts/utils.js'
 import thumb from '../../components/thumb'
 import bookinner from '../../components/bookinner'
+import imglist from './imglist'
 export default {
   name: 'linklist',
   props: ['items', 'title', 'apart'],
-  components: {bookinner, thumb},
+  components: {bookinner, thumb, imglist},
   data () {
     let len, recommend, thisItems, start, end
     recommend = []

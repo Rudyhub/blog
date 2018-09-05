@@ -632,48 +632,108 @@ export default {
       name: 'effects',
       title: '效果图类',
       subtitle: '2012 在朗形',
-      cover: '/static/effects/01.jpg',
-      items: []
+      cover: '/static/effects/001.jpg',
+      items: [{
+        img: '/static/effects/001.jpg',
+        scale: [1280, 768]
+      }, {
+        img: '/static/effects/002.jpg',
+        scale: [1280, 675]
+      }, {
+        img: '/static/effects/003.jpg',
+        scale: [1280, 577]
+      }, {
+        img: '/static/effects/004.jpg',
+        scale: [1280, 832]
+      }, {
+        img: '/static/effects/005.jpg',
+        scale: [1280, 525]
+      }, {
+        img: '/static/effects/006.jpg',
+        scale: [960, 1112]
+      }, {
+        img: '/static/effects/007.jpg',
+        scale: [1280, 796]
+      }, {
+        img: '/static/effects/008.jpg',
+        scale: [1280, 960]
+      }, {
+        img: '/static/effects/009.jpg',
+        scale: [1280, 704]
+      }, {
+        img: '/static/effects/010.jpg',
+        scale: [1280, 548]
+      }, {
+        img: '/static/effects/011.jpg',
+        scale: [1280, 730]
+      }, {
+        img: '/static/effects/012.jpg',
+        scale: [1280, 641]
+      }, {
+        img: '/static/effects/013.jpg',
+        scale: [1280, 800]
+      }, {
+        img: '/static/effects/014.jpg',
+        scale: [1280, 800]
+      }, {
+        img: '/static/effects/015.jpg',
+        scale: [1280, 852]
+      }, {
+        img: '/static/effects/016.jpg',
+        scale: [1280, 912]
+      }, {
+        img: '/static/effects/17.jpg',
+        scale: [1280, 768]
+      }, {
+        img: '/static/effects/018.jpg',
+        scale: [1280, 768]
+      }, {
+        img: '/static/effects/019.jpg',
+        scale: [1280, 800]
+      }, {
+        img: '/static/effects/020.jpg',
+        scale: [1280, 832]
+      }]
     },
     homework: {
       name: 'homework',
       title: '规划设计类',
       subtitle: '2008在学校',
-      cover: '/static/homework/01.jpg',
+      cover: '/static/homework/001.jpg',
       items: [{
         title: '模型课作业：《欧式别墅花园设计》',
-        thumb: '/static/homework/01.jpg',
+        thumb: '/static/homework/001.jpg',
         href: ['/#/works/homework'],
         date: 20110210,
         level: 1,
         items: [
           {
             caption: '别墅规划彩色平面图',
-            img: '/static/homework/03.jpg',
+            img: '/static/homework/003.jpg',
             scale: [1280, 960]
           }, {
             caption: '效果图：夜景',
-            img: '/static/homework/01.jpg',
+            img: '/static/homework/001.jpg',
             scale: [1280, 800]
           }, {
-            caption: '效果图：日天',
-            img: '/static/homework/02.jpg',
+            caption: '效果图：白天',
+            img: '/static/homework/002.jpg',
             scale: [1280, 800]
           }, {
             caption: '模型相片：前院',
-            img: '/static/homework/04.jpg',
+            img: '/static/homework/004.jpg',
             scale: [1280, 960]
           }, {
             caption: '模型相片：花架',
-            img: '/static/homework/05.jpg',
+            img: '/static/homework/005.jpg',
             scale: [1280, 960]
           }, {
             caption: '模型相片：前院东侧',
-            img: '/static/homework/06.jpg',
+            img: '/static/homework/006.jpg',
             scale: [1280, 960]
           }, {
             caption: '模型相片：泳池',
-            img: '/static/homework/07.jpg',
+            img: '/static/homework/007.jpg',
             scale: [1280, 960]
           }
         ]
