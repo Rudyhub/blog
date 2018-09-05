@@ -6,6 +6,7 @@ import works from '@/pages/works'
 import blog from '@/pages/blog'
 import album from '@/pages/album'
 import homework from '@/pages/homework'
+import effects from '@/pages/effects'
 Vue.use(Router)
 export default new Router({
   routes: [
@@ -31,9 +32,17 @@ export default new Router({
       name: 'album',
       component: album
     }, {
-      path: '/works/homework',
-      name: 'homework',
+      path: '/works/villa',
+      name: 'villa',
       component: homework
+    }, {
+      path: '/works/garden',
+      name: 'garden',
+      component: homework
+    }, {
+      path: '/works/effects',
+      name: 'effects',
+      component: effects
     }
   ]
 })

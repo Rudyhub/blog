@@ -87,6 +87,7 @@ export default {
     margin-top: .05rem;
     height: calc(100% - 1rem);
     overflow: hidden;
+    position: relative;
   }
   .homework-art{
     margin: 0 auto 25px;

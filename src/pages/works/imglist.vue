@@ -49,7 +49,7 @@ export default {
   methods: {
     calcWidth (zoom) {
       if (zoom[this.times - 2]) {
-        return Math.floor(zoom[this.times - 2] * 100) + '%'
+        return zoom[this.times - 2] * 100 + '%'
       } else {
         return 100 / this.times + '%'
       }

@@ -634,65 +634,71 @@ export default {
       subtitle: '2012 在朗形',
       cover: '/static/effects/001.jpg',
       items: [{
-        img: '/static/effects/001.jpg',
-        scale: [1280, 768]
-      }, {
-        img: '/static/effects/002.jpg',
-        scale: [1280, 675]
-      }, {
-        img: '/static/effects/003.jpg',
-        scale: [1280, 577]
-      }, {
-        img: '/static/effects/004.jpg',
-        scale: [1280, 832]
-      }, {
-        img: '/static/effects/005.jpg',
-        scale: [1280, 525]
-      }, {
-        img: '/static/effects/006.jpg',
-        scale: [960, 1112]
-      }, {
-        img: '/static/effects/007.jpg',
-        scale: [1280, 796]
-      }, {
-        img: '/static/effects/008.jpg',
-        scale: [1280, 960]
-      }, {
-        img: '/static/effects/009.jpg',
-        scale: [1280, 704]
-      }, {
-        img: '/static/effects/010.jpg',
-        scale: [1280, 548]
-      }, {
-        img: '/static/effects/011.jpg',
-        scale: [1280, 730]
-      }, {
-        img: '/static/effects/012.jpg',
-        scale: [1280, 641]
-      }, {
-        img: '/static/effects/013.jpg',
-        scale: [1280, 800]
-      }, {
-        img: '/static/effects/014.jpg',
-        scale: [1280, 800]
-      }, {
-        img: '/static/effects/015.jpg',
-        scale: [1280, 852]
-      }, {
-        img: '/static/effects/016.jpg',
-        scale: [1280, 912]
-      }, {
-        img: '/static/effects/17.jpg',
-        scale: [1280, 768]
-      }, {
-        img: '/static/effects/018.jpg',
-        scale: [1280, 768]
-      }, {
-        img: '/static/effects/019.jpg',
-        scale: [1280, 800]
-      }, {
-        img: '/static/effects/020.jpg',
-        scale: [1280, 832]
+        title: 'N多项目，直接前往',
+        thumb: '/static/effects/001.jpg',
+        href: ['#/works/effects'],
+        date: 20120925,
+        items: [{
+          img: '/static/effects/001.jpg',
+          scale: [1280, 768]
+        }, {
+          img: '/static/effects/002.jpg',
+          scale: [1280, 675]
+        }, {
+          img: '/static/effects/003.jpg',
+          scale: [1280, 577]
+        }, {
+          img: '/static/effects/004.jpg',
+          scale: [1280, 832]
+        }, {
+          img: '/static/effects/005.jpg',
+          scale: [1280, 525]
+        }, {
+          img: '/static/effects/006.jpg',
+          scale: [960, 1112]
+        }, {
+          img: '/static/effects/007.jpg',
+          scale: [1280, 796]
+        }, {
+          img: '/static/effects/008.jpg',
+          scale: [1280, 960]
+        }, {
+          img: '/static/effects/009.jpg',
+          scale: [1280, 704]
+        }, {
+          img: '/static/effects/010.jpg',
+          scale: [1280, 548]
+        }, {
+          img: '/static/effects/011.jpg',
+          scale: [1280, 730]
+        }, {
+          img: '/static/effects/012.jpg',
+          scale: [1280, 641]
+        }, {
+          img: '/static/effects/013.jpg',
+          scale: [1280, 800]
+        }, {
+          img: '/static/effects/014.jpg',
+          scale: [1280, 800]
+        }, {
+          img: '/static/effects/015.jpg',
+          scale: [1280, 852]
+        }, {
+          img: '/static/effects/016.jpg',
+          scale: [1280, 912]
+        }, {
+          img: '/static/effects/017.jpg',
+          scale: [1280, 768]
+        }, {
+          img: '/static/effects/018.jpg',
+          scale: [1280, 768]
+        }, {
+          img: '/static/effects/019.jpg',
+          scale: [1280, 800]
+        }, {
+          img: '/static/effects/020.jpg',
+          scale: [1280, 832]
+        }]
       }]
     },
     homework: {
@@ -703,7 +709,7 @@ export default {
       items: [{
         title: '模型课作业：《欧式别墅花园设计》',
         thumb: '/static/homework/001.jpg',
-        href: ['/#/works/homework'],
+        href: ['/#/works/villa'],
         date: 20110210,
         level: 1,
         items: [
@@ -740,7 +746,7 @@ export default {
       }, {
         title: '毕业设计：《大平澎湖休闲园》',
         thumb: '/static/homework/108.jpg',
-        href: ['/#/works/homework'],
+        href: ['/#/works/garden'],
         date: 20120501,
         level: 1,
         items: [
