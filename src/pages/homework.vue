@@ -12,8 +12,8 @@
           <h2 class="homework-h2 fs14">{{(index+1)+'. '+work.title}}</h2>
           <p class="homework-date fs12">{{work.date | datemat}}</p>
         </header>
-        <main ref="mainElem" class="homework-main">
-          <figure ref="figure" class="homework-figure" v-for="(item, index) of work.items" :key="'i'+index" :style="{width: calcWidth(item.zoom)}" :data-scale="item.zoom[0]" >
+        <main class="homework-main">
+          <figure class="homework-figure" v-for="(item, index) of work.items" :key="'i'+index" :style="{width: calcWidth(item.zoom)}">
             <img class="homework-img" :src="item.img" :alt="item.caption" draggable="false">
             <figcaption class="homework-figcaption"><span class="fs12">{{item.caption}}</span></figcaption>
           </figure>
@@ -39,7 +39,7 @@ export default {
         items[i].zoom = [0, 0]
       }
       for (i = 0; i < ilen; i += 2) {
-        if (i + 2 < ilen) {
+        if (i + 1 < ilen) {
           s1 = items[i].scale[1] / items[i].scale[0]
           s2 = items[i + 1].scale[1] / items[i + 1].scale[0]
           items[i].zoom[0] = s2 / (s1 + s2)
@@ -47,7 +47,7 @@ export default {
         }
       }
       for (i = 0; i < ilen; i += 3) {
-        if (i + 3 < ilen) {
+        if (i + 2 < ilen) {
           s1 = items[i].scale[1] / items[i].scale[0]
           s2 = items[i + 1].scale[1] / items[i + 1].scale[0]
           s3 = items[i + 2].scale[1] / items[i + 2].scale[0]
@@ -59,15 +59,10 @@ export default {
     }
     return {
       works: store.works.homework,
-      toolActive: 2,
-      bodyWidth: 0
+      toolActive: 2
     }
   },
   mounted () {
-    this.bodyWidth = this.$refs.mainElem[0].offsetWidth
-    window.addEventListener('resize', () => {
-      this.bodyWidth = this.$refs.mainElem[0].offsetWidth
-    })
     utils.scroll(this.$refs.body)
   },
   methods: {
@@ -76,7 +71,7 @@ export default {
     },
     calcWidth (zoom) {
       if (zoom[this.toolActive - 2]) {
-        return Math.floor(zoom[this.toolActive - 2] * this.bodyWidth) - 2 + 'px'
+        return Math.floor(zoom[this.toolActive - 2] * 100) + '%'
       } else {
         return 100 / this.toolActive + '%'
       }
@@ -132,15 +127,20 @@ export default {
   }
   .homework-art{
     margin: 0 auto 25px;
-    padding: 10px;
     box-sizing: border-box;
   }
   .homework-h2{
-    margin: 0 0 .4em;
+    background: #333;
+    color: #fff;
+    display: inline-block;
+    padding: .5em;
+    margin: 0;
+    border-radius: 0 .2em .2em 0;
   }
   .homework-date{
     color: #888;
-    margin: 0 0 .5em;
+    margin: 0;
+    padding-left: 1em;
   }
   .homework-main{
     font-size: 0;

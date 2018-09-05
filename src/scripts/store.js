@@ -645,35 +645,87 @@ export default {
         thumb: '/static/homework/01.jpg',
         href: ['/#/works/homework'],
         date: 20110210,
-        items: [{
-          caption: '别墅规划布局彩色平面图',
-          img: '/static/homework/03.jpg',
-          scale: [1280, 960]
-        }, {
-          caption: '效果图：夜景',
-          img: '/static/homework/01.jpg',
-          scale: [1280, 800]
-        }, {
-          caption: '效果图：日天',
-          img: '/static/homework/02.jpg',
-          scale: [1280, 800]
-        }, {
-          caption: '模型相片：前院',
-          img: '/static/homework/04.jpg',
-          scale: [1280, 960]
-        }, {
-          caption: '模型相片：花架',
-          img: '/static/homework/05.jpg',
-          scale: [1280, 960]
-        }, {
-          caption: '模型相片：前院东侧',
-          img: '/static/homework/06.jpg',
-          scale: [1280, 960]
-        }, {
-          caption: '模型相片：泳池',
-          img: '/static/homework/07.jpg',
-          scale: [1280, 960]
-        }]
+        level: 1,
+        items: [
+          {
+            caption: '别墅规划彩色平面图',
+            img: '/static/homework/03.jpg',
+            scale: [1280, 960]
+          }, {
+            caption: '效果图：夜景',
+            img: '/static/homework/01.jpg',
+            scale: [1280, 800]
+          }, {
+            caption: '效果图：日天',
+            img: '/static/homework/02.jpg',
+            scale: [1280, 800]
+          }, {
+            caption: '模型相片：前院',
+            img: '/static/homework/04.jpg',
+            scale: [1280, 960]
+          }, {
+            caption: '模型相片：花架',
+            img: '/static/homework/05.jpg',
+            scale: [1280, 960]
+          }, {
+            caption: '模型相片：前院东侧',
+            img: '/static/homework/06.jpg',
+            scale: [1280, 960]
+          }, {
+            caption: '模型相片：泳池',
+            img: '/static/homework/07.jpg',
+            scale: [1280, 960]
+          }
+        ]
+      }, {
+        title: '毕业设计：《大平澎湖休闲园》',
+        thumb: '/static/homework/108.jpg',
+        href: ['/#/works/homework'],
+        date: 20120501,
+        level: 1,
+        items: [
+          {
+            caption: '整体彩色平面图',
+            img: '/static/homework/101.jpg',
+            scale: [1280, 718]
+          }, {
+            caption: '整体鸟瞰效果图与现场相片对比',
+            img: '/static/homework/102.jpg',
+            scale: [1280, 721]
+          }, {
+            caption: '效果图：入口大门《千里迎鹏》',
+            img: '/static/homework/103.jpg',
+            scale: [1280, 960]
+          }, {
+            caption: '效果图：景点名《听雨轩》',
+            img: '/static/homework/104.jpg',
+            scale: [1280, 866]
+          }, {
+            caption: '效果图：景点名《缤纷小溪》',
+            img: '/static/homework/105.jpg',
+            scale: [1280, 854]
+          }, {
+            caption: '效果图：景点名《艺景园》',
+            img: '/static/homework/106.jpg',
+            scale: [1280, 960]
+          }, {
+            caption: '效果图：景点名《水云间》',
+            img: '/static/homework/107.jpg',
+            scale: [1280, 960]
+          }, {
+            caption: '效果图：景点名《枫林晚道》',
+            img: '/static/homework/108.jpg',
+            scale: [1280, 797]
+          }, {
+            caption: '效果图：景点名《谈笑阁》',
+            img: '/static/homework/109.jpg',
+            scale: [1280, 729]
+          }, {
+            caption: '效果图：卵石小道',
+            img: '/static/homework/110.jpg',
+            scale: [1280, 960]
+          }
+        ]
       }]
     }
   },

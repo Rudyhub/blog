@@ -189,7 +189,7 @@ export default {
   },
   favicon (url) {
     let sites = {
-      'favicon.ico': /rudyhub\.github\.io/i,
+      'favicon.ico': /rudyhub\.github\.io|^([^h][^t][^t][^p])/i,
       'icons/wwp.ico': /(^https?:\/\/|(www|news|assets|paper|sp|image)\.)wenweipo\.com/i,
       'icons/gitserv.wwp.png': /https?:\/\/gitserv\.wenweipo\.com/i,
       'icons/wii-c.ico': /wii-c\.com/i
