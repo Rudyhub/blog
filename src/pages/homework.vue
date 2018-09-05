@@ -6,15 +6,15 @@
         <span class="homework-tool" v-for="i of 3" :key="'tool'+i" :class="{active: i===toolActive}" @click="toolFn(i)">x{{i}}</span>
       </div>
     </header>
-    <section class="homework-body">
-      <article class="homework-art" v-for="(work, index) of works.items" :key="index">
+    <section ref="body" class="homework-body">
+      <article class="homework-art" v-for="(work, index) of works.items" :key="'w'+index">
         <header class="homework-art-header">
           <h2 class="homework-h2 fs14">{{(index+1)+'. '+work.title}}</h2>
           <p class="homework-date fs12">{{work.date | datemat}}</p>
         </header>
         <main ref="mainElem" class="homework-main">
-          <figure ref="figure" class="homework-figure" v-for="(item, index) of work.items" :key="index">
-            <img class="homework-img" :src="item.img" :alt="item.caption" @load="imgLoaded" draggable="false">
+          <figure ref="figure" class="homework-figure" v-for="(item, index) of work.items" :key="'i'+index" :style="{width: calcWidth(item.zoom)}" :data-scale="item.zoom[0]" >
+            <img class="homework-img" :src="item.img" :alt="item.caption" draggable="false">
             <figcaption class="homework-figcaption"><span class="fs12">{{item.caption}}</span></figcaption>
           </figure>
         </main>
@@ -24,60 +24,62 @@
 </template>
 
 <script>
+import utils from '../scripts/utils.js'
 import store from '../scripts/store.js'
 export default {
   name: 'homework',
   data () {
+    let works, wlen, items, ilen, n, i, s1, s2, s3
+    works = store.works.homework.items
+    wlen = works.length
+    for (n = 0; n < wlen; n++) {
+      items = works[n].items
+      ilen = items.length
+      for (i = 0; i < ilen; i++) {
+        items[i].zoom = [0, 0]
+      }
+      for (i = 0; i < ilen; i += 2) {
+        if (i + 2 < ilen) {
+          s1 = items[i].scale[1] / items[i].scale[0]
+          s2 = items[i + 1].scale[1] / items[i + 1].scale[0]
+          items[i].zoom[0] = s2 / (s1 + s2)
+          items[i + 1].zoom[0] = s1 / (s1 + s2)
+        }
+      }
+      for (i = 0; i < ilen; i += 3) {
+        if (i + 3 < ilen) {
+          s1 = items[i].scale[1] / items[i].scale[0]
+          s2 = items[i + 1].scale[1] / items[i + 1].scale[0]
+          s3 = items[i + 2].scale[1] / items[i + 2].scale[0]
+          items[i].zoom[1] = (s2 * s3) / (s1 * s2 + s2 * s3 + s1 * s3)
+          items[i + 1].zoom[1] = (s1 * s3) / (s1 * s2 + s2 * s3 + s1 * s3)
+          items[i + 2].zoom[1] = (s1 * s2) / (s1 * s2 + s2 * s3 + s1 * s3)
+        }
+      }
+    }
     return {
       works: store.works.homework,
-      toolActive: 1,
-      figureLen: 0
+      toolActive: 2,
+      bodyWidth: 0
     }
+  },
+  mounted () {
+    this.bodyWidth = this.$refs.mainElem[0].offsetWidth
+    window.addEventListener('resize', () => {
+      this.bodyWidth = this.$refs.mainElem[0].offsetWidth
+    })
+    utils.scroll(this.$refs.body)
   },
   methods: {
     toolFn (index) {
-      let figures, vw, h, s1, s2, s3, i
-      figures = this.$refs.figure
-      vw = this.$refs.mainElem[0].offsetWidth
       this.toolActive = index
-      switch (index) {
-        case 3:
-          for (i = 0; i < this.figureLen; i += 3) {
-            if (figures[i + 1] && figures[i + 2]) {
-              s1 = parseFloat(figures[i].getAttribute('data-scale'))
-              s2 = parseFloat(figures[i + 1].getAttribute('data-scale'))
-              s3 = parseFloat(figures[i + 2].getAttribute('data-scale'))
-              h = (vw * s1 * s2 * s3) / (s1 * s2 + s2 * s3 + s1 * s3)
-              figures[i].style.width = h / s1 + 'px'
-              figures[i + 1].style.width = h / s2 + 'px'
-              figures[i + 2].style.width = h / s3 + 'px'
-            } else {
-              figures[i].style.width = '33%'
-            }
-          }
-          break
-        case 2:
-          for (i = 0; i < this.figureLen; i += 2) {
-            if (figures[i + 1]) {
-              s1 = parseFloat(figures[i].getAttribute('data-scale'))
-              s2 = parseFloat(figures[i + 1].getAttribute('data-scale'))
-              h = (vw * s1 * s2) / (s1 + s2)
-              figures[i].style.width = h / s1 + 'px'
-              figures[i + 1].style.width = h / s2 + 'px'
-            } else {
-              figures[i].style.width = '50%'
-            }
-          }
-          break
-        default:
-          for (i = 0; i < this.figureLen; i++) {
-            figures[i].style.width = '100%'
-          }
-      }
     },
-    imgLoaded (e) {
-      e.currentTarget.parentNode.setAttribute('data-scale', e.currentTarget.height / e.currentTarget.width)
-      this.figureLen++
+    calcWidth (zoom) {
+      if (zoom[this.toolActive - 2]) {
+        return Math.floor(zoom[this.toolActive - 2] * this.bodyWidth) - 2 + 'px'
+      } else {
+        return 100 / this.toolActive + '%'
+      }
     }
   },
   filters: {
@@ -126,7 +128,7 @@ export default {
   .homework-body{
     margin-top: .05rem;
     height: calc(100% - 1rem);
-    overflow: auto;
+    overflow: hidden;
   }
   .homework-art{
     margin: 0 auto 25px;
@@ -164,6 +166,9 @@ export default {
     font-weight: bold;
     background: #fff;
     padding-bottom: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .homework-figcaption span{
     display: inline-block;

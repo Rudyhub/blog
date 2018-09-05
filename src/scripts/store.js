@@ -647,25 +647,32 @@ export default {
         date: 20110210,
         items: [{
           caption: '别墅规划布局彩色平面图',
-          img: '/static/homework/03.jpg'
+          img: '/static/homework/03.jpg',
+          scale: [1280, 960]
         }, {
           caption: '效果图：夜景',
-          img: '/static/homework/01.jpg'
+          img: '/static/homework/01.jpg',
+          scale: [1280, 800]
         }, {
           caption: '效果图：日天',
-          img: '/static/homework/02.jpg'
+          img: '/static/homework/02.jpg',
+          scale: [1280, 800]
         }, {
           caption: '模型相片：前院',
-          img: '/static/homework/04.jpg'
+          img: '/static/homework/04.jpg',
+          scale: [1280, 960]
         }, {
           caption: '模型相片：花架',
-          img: '/static/homework/05.jpg'
+          img: '/static/homework/05.jpg',
+          scale: [1280, 960]
         }, {
           caption: '模型相片：前院东侧',
-          img: '/static/homework/06.jpg'
+          img: '/static/homework/06.jpg',
+          scale: [1280, 960]
         }, {
           caption: '模型相片：泳池',
-          img: '/static/homework/07.jpg'
+          img: '/static/homework/07.jpg',
+          scale: [1280, 960]
         }]
       }]
     }
