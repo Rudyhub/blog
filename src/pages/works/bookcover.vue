@@ -1,7 +1,7 @@
 <template>
   <div @transitionend="transitionEnd">
-    <canvasplayer v-if="book.video" :src="book.video" :autoplay="true" :loop="true" class="bookcover-img"></canvasplayer>
-    <img class="bookcover-img" :src="book.cover" draggable="false">
+    <video v-if="book.video" class="bookcover-img" :src="book.video" autoplay loop></video>
+    <img v-else class="bookcover-img" :src="book.cover" draggable="false">
     <h1 class="bookcover-title">{{book.title}}</h1>
     <h2 class="bookcover-subtitle">{{book.subtitle}}</h2>
     <slot></slot>
@@ -9,10 +9,8 @@
 </template>
 
 <script>
-import canvasplayer from '../../components/canvasplayer'
 export default {
   name: 'bookcover',
-  components: {canvasplayer},
   props: ['book'],
   methods: {
     transitionEnd (e) {

@@ -625,8 +625,104 @@ export default {
     landscape: {
       title: '景观方案设计类',
       subtitle: '2014 在溪林峰',
-      cover: '/static/landscape/01.jpg',
-      items: []
+      cover: '/static/landscape/j03.jpg',
+      items: [{
+        title: '深圳十五峯：屋顶花园',
+        thumb: '/static/landscape/a01.jpg',
+        href: ['/#/works/landscape'],
+        date: 20110210,
+        items: [
+          {
+            caption: '角度一',
+            img: '/static/landscape/a01.jpg',
+            scale: [1280, 960]
+          }, {
+            caption: '角度二',
+            img: '/static/landscape/a02.jpg',
+            scale: [1280, 800]
+          }
+        ]
+      }, {
+        title: '深圳石龙仔：别墅花园',
+        thumb: '/static/landscape/b03.jpg',
+        href: ['/#/works/landscape'],
+        date: 20110210,
+        items: [
+          {
+            caption: '总平面彩图',
+            img: '/static/landscape/b04.jpg',
+            scale: [1280, 960]
+          }, {
+            caption: '角度一',
+            img: '/static/landscape/b01.jpg',
+            scale: [1280, 800]
+          }, {
+            caption: '角度二',
+            img: '/static/landscape/b02.jpg',
+            scale: [1280, 800]
+          }, {
+            caption: '角度三',
+            img: '/static/landscape/b03.jpg',
+            scale: [1280, 800]
+          }
+        ]
+      }, {
+        title: '深圳石龙仔：双栋别墅花园',
+        thumb: '/static/landscape/d02.jpg',
+        href: ['/#/works/landscape'],
+        date: 20110210,
+        items: [
+          {
+            caption: '总平面彩图',
+            img: '/static/landscape/d05.jpg',
+            scale: [1280, 960]
+          }, {
+            caption: '前大门',
+            img: '/static/landscape/d01.jpg',
+            scale: [1280, 800]
+          }, {
+            caption: '前院',
+            img: '/static/landscape/d02.jpg',
+            scale: [1280, 800]
+          }, {
+            caption: '前院水景',
+            img: '/static/landscape/d03.jpg',
+            scale: [1280, 800]
+          }, {
+            caption: '西院',
+            img: '/static/landscape/d04.jpg',
+            scale: [1280, 800]
+          }
+        ]
+      }, {
+        title: '东莞尚都：别墅后院',
+        thumb: '/static/landscape/e02.jpg',
+        href: ['/#/works/landscape'],
+        date: 20110210,
+        items: [
+          {
+            caption: '总平面彩图',
+            img: '/static/landscape/d05.jpg',
+            scale: [1280, 960]
+          }, {
+            caption: '前大门',
+            img: '/static/landscape/d01.jpg',
+            scale: [1280, 800]
+          }, {
+            caption: '前院',
+            img: '/static/landscape/d02.jpg',
+            scale: [1280, 800]
+          }, {
+            caption: '前院水景',
+            img: '/static/landscape/d03.jpg',
+            scale: [1280, 800]
+          }, {
+            caption: '西院',
+            img: '/static/landscape/d04.jpg',
+            scale: [1280, 800]
+          }
+        ]
+      }]
     },
     effects: {
       name: 'effects',
@@ -639,63 +735,83 @@ export default {
         href: ['#/works/effects'],
         date: 20120925,
         items: [{
+          caption: '综合商业景观',
           img: '/static/effects/001.jpg',
           scale: [1280, 768]
         }, {
+          caption: '综合商业景观',
           img: '/static/effects/002.jpg',
           scale: [1280, 675]
         }, {
+          caption: '综合商业景观',
           img: '/static/effects/003.jpg',
           scale: [1280, 577]
         }, {
+          caption: '会堂建筑',
           img: '/static/effects/004.jpg',
           scale: [1280, 832]
         }, {
+          caption: '别墅群',
           img: '/static/effects/005.jpg',
           scale: [1280, 525]
         }, {
+          caption: '办公建筑步行街',
           img: '/static/effects/006.jpg',
           scale: [960, 1112]
         }, {
+          caption: '商业办公建筑',
           img: '/static/effects/007.jpg',
           scale: [1280, 796]
         }, {
+          caption: '半室内景观',
           img: '/static/effects/008.jpg',
           scale: [1280, 960]
         }, {
+          caption: '办公景观',
           img: '/static/effects/009.jpg',
           scale: [1280, 704]
         }, {
+          caption: '综合楼群',
           img: '/static/effects/010.jpg',
           scale: [1280, 548]
         }, {
+          caption: '幼儿园',
           img: '/static/effects/011.jpg',
           scale: [1280, 730]
         }, {
+          caption: '商业街',
           img: '/static/effects/012.jpg',
           scale: [1280, 641]
         }, {
+          caption: '住宅区景观',
           img: '/static/effects/013.jpg',
           scale: [1280, 800]
         }, {
+          caption: '住宅区景观',
           img: '/static/effects/014.jpg',
           scale: [1280, 800]
         }, {
+          caption: '综合建筑',
           img: '/static/effects/015.jpg',
           scale: [1280, 852]
         }, {
+          caption: '住宅区景观',
           img: '/static/effects/016.jpg',
           scale: [1280, 912]
         }, {
+          caption: '别墅后院景观',
           img: '/static/effects/017.jpg',
           scale: [1280, 768]
         }, {
+          caption: '别墅群公共区景观',
           img: '/static/effects/018.jpg',
           scale: [1280, 768]
         }, {
+          caption: '住宅区入口景观',
           img: '/static/effects/019.jpg',
           scale: [1280, 800]
         }, {
+          caption: '建筑群',
           img: '/static/effects/020.jpg',
           scale: [1280, 832]
         }]

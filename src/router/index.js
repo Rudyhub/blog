@@ -7,6 +7,7 @@ import blog from '@/pages/blog'
 import album from '@/pages/album'
 import homework from '@/pages/homework'
 import effects from '@/pages/effects'
+import landscape from '@/pages/landscape'
 Vue.use(Router)
 export default new Router({
   routes: [
@@ -43,6 +44,10 @@ export default new Router({
       path: '/works/effects',
       name: 'effects',
       component: effects
+    }, {
+      path: '/works/landscape',
+      name: 'landscape',
+      component: landscape
     }
   ]
 })
