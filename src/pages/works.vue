@@ -1,14 +1,13 @@
 <template>
   <div class="works flex-center" :style="'perspective: '+(stagePerspective/10)+'rem'" @transitionend="stageTransEnd">
     <navbar ref="navbar" class="flex-column" @click="navbarClick"/>
-    <popup ref="popup" v-if="isKnown" @beforeEnter="onPopupShow" @afterLeave="onPopupHide">
+    <popup ref="popup" @beforeEnter="onPopupShow" @afterLeave="onPopupHide">
       <p class="fs12 popup-color-1"><b>操作指南：</b></p>
       <p class="fs10">
         鼠标左键左右拖动<b class="popup-color-1">&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&nbsp;&nbsp;&nbsp;</b>旋转<br>
         点击书本<b class="popup-color-1">&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&nbsp;&nbsp;&nbsp;</b>进入查看作品<br/>
         书本被打开后，双击<b class="popup-color-1">&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&nbsp;&nbsp;&nbsp;</b>关闭书本
       </p>
-      <button class="popup-btn" @click="knowFn">知道了</button>
     </popup>
     <div class="works-table flex-center"
          :style="{
@@ -58,7 +57,7 @@ export default {
   name: 'works',
   components: {bookcover, popup, navbar, linklist},
   data () {
-    let works, books, len, i, inits, isKnown
+    let works, books, len, i, inits
     works = store.works
     len = Object.keys(works).length
     books = {}
@@ -82,7 +81,6 @@ export default {
       tableRotateX: 60,
       tableTranslateY: 0
     })
-    isKnown = !!window.localStorage.getItem('worksKnow')
     return {
       books,
       activeIndex: -1,
@@ -93,8 +91,7 @@ export default {
       tableTranslateY: inits.tableTranslateY,
       allTransition: 0.8,
       isRotateTable: false,
-      isBookOpened: true,
-      isKnown
+      isBookOpened: true
     }
   },
   mounted () {
@@ -135,7 +132,8 @@ export default {
       timer = setTimeout(() => {
         clearTimeout(timer)
         this.allTransition = 0.8
-        this.$refs.popup.show = this.$refs.navbar.show = true
+        this.$refs.navbar.show = true
+        this.$refs.popup.show = true
       }, 1500)
     }, 200)
     this.$on('offRotate', () => {
@@ -196,9 +194,6 @@ export default {
       this.books[index].translateX = -80
       this.books[index].coverRotateY = -90
       this.$refs.navbar.show = true
-    },
-    knowFn () {
-      window.localStorage.setItem('worksKnow', '1')
     }
   }
 }

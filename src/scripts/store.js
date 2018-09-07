@@ -229,15 +229,18 @@ export default {
       subtitle: '2016 在文汇',
       video: '/static/works/v02.mp4',
       items: [{
+        title: '逃课大作战',
+        href: ['https://wii-c.com/student_catch_game/', 'https://rudyhub.github.io/catchKids/'],
+        date: 20180906,
+        thumb: 'https://wii-c.com/student_catch_game/img/cover.jpg'
+      }, {
         title: '测一测别人眼中的你',
         href: ['https://wii-c.com/personality_test/'],
-        source: ['http://gitserv.wenweipo.com/Rudyhub/personality_test'],
         date: 20180823,
         thumb: 'https://wii-c.com/personality_test/img/cover.jpg'
       }, {
         title: '评选心中最美港姐',
         href: ['https://wii-c.com/gangjie_election_game/'],
-        source: ['http://gitserv.wenweipo.com/fentoo/gangjie_election_game'],
         date: 20180808,
         thumb: 'https://wii-c.com/gangjie_election_game/img/cover.jpg'
       }, {
@@ -258,13 +261,12 @@ export default {
       }, {
         title: '寻找香港吃货',
         href: ['https://rudyhub.github.io/HKFoodGame/', 'https://wii-c.com/hk_food_game/'],
-        source: ['https://github.com/Rudyhub/HKFoodGame', 'http://gitserv.wenweipo.com/Rudyhub/hk_food_game'],
+        source: ['https://github.com/Rudyhub/HKFoodGame'],
         date: 20180728,
         thumb: 'https://wii-c.com/hk_food_game/img/cover.jpg'
       }, {
         title: '贸易战疯狂进化论',
         href: ['https://wii-c.com/trade_war_chat/'],
-        source: ['http://gitserv.wenweipo.com/fentoo/trade_war_chat'],
         date: 20180718,
         thumb: 'https://wii-c.com/trade_war_chat/img/cover.jpg'
       }, {
@@ -275,7 +277,7 @@ export default {
       }, {
         title: '世界杯射门游戏',
         href: ['https://rudyhub.github.io/WorldCupGame2.0/', 'https://wii-c.com/world_cup_shot_game/'],
-        source: ['https://github.com/Rudyhub/WorldCupGame2.0', 'http://gitserv.wenweipo.com/fentoo/world_cup_shot_game'],
+        source: ['https://github.com/Rudyhub/WorldCupGame2.0'],
         desc: `<p>优秀作品。</p>
         <p>这是dom+css3写游戏的尝试，用2D模拟3D运动、keyframe动画、匀减速、碰撞检测等，虽然碰撞检测用了canvas，但也仅仅只是个隐藏的标签而已。</p>
         <p>当然，最后得出结论：canvas写游戏更好，尤其在低配手机上可以看出渲染的差别，dom+css3有时有卡顿现象。</p>`,
@@ -757,21 +759,33 @@ export default {
         date: 20150410,
         items: [
           {
-            caption: '角度一',
+            caption: '方案一：角度一',
             img: '/static/landscape/g01.jpg',
             scale: [1280, 800]
           }, {
-            caption: '角度二',
+            caption: '方案一：角度二',
             img: '/static/landscape/g02.jpg',
             scale: [1280, 760]
           }, {
-            caption: '休闲亭',
+            caption: '方案一：休闲亭',
             img: '/static/landscape/g03.jpg',
             scale: [1280, 800]
           }, {
-            caption: '东入口花架',
+            caption: '方案一：东入口花架',
             img: '/static/landscape/g04.jpg',
             scale: [1280, 800]
+          }, {
+            caption: '方案二：整体彩色平面图',
+            img: '/static/landscape/g05.jpg',
+            scale: [1280, 640]
+          }, {
+            caption: '方案二：角度一',
+            img: '/static/landscape/g06.jpg',
+            scale: [1280, 640]
+          }, {
+            caption: '方案二：角度二',
+            img: '/static/landscape/g07.jpg',
+            scale: [1280, 640]
           }
         ]
       }, {
@@ -943,6 +957,34 @@ export default {
           }, {
             caption: '路段局部效果',
             img: '/static/landscape/p02.jpg',
+            scale: [1280, 640]
+          }
+        ]
+      }, {
+        title: '梅州：私家花园',
+        thumb: '/static/landscape/t01.jpg',
+        href: ['/#/works/landscape'],
+        date: 20151216,
+        items: [
+          {
+            caption: '总体鸟瞰图',
+            img: '/static/landscape/t01.jpg',
+            scale: [1280, 640]
+          }, {
+            caption: '角度一',
+            img: '/static/landscape/t02.jpg',
+            scale: [1280, 640]
+          }, {
+            caption: '角度二',
+            img: '/static/landscape/t03.jpg',
+            scale: [1280, 918]
+          }, {
+            caption: '角度三',
+            img: '/static/landscape/t04.jpg',
+            scale: [1280, 640]
+          }, {
+            caption: '角度四',
+            img: '/static/landscape/t05.jpg',
             scale: [1280, 640]
           }
         ]

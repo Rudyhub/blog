@@ -12,7 +12,8 @@ export default {
 }
 </script>
 <style>
-  body{
+  .blog{
     background: #fff;
+    height: 100%;
   }
 </style>

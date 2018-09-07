@@ -91,14 +91,21 @@ export default {
   .popup-color-1{
     color: #ffb900;
   }
+  .popup-center-text{
+    text-align: center;
+  }
   .popup-btn{
     border-radius: 4px;
     -webkit-appearance: none;
-    background: linear-gradient(#c1c1c0, #fff);
+    background: -webkit-gradient(linear, left top, left bottom, from(#c1c1c0), to(#fff));
+    background: linear-gradient(#4e5372, #343c51);
     border: none;
     cursor: pointer;
+    color: #fff;
+    padding: .3em .8em;
+    display: inline-block;
   }
   .popup-btn:hover{
-    background: linear-gradient(#fff, #c1c1c0);
+    background: linear-gradient(#343c51, #4e5372);
   }
 </style>
