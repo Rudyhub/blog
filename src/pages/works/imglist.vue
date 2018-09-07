@@ -25,22 +25,18 @@ export default {
       items[i].zoom = [0, 0]
     }
     for (i = 0; i < len; i += 2) {
-      if (i + 1 < len) {
-        s1 = items[i].scale[1] / items[i].scale[0]
-        s2 = items[i + 1].scale[1] / items[i + 1].scale[0]
-        items[i].zoom[0] = s2 / (s1 + s2)
-        items[i + 1].zoom[0] = s1 / (s1 + s2)
-      }
+      s1 = items[i].scale[1] / items[i].scale[0]
+      s2 = items[i + 1] ? items[i + 1].scale[1] / items[i + 1].scale[0] : 0.5625
+      items[i].zoom[0] = s2 / (s1 + s2)
+      if (items[i + 1]) items[i + 1].zoom[0] = s1 / (s1 + s2)
     }
     for (i = 0; i < len; i += 3) {
-      if (i + 2 < len) {
-        s1 = items[i].scale[1] / items[i].scale[0]
-        s2 = items[i + 1].scale[1] / items[i + 1].scale[0]
-        s3 = items[i + 2].scale[1] / items[i + 2].scale[0]
-        items[i].zoom[1] = (s2 * s3) / (s1 * s2 + s2 * s3 + s1 * s3)
-        items[i + 1].zoom[1] = (s1 * s3) / (s1 * s2 + s2 * s3 + s1 * s3)
-        items[i + 2].zoom[1] = (s1 * s2) / (s1 * s2 + s2 * s3 + s1 * s3)
-      }
+      s1 = items[i].scale[1] / items[i].scale[0]
+      s2 = items[i + 1] ? items[i + 1].scale[1] / items[i + 1].scale[0] : 0.5625
+      s3 = items[i + 2] ? items[i + 2].scale[1] / items[i + 2].scale[0] : 0.5625
+      items[i].zoom[1] = (s2 * s3) / (s1 * s2 + s2 * s3 + s1 * s3)
+      if (items[i + 1]) items[i + 1].zoom[1] = (s1 * s3) / (s1 * s2 + s2 * s3 + s1 * s3)
+      if (items[i + 2]) items[i + 2].zoom[1] = (s1 * s2) / (s1 * s2 + s2 * s3 + s1 * s3)
     }
     return {
       thisItems: items

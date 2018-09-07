@@ -91,4 +91,14 @@ export default {
   .popup-color-1{
     color: #ffb900;
   }
+  .popup-btn{
+    border-radius: 4px;
+    -webkit-appearance: none;
+    background: linear-gradient(#c1c1c0, #fff);
+    border: none;
+    cursor: pointer;
+  }
+  .popup-btn:hover{
+    background: linear-gradient(#fff, #c1c1c0);
+  }
 </style>
