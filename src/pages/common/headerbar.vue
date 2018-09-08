@@ -3,7 +3,10 @@
     <div class="header-container flex-between">
       <img class="face" src="/static/logo.png" alt="">
       <form class="header-form" action="">
-        <input class="header-search-input" type="text" name="keyword" placeholder="search" value="" title="输入搜索的关键词">
+        <input class="header-search-input" type="text" name="keyword" placeholder="search" value="" title="输入搜索的关键词" list="search-data">
+        <datalist id="search-data" class="data-list">
+          <option v-for="(item, key) of dataList" :key="key" :value="item.val">{{item.text}}</option>
+        </datalist>
       </form>
       <div class="header-navbar">
         <nav class="header-nav">
@@ -29,7 +32,14 @@ export default {
         nav[key] = store.nav[key]
       }
     }
-    return {nav}
+    return {
+      nav,
+      dataList: [
+        {val: 'javascript', text: 'js/javascript/es2015/es6'},
+        {val: 'html', text: 'html/html5'},
+        {val: 'css', text: 'css/css3'}
+      ]
+    }
   }
 }
 </script>
@@ -41,7 +51,7 @@ export default {
     border-bottom: 1px solid #ddd;
     font-size: 16px;
   }
-  .blog-container{
+  .header-container{
     max-width: 800px;
     margin: 0 auto;
   }
@@ -73,6 +83,10 @@ export default {
     outline: none;
     border-color: #4787e2;
     box-shadow: #4787e2 0 0 4px;
+  }
+  .data-list{
+    -webkit-appearance: none;
+    box-sizing: border-box;
   }
   .header-navbar{
     position: relative;
