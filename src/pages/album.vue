@@ -1,6 +1,7 @@
 <template>
   <section class="album">
     <headerbar isName="album"/>
+    <div style="text-align: center">啥都木有</div>
   </section>
 </template>
 

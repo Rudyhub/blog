@@ -232,7 +232,9 @@ export default {
         title: '逃课大作战',
         href: ['https://wii-c.com/student_catch_game/', 'https://rudyhub.github.io/catchKids/'],
         date: 20180906,
-        thumb: 'https://wii-c.com/student_catch_game/img/cover.jpg'
+        thumb: 'https://wii-c.com/student_catch_game/img/cover.jpg',
+        level: 1,
+        desc: '优秀作品。写法上，比之前那些敢时间的项目都更加聚合和规范。'
       }, {
         title: '测一测别人眼中的你',
         href: ['https://wii-c.com/personality_test/'],
@@ -996,7 +998,7 @@ export default {
       subtitle: '2012 在朗形',
       cover: '/static/effects/001.jpg',
       items: [{
-        title: 'N多项目，直接前往',
+        title: '全部效果图',
         thumb: '/static/effects/001.jpg',
         href: ['#/works/effects'],
         date: 20120925,

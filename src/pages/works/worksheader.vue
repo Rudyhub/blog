@@ -2,7 +2,7 @@
   <header class="worksheader">
     <h1 class="worksheader-h1 fs20">{{title}}</h1>
     <div class="worksheader-tools">
-      <span class="worksheader-tool" v-for="i of 3" :key="'tool'+i" :class="{active: i===active}" @click="toolFn(i)">x{{i}}</span>
+      <span class="worksheader-tool" v-for="i of 3" :key="'tool'+i" :class="{active: i===active}" @click="toolFn(i)" :title="'每行'+i+'张图'">x{{i}}</span>
     </div>
   </header>
 </template>
@@ -35,11 +35,13 @@ export default {
     margin: 0;
     height: .9rem;
     line-height: .9rem;
+    background: #333;
+    color: #fff;
   }
   .worksheader-tools{
     position: absolute;
-    right: 10px;
-    bottom: 0;
+    left: 0;
+    bottom: 2px;
   }
   .worksheader-tool{
     display: inline-block;
@@ -49,7 +51,11 @@ export default {
     user-select: none;
     color: #ddd;
     cursor: pointer;
-    background: #aaa;
+    background: #888;
+    margin: 0 2px;
+  }
+  .worksheader-tool:hover{
+    background: #666;
   }
   .worksheader-tool.active{
     background: #318642;

@@ -3,10 +3,7 @@
     <div class="header-container flex-between">
       <img class="face" src="/static/logo.png" alt="">
       <form class="header-form" action="">
-        <input class="header-search-input" type="text" name="keyword" placeholder="search" value="" title="输入搜索的关键词" list="search-data">
-        <datalist id="search-data" class="data-list">
-          <option v-for="(item, key) of dataList" :key="key" :value="item.val">{{item.text}}</option>
-        </datalist>
+        <input class="header-search-input" type="text" name="keyword" placeholder="search" value="" title="输入搜索的关键词">
       </form>
       <div class="header-navbar">
         <nav class="header-nav">
@@ -33,12 +30,7 @@ export default {
       }
     }
     return {
-      nav,
-      dataList: [
-        {val: 'javascript', text: 'js/javascript/es2015/es6'},
-        {val: 'html', text: 'html/html5'},
-        {val: 'css', text: 'css/css3'}
-      ]
+      nav
     }
   }
 }
