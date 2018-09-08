@@ -35,9 +35,6 @@ export default {
   },
   mounted () {
     this.show = true
-    window.bgsong = new Audio()
-    window.bgsong.src = './static/media/lanlianhua.mp3'
-    window.bgsong.autoplay = true
   },
   methods: {
     coverAfterEnd () {

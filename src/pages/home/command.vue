@@ -1,12 +1,11 @@
 <template>
-    <div class="command" @click="input.focus()">
+    <div class="command fs9" @click="input.focus()">
       <transition name="fade" @afterEnter="input.focus()">
         <div v-show="show" class="command-sys">
           欢迎进入老夫的互动系统，可与老夫进行简单的交流，想进入其他页面必须输入正确的指令。<br><br>
           查看全部指令可输入：<span v-html="helpText"></span><br><br>
           注意：不是输入上面的一整串，而是竖线之间所有单词的任意一个。<br>
           举个例：输入“帮助”后Enter。 来试一哈 <br>
-          ctrl + m：打开/关闭背景音乐
         </div>
       </transition>
     </div>
@@ -128,7 +127,6 @@ export default {
     margin: 0 auto;
     padding: 1em;
     overflow: hidden;
-    font-size: 13px;
     box-sizing: border-box;
     line-height: 1.4;
   }

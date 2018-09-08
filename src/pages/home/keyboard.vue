@@ -55,9 +55,6 @@ export default {
       if (reg.test(e.code)) {
         e.preventDefault()
       }
-      if (e.ctrlKey && e.code === 'KeyM') {
-        window.bgsong.paused ? window.bgsong.play() : window.bgsong.pause()
-      }
       if (items[e.code]) {
         items[e.code].classList.remove('active')
         clearTimeout(timer)
