@@ -9,7 +9,7 @@ export default {
   name: 'welcome',
   data () {
     return {
-      chars: 'Welcome Rudy\'s Zone'.split('')
+      chars: 'Welcome To Rudy\'s Zone'.split('')
     }
   },
   mounted () {

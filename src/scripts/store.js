@@ -193,7 +193,7 @@ export default {
       date: '2018年9月',
       company: '期待',
       job: '大前端 / 全栈 / 全能',
-      harvest: '争取一份荣耀，而不止是待遇。'
+      harvest: '争取一份荣耀。'
     }]
   },
   works: {
