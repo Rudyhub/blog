@@ -4,7 +4,13 @@
 
 <script>
 export default {
-  name: 'App'
+  name: 'App',
+  beforeCreate () {
+    window.Rmusic = new Audio()
+    window.Rmusic.addEventListener('canplay', () => {
+      window.Rmusic.play()
+    })
+  }
 }
 </script>
 

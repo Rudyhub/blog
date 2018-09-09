@@ -1,11 +1,15 @@
 <template>
-    <div class="command fs9" @click="input.focus()">
+    <div class="command fs8" @click="input.focus()">
       <transition name="fade" @afterEnter="input.focus()">
         <div v-show="show" class="command-sys">
-          欢迎进入老夫的互动系统，可与老夫进行简单的交流，想进入其他页面必须输入正确的指令。<br><br>
-          查看全部指令可输入：<span v-html="helpText"></span><br><br>
-          注意：不是输入上面的一整串，而是竖线之间所有单词的任意一个。<br>
+          欢迎进入老夫的互动系统，可与老夫进行简单的交流，想进入其他页面必须输入正确的指令。<br>
+          查看全部指令可输入：<span v-html="helpText"></span><br>
           举个例：输入“帮助”后Enter。 来试一哈 <br>
+          <b>音乐模块：</b><br>
+          听歌可输入：听 + 空格 + 歌曲名 &nbsp; &nbsp; 如：听 蓝莲花 <br>
+          关闭可输入：关闭音乐、安静、嘘、静音 <br>
+          单曲循环可输入：单曲循环 （注意：再次输入，即可关闭单曲循环）<br>
+          继续播放可输入：继续音乐、歌曲继续...
         </div>
       </transition>
     </div>
@@ -14,7 +18,7 @@
 <script>
 import utils from '../../scripts/utils.js'
 import store from '../../scripts/store.js'
-
+import music from '../../scripts/music.js'
 let lines, lineIndex
 lines = []
 lineIndex = 0
@@ -55,7 +59,10 @@ export default {
       _this.input.focus()
     })
     _this.$watch('show', (e) => {
-      if (e) _this.addLine()
+      if (e) {
+        _this.addLine()
+        music.play()
+      }
     })
   },
   methods: {
@@ -83,6 +90,20 @@ export default {
                 break
               case 'clear':
                 _this.clear()
+                break
+              case 'music':
+                music.play(res[1], () => {
+                  sysLine.innerHTML = _this.musicList()
+                })
+                break
+              case 'music-num':
+                let musicFile = music.list[res[1]]
+                if (musicFile) {
+                  music.url(musicFile.FileHash)
+                  sysLine.innerHTML = '正在播放：' + musicFile.FileName
+                } else {
+                  sysLine.innerHTML = '木有音乐'
+                }
                 break
               default:
                 _this.$router.push(res[0])
@@ -116,6 +137,23 @@ export default {
         html += store.nav[page][0] + '：' + store.nav[page].join('  &nbsp; |  &nbsp; ') + '<br>'
       }
       return html
+    },
+    musicList () {
+      let html, list
+      list = music.list
+      if (list && list.length) {
+        html = '<dl class="command-dl"><dt>正在播放：' + list[0].FileName + '</dt>'
+        if (list.length > 1) {
+          html += '<dd class="command-more-music command-dd">更多相关歌曲：（输入对应序号即听）</dd>'
+          list.forEach((file, index) => {
+            html += '<dd class="command-dd">' + index + '：' + file.FileName + '</dd>'
+          })
+        }
+        html += '</dl>'
+      } else {
+        html = '木有音乐~'
+      }
+      return html
     }
   }
 }
@@ -131,7 +169,7 @@ export default {
     line-height: 1.4;
   }
   .command-sys{
-    padding: 0.3em 0 0.3em 4em;
+    padding: 0.3em 0 0.3em 2em;
     color: #b26821;
   }
   .command-head{
@@ -150,5 +188,13 @@ export default {
     box-sizing: border-box;
     vertical-align: middle;
     padding: 0;
+  }
+  .command-dl,
+  .command-dd{
+    margin: 0;
+  }
+  .command-more-music{
+    color: #911;
+    margin-top: .5em;
   }
 </style>
