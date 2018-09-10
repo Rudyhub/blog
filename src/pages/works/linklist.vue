@@ -15,9 +15,12 @@
         </h2>
         <div class="linklist-list">
           <time class="linklist-time">{{item.date | datemat}} </time>
-          <a class="linklist-item linklist-href" v-if="item.href" v-for="(href, hIndex) of item.href" :key="'href'+hIndex" :href="href" target="_blank">
+          <!--<a class="linklist-item linklist-href" v-if="item.href" v-for="(href, hIndex) of item.href" :key="'href'+hIndex" :href="href" target="_blank">-->
+            <!--<span class="linklist-favhd">体验</span><img class="linklist-favicon" :src="getFavicon(href)"/>-->
+          <!--</a>-->
+          <router-link class="linklist-item linklist-href" v-if="item.href" v-for="(href, hIndex) of item.href" :key="'href'+hIndex" :data="thisItems" :to="href" tag="a" target="_blank">
             <span class="linklist-favhd">体验</span><img class="linklist-favicon" :src="getFavicon(href)"/>
-          </a>
+          </router-link>
           <a class="linklist-item linklist-source" v-if="item.source" v-for="(source, sIndex) of item.source" :key="'source'+sIndex" :href="source" target="_blank">
             <span class="linklist-favhd">源码</span><img class="linklist-favicon" :src="getFavicon(source)"/>
           </a>

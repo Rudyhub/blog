@@ -198,5 +198,59 @@ export default {
     }
     url = url.split(/\/+/)
     return url[0] + '//' + url[1] + '/favicon.ico'
+  },
+  ajax (opt) {
+    let xhr, o, promise, params
+    o = {
+      url: '',
+      type: 'get',
+      dataType: 'json',
+      data: {},
+      timeout: 30000,
+      contentType: 'application/x-www-form-urlencoded',
+      sync: true
+    }
+    if (typeof opt === 'object') {
+      for (let k in opt) {
+        if (opt.hasOwnProperty(k) && o.hasOwnProperty(k)) {
+          o[k] = opt[k]
+        }
+      }
+    }
+    opt = null
+    if (o.data instanceof FormData) {
+      o.contentType = 'multipart/form-data'
+      o.type = 'post'
+      params = o.data
+    } else {
+      params = ''
+      for (let k in o.data) {
+        if (o.data.hasOwnProperty(k)) {
+          params += '&' + k + '=' + o.data[k]
+        }
+      }
+      if (params && o.type.toLowerCase() === 'get') {
+        o.url += /\?/.test(o.url) ? params : '?' + params
+        params = null
+      }
+    }
+    promise = new Promise((resolve, reject) => {
+      xhr = new XMLHttpRequest()
+      xhr.responseType = o.dataType
+      xhr.timeout = o.timeout
+      xhr.open(o.type, o.url, o.sync)
+      xhr.setRequestHeader('Content-type', o.contentType)
+      xhr.onreadystatechange = () => {
+        if (xhr.readyState === 4) {
+          if (xhr.status === 200) {
+            resolve(xhr.response)
+          } else {
+            reject(new Error('fail, readyState:' + xhr.readyState + ', status:' + xhr.status))
+          }
+        }
+      }
+      xhr.send(params)
+    })
+    return promise
   }
 }

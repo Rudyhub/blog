@@ -33,21 +33,20 @@ export default new Router({
       name: 'album',
       component: album
     }, {
-      path: '/works/villa',
-      name: 'villa',
+      path: '/homework',
+      alias: ['/villa', '/garden'],
+      name: 'homework',
       component: homework
     }, {
-      path: '/works/garden',
-      name: 'garden',
-      component: homework
-    }, {
-      path: '/works/effects',
+      path: '/effects',
       name: 'effects',
-      component: effects
+      component: effects,
+      props: true
     }, {
-      path: '/works/landscape',
+      path: '/landscape',
       name: 'landscape',
-      component: landscape
+      component: landscape,
+      props: true
     }
   ]
 })

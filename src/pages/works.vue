@@ -33,7 +33,7 @@
         <div class="book-spine book-spine-d"></div>
         <bookcover :book="book" class="book-back-cover flex-center">
           <div class="book-back-cover-inner" @dblclick="closeBook(index)">
-            <linklist :items="book.items" apart="right"  :title="book.title"></linklist>
+            <linklist :items="book.items" apart="right" :title="book.title"></linklist>
           </div>
         </bookcover>
       </div>
@@ -47,7 +47,6 @@
 </template>
 
 <script>
-import store from '../scripts/store.js'
 import bookcover from './works/bookcover'
 import popup from '../components/popup'
 import utils from '../scripts/utils.js'
@@ -56,33 +55,44 @@ import linklist from './works/linklist'
 export default {
   name: 'works',
   components: {bookcover, popup, navbar, linklist},
+  beforeCreate () {
+    let _this = this
+    utils.ajax({
+      url: '/static/works/works.json'
+    }).then(res => {
+      let books, len, i, localData
+      len = Object.keys(res).length
+      books = {}
+      i = 0
+
+      for (let name in res) {
+        books[name] = {
+          rotateY: Math.round(i * (360 / len)),
+          coverRotateY: -90,
+          scale: 0.25,
+          translateX: -80
+        }
+        for (let k in res[name]) {
+          books[name][k] = res[name][k]
+        }
+        i++
+      }
+      _this.books = books
+      localData = JSON.parse(window.localStorage.getItem('RudyData') || '{}')
+      localData.works = res
+      window.localStorage.setItem('RudyData', JSON.stringify(localData))
+    }, err => {
+      console.log(err)
+    })
+  },
   data () {
-    let works, books, len, i, inits
-    works = store.works
-    len = Object.keys(works).length
-    books = {}
-    i = 0
-
-    for (let name in works) {
-      books[name] = {
-        rotateY: Math.round(i * (360 / len)),
-        coverRotateY: -90,
-        scale: 0.25,
-        translateX: -80
-      }
-      for (let k in works[name]) {
-        books[name][k] = works[name][k]
-      }
-      i++
-    }
-
-    inits = Object.freeze({
+    let inits = Object.freeze({
       stagePerspective: 100,
       tableRotateX: 60,
       tableTranslateY: 0
     })
     return {
-      books,
+      books: {},
       activeIndex: -1,
       inits,
       stagePerspective: inits.stagePerspective,

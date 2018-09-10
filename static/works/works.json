@@ -1,0 +1,1681 @@
+{
+  "app": {
+    "title": "库与框架及APP类",
+    "subtitle": "2016 在文汇",
+    "video": "/static/works/v03.mp4",
+    "items": [
+      {
+        "title": "RMedia媒体处理器",
+        "source": [
+          "https://github.com/Rudyhub/RMedia"
+        ],
+        "docs": [
+          "https://rudyhub.github.io/RMedia"
+        ],
+        "date": 20180226,
+        "desc": "这是一个node-webkit + ffmpeg的桌面应用，初衷只是为了解决视频压缩问题，但发现公司视频部还遇到各种奇怪问题，比如电脑上或ios手机上播放视频有声音，但安卓播放没有却死活没有声音或者某段声音喳喳的响到后面又正常等。本软件就是为了处理这些问题。另外还外加了处理图片以及pdf转图片然后自动拼接等。",
+        "level": 1
+      },
+      {
+        "title": "FupConvert视频转码压缩",
+        "source": [
+          "https://github.com/Rudyhub/FupConvert"
+        ],
+        "date": 20171102,
+        "desc": "这是java + ffmpeg的视频压缩和转换软件，其实就是为了给ffmpeg一个简单的UI，让非专业人士也能使用。很多第三方软件很多也用ffmpeg，但它们提供的可配置参数太专业太复杂，普通用户根本看不懂。"
+      },
+      {
+        "title": "Reditor富文本编辑器",
+        "href": [
+          "https://rudyhub.github.io/Reditor/"
+        ],
+        "source": [
+          "https://github.com/Rudyhub/Reditor"
+        ],
+        "date": 20170825,
+        "desc": "由于中途有其他事更急迫，故未完成，但一般后台常功能都可用。本编辑器是针对后台的，侧重于图片、视频及其他文件的上传功能的体验。",
+        "level": 1
+      }
+    ]
+  },
+  "games": {
+    "title": "小游戏小程序H5类",
+    "subtitle": "2016 在文汇",
+    "video": "/static/works/v02.mp4",
+    "items": [
+      {
+        "title": "逃课大作战",
+        "href": [
+          "https://wii-c.com/student_catch_game/",
+          "https://rudyhub.github.io/catchKids/"
+        ],
+        "date": 20180906,
+        "thumb": "https://wii-c.com/student_catch_game/img/cover.jpg",
+        "level": 1,
+        "desc": "优秀作品。写法上，比之前那些敢时间的项目都更加聚合和规范。"
+      },
+      {
+        "title": "测一测别人眼中的你",
+        "href": [
+          "https://wii-c.com/personality_test/"
+        ],
+        "date": 20180823,
+        "thumb": "https://wii-c.com/personality_test/img/cover.jpg"
+      },
+      {
+        "title": "评选心中最美港姐",
+        "href": [
+          "https://wii-c.com/gangjie_election_game/"
+        ],
+        "date": 20180808,
+        "thumb": "https://wii-c.com/gangjie_election_game/img/cover.jpg"
+      },
+      {
+        "title": "改革开放40周年之岁月如歌",
+        "href": [
+          "http://assets.wenweipo.com/sp/2018h510/"
+        ],
+        "date": 20180808,
+        "thumb": "http://assets.wenweipo.com/sp/2018h510/img/cover.jpg"
+      },
+      {
+        "title": "改革开放40周年之微数据",
+        "href": [
+          "http://assets.wenweipo.com/sp/2018h509/"
+        ],
+        "date": 20180808,
+        "thumb": "http://assets.wenweipo.com/sp/2018h509/img/cover.jpg"
+      },
+      {
+        "title": "改革开放40周年之流行语",
+        "href": [
+          "http://assets.wenweipo.com/sp/2018h508/"
+        ],
+        "date": 20180731,
+        "thumb": "http://assets.wenweipo.com/sp/2018h508/img/cover.jpg"
+      },
+      {
+        "title": "寻找香港吃货",
+        "href": [
+          "https://rudyhub.github.io/HKFoodGame/",
+          "https://wii-c.com/hk_food_game/"
+        ],
+        "source": [
+          "https://github.com/Rudyhub/HKFoodGame"
+        ],
+        "date": 20180728,
+        "thumb": "https://wii-c.com/hk_food_game/img/cover.jpg"
+      },
+      {
+        "title": "贸易战疯狂进化论",
+        "href": [
+          "https://wii-c.com/trade_war_chat/"
+        ],
+        "date": 20180718,
+        "thumb": "https://wii-c.com/trade_war_chat/img/cover.jpg"
+      },
+      {
+        "title": "金句填充我可以，有奖问答",
+        "href": [
+          "http://sp.wenweipo.com/2018h507/"
+        ],
+        "date": 20180621,
+        "thumb": "http://sp.wenweipo.com/2018h507/img/cover.jpg"
+      },
+      {
+        "title": "世界杯射门游戏",
+        "href": [
+          "https://rudyhub.github.io/WorldCupGame2.0/",
+          "https://wii-c.com/world_cup_shot_game/"
+        ],
+        "source": [
+          "https://github.com/Rudyhub/WorldCupGame2.0"
+        ],
+        "desc": "<p>优秀作品。</p><p>这是dom+css3写游戏的尝试，用2D模拟3D运动、keyframe动画、匀减速、碰撞检测等，虽然碰撞检测用了canvas，但也仅仅只是个隐藏的标签而已。</p><p>当然，最后得出结论：canvas写游戏更好，尤其在低配手机上可以看出渲染的差别，dom+css3有时有卡顿现象。</p>",
+        "date": 20180615,
+        "thumb": "https://wii-c.com/world_cup_shot_game/img/cover.jpg",
+        "level": 1
+      },
+      {
+        "title": "香港中联办首个公众开放日",
+        "href": [
+          "http://assets.wenweipo.com/sp/2018h506/"
+        ],
+        "date": 20180428,
+        "thumb": "http://assets.wenweipo.com/sp/2018h506/img/cover.jpg"
+      },
+      {
+        "title": "广深港高铁知多少",
+        "href": [
+          "http://assets.wenweipo.com/sp/2018h505/"
+        ],
+        "source": [
+          "https://github.com/Rudyhub/20180401h5"
+        ],
+        "date": 20180401,
+        "thumb": "http://assets.wenweipo.com/sp/2018h505/img/cover.jpg"
+      },
+      {
+        "title": "亮出你的出世纸",
+        "href": [
+          "http://sp.wenweipo.com/2018h504/"
+        ],
+        "source": [
+          "https://github.com/Rudyhub/20180328h5"
+        ],
+        "date": 20180327,
+        "thumb": "http://sp.wenweipo.com/2018h504/img/cover.jpg",
+        "desc": "canvas手画马赛克"
+      },
+      {
+        "title": "2018两会微数据",
+        "href": [
+          "http://assets.wenweipo.com/sp/2018h503/"
+        ],
+        "date": 20180320,
+        "thumb": "http://assets.wenweipo.com/sp/2018h503/img/cover.jpg"
+      },
+      {
+        "title": "热烈祝贺习近平全票当选国家主席",
+        "href": [
+          "http://sp.wenweipo.com/2018card01/"
+        ],
+        "date": 20180318,
+        "thumb": "http://sp.wenweipo.com/2018card01/img/cover.jpg"
+      },
+      {
+        "title": "香港中联办主任王志民的答卷",
+        "href": [
+          "http://assets.wenweipo.com/sp/2018h502/"
+        ],
+        "date": 20180131,
+        "thumb": "http://assets.wenweipo.com/sp/2018h502/img/cover.jpg"
+      },
+      {
+        "title": "狗旺财，富入屋",
+        "href": [
+          "http://assets.wenweipo.com/sp/2018h501/"
+        ],
+        "date": 20180124,
+        "thumb": "http://assets.wenweipo.com/sp/2018h501/img/cover.jpg"
+      },
+      {
+        "title": "文汇2018招聘",
+        "href": [
+          "http://sp.wenweipo.com/zhaopin2018/"
+        ],
+        "date": 20180110
+      },
+      {
+        "title": "新年与圣诞贺卡",
+        "href": [
+          "http://sp.wenweipo.com/2017card01/"
+        ],
+        "date": 20171212,
+        "thumb": "http://sp.wenweipo.com/2017card01/img/cover.jpg"
+      },
+      {
+        "title": "王志民与网民在线交流",
+        "href": [],
+        "date": 20171103,
+        "desc": "白忙活，领导没去直播，所以没上线",
+        "online": 0
+      },
+      {
+        "title": "十九大知识知多少",
+        "href": [
+          "http://sp.wenweipo.com/2017ff/game/"
+        ],
+        "date": 20171023,
+        "thumb": "http://sp.wenweipo.com/2017ff/game/img/cover.jpg"
+      },
+      {
+        "title": "习近平与三位基层代表亲密互动",
+        "href": [
+          "http://assets.wenweipo.com/sp/2017xigz/"
+        ],
+        "date": 20171021,
+        "thumb": "http://assets.wenweipo.com/sp/2017xigz/img/cover.jpg"
+      },
+      {
+        "title": "祝贺十九大贺卡",
+        "href": [
+          "http://sp.wenweipo.com/greeting_card/"
+        ],
+        "date": 20171018,
+        "thumb": "http://sp.wenweipo.com/greeting_card/img/cover.jpg"
+      },
+      {
+        "title": "王志民提「三势」各界认同齐声赞",
+        "href": [
+          "http://assets.wenweipo.com/sp/2017mwh5/"
+        ],
+        "date": 20170928,
+        "thumb": "http://assets.wenweipo.com/sp/2017mwh5/img/logo.jpg"
+      },
+      {
+        "title": "斩港妖切切乐游戏",
+        "href": [
+          "https://rudyhub.github.io/cutfruit-wwp/"
+        ],
+        "date": 20170923,
+        "desc": "<p>这是基于pixi.js库的canvas 2D游戏，初探游戏，虽然运用部分ES6模块写法，但其实现在看来代码并不好，有很多东西是非常需要优化的。</p><p>产品未上线，原因是突然发现有点血腥，虽然针对港独分子，政治对立，但还是要讲人道主义的。但可体验本人随便替换了UI的切水果版本：https://rudyhub.github.io/cutfruit/</p>",
+        "thumb": "https://rudyhub.github.io/cutfruit-wwp/img/title.png",
+        "online": 0,
+        "level": 1
+      },
+      {
+        "title": "香港回归20周年报纸集锦",
+        "href": [
+          "http://assets.wenweipo.com/sp/2017hgpapers/"
+        ],
+        "date": 20170712
+      },
+      {
+        "title": "习大大邀您群聊",
+        "href": [
+          "https://rudyhub.github.io/20170630h5/",
+          "http://assets.wenweipo.com/sp/2017chat/"
+        ],
+        "source": [
+          "https://github.com/Rudyhub/20170630h5"
+        ],
+        "date": 20170628,
+        "desc": "上线后点击百万以上，但因仿群聊防红包同时事关习大大，故已被微信屏蔽。其实初衷只想逗大家一乐而已。现在文汇网处链接也已关闭，但本人的Github依然体验的。",
+        "level": 1
+      },
+      {
+        "title": "文汇网微信小程序",
+        "href": [],
+        "date": 20170401,
+        "desc": "因公司服务器是香港的，无需备案，所以也无ssl证书，微信小程序只支持有ssl证书的网站，无奈放弃。",
+        "online": 0
+      },
+      {
+        "title": "汇眼识鸡",
+        "href": [
+          "http://sp.wenweipo.com/2017score/"
+        ],
+        "date": 20170119,
+        "thumb": "http://sp.wenweipo.com/2017score/img/logo.jpg"
+      },
+      {
+        "title": "2016国庆",
+        "href": [
+          "http://sp.wenweipo.com/2016gqh5/"
+        ],
+        "date": 20160929,
+        "thumb": "http://assets.wenweipo.com/sp/2016gqh5/images/square.jpg"
+      },
+      {
+        "title": "立法会投票站地图指引",
+        "href": [
+          "http://sp.wenweipo.com/2016lcmap/"
+        ],
+        "date": 20160830
+      }
+    ]
+  },
+  "webs": {
+    "title": "Web网站网页类",
+    "subtitle": "2016 在文汇",
+    "cover": "/static/works/cover01.jpg",
+    "items": [
+      {
+        "title": "改革开放40周年",
+        "href": [
+          "http://sp.wenweipo.com/2018gk/"
+        ],
+        "date": 20180725
+      },
+      {
+        "title": "大湾融媒",
+        "href": [
+          "http://news.wenweipo.com/szj/"
+        ],
+        "date": 20180724
+      },
+      {
+        "title": "林鄭班底施政一周年",
+        "href": [
+          "http://sp.wenweipo.com/2018sz/"
+        ],
+        "date": 20180621
+      },
+      {
+        "title": "凝神聚力发挥所长",
+        "href": [
+          "http://sp.wenweipo.com/2018sc/"
+        ],
+        "date": 20180620
+      },
+      {
+        "title": "特金会瞩目登场",
+        "href": [
+          "http://sp.wenweipo.com/2018tj/"
+        ],
+        "date": 20180607
+      },
+      {
+        "title": "俄罗斯世界杯",
+        "href": [
+          "http://sp.wenweipo.com/2018zs/"
+        ],
+        "date": 20180607
+      },
+      {
+        "title": "上合組織青島峰會",
+        "href": [
+          "http://sp.wenweipo.com/2018sh/"
+        ],
+        "date": 20180531
+      },
+      {
+        "title": "粤港澳大湾区规划出台",
+        "href": [
+          "http://sp.wenweipo.com/2018dw/"
+        ],
+        "date": 20180521
+      },
+      {
+        "title": "哈理王子世纪婚礼",
+        "href": [
+          "http://sp.wenweipo.com/2018hl/"
+        ],
+        "date": 20180517
+      },
+      {
+        "title": "汶川十年川港情",
+        "href": [
+          "http://sp.wenweipo.com/2018wc/"
+        ],
+        "date": 20180509
+      },
+      {
+        "title": "汶川地震十年 川港重建新生活",
+        "href": [
+          "http://assets.wenweipo.com/sp/2018cg/"
+        ],
+        "date": 20180508
+      },
+      {
+        "title": "朝韩首脑会晤",
+        "href": [
+          "http://sp.wenweipo.com/2018hw/"
+        ],
+        "date": 20180424
+      },
+      {
+        "title": "外国驻港领事团四川行",
+        "href": [
+          "http://assets.wenweipo.com/sp/2018fc/"
+        ],
+        "date": 20180414
+      },
+      {
+        "title": "香港仔",
+        "href": [],
+        "date": 20180413,
+        "desc": "我也不知道为什么没有上线，不了解政治环境。",
+        "online": 0
+      },
+      {
+        "title": "開往春天的中歐班列",
+        "href": [
+          "http://assets.wenweipo.com/sp/2018zozl/"
+        ],
+        "date": 20180316
+      },
+      {
+        "title": "2018全国两会",
+        "href": [
+          "http://sp.wenweipo.com/2018lh"
+        ],
+        "date": 20180226
+      },
+      {
+        "title": "香港国际青年中乐节投票",
+        "href": [
+          "http://sp.wenweipo.com/vote_cms/"
+        ],
+        "date": 20180115
+      },
+      {
+        "title": "全媒体网站",
+        "href": [
+          "http://news.wenweipo.com/am/"
+        ],
+        "date": 20171227
+      },
+      {
+        "title": "文汇2017招聘页",
+        "href": [
+          "http://sp.wenweipo.com/zhaopin2017/"
+        ],
+        "date": 20171222
+      },
+      {
+        "title": "林鄭月娥首次進京述職",
+        "href": [
+          "http://sp.wenweipo.com/2017ls/"
+        ],
+        "date": 20171212
+      },
+      {
+        "title": "智造&服务 为无锡插上腾飞双翼",
+        "href": [
+          "http://sp.wenweipo.com/2017wuxi/"
+        ],
+        "date": 20171201
+      },
+      {
+        "title": "港青北上发展风采展示活动",
+        "href": [
+          "http://sp.wenweipo.com/2017gq/"
+        ],
+        "date": 20171128
+      },
+      {
+        "title": "王志民直播间",
+        "href": [
+          "http://sp.wenweipo.com/2017wlive/"
+        ],
+        "date": 20171102,
+        "desc": "一切准备就绪后，领导没去直播，然后已关闭"
+      },
+      {
+        "title": "十九大VR视点",
+        "href": [
+          "http://sp.wenweipo.com/2017ff/vr/list.php"
+        ],
+        "date": 20171013,
+        "desc": "pano.js已经过期，进入vr已经无法观看"
+      },
+      {
+        "title": "林郑首份施政报告",
+        "href": [
+          "http://sp.wenweipo.com/2017bg/"
+        ],
+        "date": 20171009
+      },
+      {
+        "title": "电竞钱途系列报道",
+        "href": [
+          "http://sp.wenweipo.com/2017dj/"
+        ],
+        "date": 20170928
+      },
+      {
+        "title": "文汇后台系统",
+        "href": [],
+        "date": 20170926,
+        "desc": "未上线，原因可能是后台人手不够，或者还没有完成，人手不够进度慢。",
+        "online": 0
+      },
+      {
+        "title": "中共十九大",
+        "href": [
+          "http://sp.wenweipo.com/2017rd/"
+        ],
+        "date": 20170914
+      },
+      {
+        "title": "聚焦十九大",
+        "href": [
+          "http://sp.wenweipo.com/2017ff/"
+        ],
+        "date": 20170914
+      },
+      {
+        "title": "香港南顺集团食品安全",
+        "href": [
+          "http://sp.wenweipo.com/hklamsoon/"
+        ],
+        "date": 20170627
+      },
+      {
+        "title": "纪念版陀飞轮腕表",
+        "href": [
+          "http://sp.wenweipo.com/hk20watch/"
+        ],
+        "date": 20170627
+      },
+      {
+        "title": "庆祝香港回归20周年",
+        "href": [
+          "http://sp.wenweipo.com/2017hg/"
+        ],
+        "date": 20170525
+      },
+      {
+        "title": "2017张德江视察澳门",
+        "href": [
+          "http://sp.wenweipo.com/2017zd/"
+        ],
+        "date": 20170504
+      },
+      {
+        "title": "文汇天气网站系统",
+        "href": [],
+        "date": 20170417,
+        "desc": "不知道为什么没上线，只知道一般情况下是领导商议无果。",
+        "online": 0
+      },
+      {
+        "title": "2017香港特首选举",
+        "href": [
+          "http://sp.wenweipo.com/2017xj/"
+        ],
+        "date": 20170318
+      },
+      {
+        "title": "2017全国两会网红",
+        "href": [
+          "http://sp.wenweipo.com/wwp_vote/"
+        ],
+        "date": 20170314
+      },
+      {
+        "title": "2017全国两会",
+        "href": [
+          "http://sp.wenweipo.com/2017lh"
+        ],
+        "date": 20170223
+      },
+      {
+        "title": "大文全媒体访谈Talk",
+        "href": [
+          "http://sp.wenweipo.com/all-media/interview/"
+        ],
+        "date": 20170207
+      },
+      {
+        "title": "冰天雪地 賞冰樂雪 「醉」美龍江",
+        "href": [
+          "http://sp.wenweipo.com/2016ic/"
+        ],
+        "date": 20161229
+      },
+      {
+        "title": "大文全媒体图说香港Hong Kong Pic",
+        "href": [
+          "http://sp.wenweipo.com/all-media/hongkong_pic/"
+        ],
+        "date": 20161128
+      },
+      {
+        "title": "大文全媒体视频Hong Kong Video",
+        "href": [
+          "http://sp.wenweipo.com/all-media/video/"
+        ],
+        "date": 20161128
+      },
+      {
+        "title": "香港各界紀念孫中山先生誕辰150周年大會",
+        "href": [
+          "http://sp.wenweipo.com/2016szs/"
+        ],
+        "date": 20161101
+      },
+      {
+        "title": "H5睇新闻",
+        "href": [
+          "http://sp.wenweipo.com/h5/"
+        ],
+        "date": 20161024
+      },
+      {
+        "title": "2016里约奥运会",
+        "href": [
+          "http://sp.wenweipo.com/2016ol/"
+        ],
+        "date": 20160801
+      },
+      {
+        "title": "范长江行动（长期）",
+        "href": [
+          "http://sp.wenweipo.com/2016cj/"
+        ],
+        "date": 20160701
+      },
+      {
+        "title": "2016年香港立法会选举",
+        "href": [
+          "http://sp.wenweipo.com/2016lc/"
+        ],
+        "date": 20160630
+      },
+      {
+        "title": "李太「港」本土",
+        "href": [
+          "http://sp.wenweipo.com/2016lt/"
+        ],
+        "date": 20160629
+      },
+      {
+        "title": "未来之星",
+        "href": [
+          "http://sp.wenweipo.com/2016fs/"
+        ],
+        "date": 20160627
+      },
+      {
+        "title": "香港回归19周年",
+        "href": [
+          "http://sp.wenweipo.com/201620/"
+        ],
+        "date": 20160624
+      },
+      {
+        "title": "張德江赴港出席「一帶一路」高峰論壇並視察香港特區",
+        "href": [
+          "http://sp.wenweipo.com/2016zdj/"
+        ],
+        "date": 20160512
+      },
+      {
+        "title": "文汇网站改版",
+        "href": [],
+        "date": 20160503,
+        "desc": "不知道为什么没上线，只知道一般情况下是领导商议无果。",
+        "online": 0
+      },
+      {
+        "title": "习近平出访捷克并赴美核峰会",
+        "href": [
+          "http://sp.wenweipo.com/2016fj/"
+        ],
+        "date": 20160325
+      }
+    ]
+  },
+  "landscape": {
+    "title": "景观方案设计类",
+    "subtitle": "2014 在溪林峰",
+    "cover": "/static/landscape/j03.jpg",
+    "items": [
+      {
+        "title": "深圳十五峯：屋顶花园",
+        "thumb": "/static/landscape/a01.jpg",
+        "href": [
+          "/landscape"
+        ],
+        "date": 20141130,
+        "items": [
+          {
+            "caption": "角度一",
+            "img": "/static/landscape/a01.jpg",
+            "scale": [
+              1280,
+              720
+            ]
+          },
+          {
+            "caption": "角度二",
+            "img": "/static/landscape/a02.jpg",
+            "scale": [
+              1280,
+              720
+            ]
+          }
+        ]
+      },
+      {
+        "title": "深圳兴强苑：别墅花园",
+        "thumb": "/static/landscape/b03.jpg",
+        "href": [
+          "/landscape"
+        ],
+        "date": 20141213,
+        "items": [
+          {
+            "caption": "总平面彩图",
+            "img": "/static/landscape/b04.jpg",
+            "scale": [
+              1280,
+              800
+            ]
+          },
+          {
+            "caption": "角度一",
+            "img": "/static/landscape/b01.jpg",
+            "scale": [
+              1280,
+              800
+            ]
+          },
+          {
+            "caption": "角度二",
+            "img": "/static/landscape/b02.jpg",
+            "scale": [
+              1280,
+              800
+            ]
+          },
+          {
+            "caption": "角度三",
+            "img": "/static/landscape/b03.jpg",
+            "scale": [
+              1280,
+              800
+            ]
+          }
+        ]
+      },
+      {
+        "title": "深圳兴强苑：双栋别墅花园",
+        "thumb": "/static/landscape/d02.jpg",
+        "href": [
+          "/landscape"
+        ],
+        "date": 20141213,
+        "items": [
+          {
+            "caption": "总平面彩图",
+            "img": "/static/landscape/d05.jpg",
+            "scale": [
+              1280,
+              800
+            ]
+          },
+          {
+            "caption": "前大门",
+            "img": "/static/landscape/d01.jpg",
+            "scale": [
+              1280,
+              800
+            ]
+          },
+          {
+            "caption": "前院",
+            "img": "/static/landscape/d02.jpg",
+            "scale": [
+              1280,
+              800
+            ]
+          },
+          {
+            "caption": "前院水景",
+            "img": "/static/landscape/d03.jpg",
+            "scale": [
+              1280,
+              800
+            ]
+          },
+          {
+            "caption": "西院",
+            "img": "/static/landscape/d04.jpg",
+            "scale": [
+              1280,
+              800
+            ]
+          }
+        ]
+      },
+      {
+        "title": "东莞尚都：别墅后院",
+        "thumb": "/static/landscape/e02.jpg",
+        "href": [
+          "/landscape"
+        ],
+        "date": 20141130,
+        "items": [
+          {
+            "caption": "方案一：白天",
+            "img": "/static/landscape/e01.jpg",
+            "scale": [
+              1280,
+              800
+            ]
+          },
+          {
+            "caption": "方案一：夜景",
+            "img": "/static/landscape/e02.jpg",
+            "scale": [
+              1280,
+              800
+            ]
+          },
+          {
+            "caption": "方案二",
+            "img": "/static/landscape/e03.jpg",
+            "scale": [
+              1280,
+              735
+            ]
+          },
+          {
+            "caption": "方案三",
+            "img": "/static/landscape/e04.jpg",
+            "scale": [
+              1280,
+              713
+            ]
+          }
+        ]
+      },
+      {
+        "title": "深圳招商依山郡：屋顶花园",
+        "thumb": "/static/landscape/f02.jpg",
+        "href": [
+          "/landscape"
+        ],
+        "date": 20150210,
+        "items": [
+          {
+            "caption": "总体鸟瞰效果",
+            "img": "/static/landscape/f01.jpg",
+            "scale": [
+              1280,
+              694
+            ]
+          },
+          {
+            "caption": "水景",
+            "img": "/static/landscape/f02.jpg",
+            "scale": [
+              1280,
+              655
+            ]
+          },
+          {
+            "caption": "水平台",
+            "img": "/static/landscape/f03.jpg",
+            "scale": [
+              1280,
+              800
+            ]
+          },
+          {
+            "caption": "花架一",
+            "img": "/static/landscape/f04.jpg",
+            "scale": [
+              1280,
+              800
+            ]
+          },
+          {
+            "caption": "花架二",
+            "img": "/static/landscape/f05.jpg",
+            "scale": [
+              1280,
+              838
+            ]
+          },
+          {
+            "caption": "木地板",
+            "img": "/static/landscape/f06.jpg",
+            "scale": [
+              1280,
+              779
+            ]
+          }
+        ]
+      },
+      {
+        "title": "深圳中央原著：别墅花园",
+        "thumb": "/static/landscape/g03.jpg",
+        "href": [
+          "/landscape"
+        ],
+        "date": 20150410,
+        "items": [
+          {
+            "caption": "方案一：角度一",
+            "img": "/static/landscape/g01.jpg",
+            "scale": [
+              1280,
+              800
+            ]
+          },
+          {
+            "caption": "方案一：角度二",
+            "img": "/static/landscape/g02.jpg",
+            "scale": [
+              1280,
+              760
+            ]
+          },
+          {
+            "caption": "方案一：休闲亭",
+            "img": "/static/landscape/g03.jpg",
+            "scale": [
+              1280,
+              800
+            ]
+          },
+          {
+            "caption": "方案一：东入口花架",
+            "img": "/static/landscape/g04.jpg",
+            "scale": [
+              1280,
+              800
+            ]
+          },
+          {
+            "caption": "方案二：整体彩色平面图",
+            "img": "/static/landscape/g05.jpg",
+            "scale": [
+              1280,
+              640
+            ]
+          },
+          {
+            "caption": "方案二：角度一",
+            "img": "/static/landscape/g06.jpg",
+            "scale": [
+              1280,
+              640
+            ]
+          },
+          {
+            "caption": "方案二：角度二",
+            "img": "/static/landscape/g07.jpg",
+            "scale": [
+              1280,
+              640
+            ]
+          }
+        ]
+      },
+      {
+        "title": "香港：别墅后院",
+        "thumb": "/static/landscape/h01.jpg",
+        "href": [
+          "/landscape"
+        ],
+        "date": 20150430,
+        "items": [
+          {
+            "caption": "平面彩图",
+            "img": "/static/landscape/h02.jpg",
+            "scale": [
+              1280,
+              1500
+            ]
+          },
+          {
+            "caption": "总体效果",
+            "img": "/static/landscape/h01.jpg",
+            "scale": [
+              1280,
+              800
+            ]
+          }
+        ]
+      },
+      {
+        "title": "深圳招商观园：别墅花园",
+        "thumb": "/static/landscape/i05.jpg",
+        "href": [
+          "/landscape"
+        ],
+        "date": 20150503,
+        "items": [
+          {
+            "caption": "前院角度一",
+            "img": "/static/landscape/i05.jpg",
+            "scale": [
+              1280,
+              800
+            ]
+          },
+          {
+            "caption": "前院角度二",
+            "img": "/static/landscape/i06.jpg",
+            "scale": [
+              1280,
+              800
+            ]
+          },
+          {
+            "caption": "后院",
+            "img": "/static/landscape/i01.jpg",
+            "scale": [
+              1280,
+              800
+            ]
+          },
+          {
+            "caption": "东院",
+            "img": "/static/landscape/i04.jpg",
+            "scale": [
+              1280,
+              800
+            ]
+          }
+        ]
+      },
+      {
+        "title": "深圳四海投资：屋顶花园及木屋",
+        "thumb": "/static/landscape/j03.jpg",
+        "href": [
+          "/landscape"
+        ],
+        "date": 20150604,
+        "items": [
+          {
+            "caption": "平面布局图",
+            "img": "/static/landscape/j00.jpg",
+            "scale": [
+              1280,
+              816
+            ]
+          },
+          {
+            "caption": "总体鸟瞰",
+            "img": "/static/landscape/j01.jpg",
+            "scale": [
+              1280,
+              872
+            ]
+          },
+          {
+            "caption": "角度一：白天",
+            "img": "/static/landscape/j03.jpg",
+            "scale": [
+              1280,
+              720
+            ]
+          },
+          {
+            "caption": "角度一：夜景",
+            "img": "/static/landscape/j04.jpg",
+            "scale": [
+              1280,
+              720
+            ]
+          },
+          {
+            "caption": "角度二：白天",
+            "img": "/static/landscape/j05.jpg",
+            "scale": [
+              1280,
+              720
+            ]
+          },
+          {
+            "caption": "角度二：夜景",
+            "img": "/static/landscape/j06.jpg",
+            "scale": [
+              1280,
+              720
+            ]
+          },
+          {
+            "caption": "木屋室内角度一",
+            "img": "/static/landscape/j07.jpg",
+            "scale": [
+              1280,
+              960
+            ]
+          },
+          {
+            "caption": "木屋室内角度二",
+            "img": "/static/landscape/j08.jpg",
+            "scale": [
+              1280,
+              960
+            ]
+          }
+        ]
+      },
+      {
+        "title": "深圳半山溪谷：住宅庭院",
+        "thumb": "/static/landscape/k01.jpg",
+        "href": [
+          "/landscape"
+        ],
+        "date": 20150805,
+        "items": [
+          {
+            "caption": "总体园建模型鸟瞰图",
+            "img": "/static/landscape/k01.jpg",
+            "scale": [
+              1280,
+              800
+            ]
+          },
+          {
+            "caption": "前院角度一",
+            "img": "/static/landscape/k02.jpg",
+            "scale": [
+              1280,
+              800
+            ]
+          },
+          {
+            "caption": "前院角度二",
+            "img": "/static/landscape/k03.jpg",
+            "scale": [
+              1280,
+              800
+            ]
+          },
+          {
+            "caption": "前院角度三",
+            "img": "/static/landscape/k04.jpg",
+            "scale": [
+              1280,
+              800
+            ]
+          },
+          {
+            "caption": "前院角度四",
+            "img": "/static/landscape/k05.jpg",
+            "scale": [
+              1280,
+              800
+            ]
+          },
+          {
+            "caption": "前院角度五",
+            "img": "/static/landscape/k06.jpg",
+            "scale": [
+              1280,
+              800
+            ]
+          },
+          {
+            "caption": "后院总体鸟瞰",
+            "img": "/static/landscape/k07.jpg",
+            "scale": [
+              1280,
+              800
+            ]
+          }
+        ]
+      },
+      {
+        "title": "美国纽约：别墅后院",
+        "thumb": "/static/landscape/n02.jpg",
+        "href": [
+          "/landscape"
+        ],
+        "date": 20150728,
+        "items": [
+          {
+            "caption": "总体鸟瞰图",
+            "img": "/static/landscape/n01.jpg",
+            "scale": [
+              1280,
+              800
+            ]
+          },
+          {
+            "caption": "角度一",
+            "img": "/static/landscape/n02.jpg",
+            "scale": [
+              1280,
+              800
+            ]
+          },
+          {
+            "caption": "角度二",
+            "img": "/static/landscape/n03.jpg",
+            "scale": [
+              1280,
+              800
+            ]
+          },
+          {
+            "caption": "角度三",
+            "img": "/static/landscape/n04.jpg",
+            "scale": [
+              1280,
+              800
+            ]
+          }
+        ]
+      },
+      {
+        "title": "梅州：花园",
+        "thumb": "/static/landscape/o01.jpg",
+        "href": [
+          "/landscape"
+        ],
+        "date": 20150623,
+        "items": [
+          {
+            "caption": "平面彩图",
+            "img": "/static/landscape/o02.jpg",
+            "scale": [
+              1280,
+              1328
+            ]
+          },
+          {
+            "caption": "整体效果",
+            "img": "/static/landscape/o01.jpg",
+            "scale": [
+              1280,
+              800
+            ]
+          }
+        ]
+      },
+      {
+        "title": "深圳坂田：道路绿化",
+        "thumb": "/static/landscape/p01.jpg",
+        "href": [
+          "/landscape"
+        ],
+        "date": 20151112,
+        "items": [
+          {
+            "caption": "路口鸟瞰图",
+            "img": "/static/landscape/p01.jpg",
+            "scale": [
+              1280,
+              880
+            ]
+          },
+          {
+            "caption": "路段局部效果",
+            "img": "/static/landscape/p02.jpg",
+            "scale": [
+              1280,
+              640
+            ]
+          }
+        ]
+      },
+      {
+        "title": "梅州：私家花园",
+        "thumb": "/static/landscape/t01.jpg",
+        "href": [
+          "/landscape"
+        ],
+        "date": 20151216,
+        "items": [
+          {
+            "caption": "总体鸟瞰图",
+            "img": "/static/landscape/t01.jpg",
+            "scale": [
+              1280,
+              640
+            ]
+          },
+          {
+            "caption": "角度一",
+            "img": "/static/landscape/t02.jpg",
+            "scale": [
+              1280,
+              640
+            ]
+          },
+          {
+            "caption": "角度二",
+            "img": "/static/landscape/t03.jpg",
+            "scale": [
+              1280,
+              918
+            ]
+          },
+          {
+            "caption": "角度三",
+            "img": "/static/landscape/t04.jpg",
+            "scale": [
+              1280,
+              640
+            ]
+          },
+          {
+            "caption": "角度四",
+            "img": "/static/landscape/t05.jpg",
+            "scale": [
+              1280,
+              640
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "effects": {
+    "name": "effects",
+    "title": "效果图类",
+    "subtitle": "2012 在朗形",
+    "cover": "/static/effects/001.jpg",
+    "items": [
+      {
+        "title": "全部效果图",
+        "thumb": "/static/effects/001.jpg",
+        "href": [
+          "#/works/effects"
+        ],
+        "date": 20120925,
+        "items": [
+          {
+            "caption": "综合商业景观",
+            "img": "/static/effects/001.jpg",
+            "scale": [
+              1280,
+              768
+            ]
+          },
+          {
+            "caption": "综合商业景观",
+            "img": "/static/effects/002.jpg",
+            "scale": [
+              1280,
+              675
+            ]
+          },
+          {
+            "caption": "综合商业景观",
+            "img": "/static/effects/003.jpg",
+            "scale": [
+              1280,
+              577
+            ]
+          },
+          {
+            "caption": "会堂建筑",
+            "img": "/static/effects/004.jpg",
+            "scale": [
+              1280,
+              832
+            ]
+          },
+          {
+            "caption": "别墅群",
+            "img": "/static/effects/005.jpg",
+            "scale": [
+              1280,
+              525
+            ]
+          },
+          {
+            "caption": "办公建筑步行街",
+            "img": "/static/effects/006.jpg",
+            "scale": [
+              960,
+              1112
+            ]
+          },
+          {
+            "caption": "商业办公建筑",
+            "img": "/static/effects/007.jpg",
+            "scale": [
+              1280,
+              796
+            ]
+          },
+          {
+            "caption": "半室内景观",
+            "img": "/static/effects/008.jpg",
+            "scale": [
+              1280,
+              960
+            ]
+          },
+          {
+            "caption": "办公景观",
+            "img": "/static/effects/009.jpg",
+            "scale": [
+              1280,
+              704
+            ]
+          },
+          {
+            "caption": "综合楼群",
+            "img": "/static/effects/010.jpg",
+            "scale": [
+              1280,
+              548
+            ]
+          },
+          {
+            "caption": "幼儿园",
+            "img": "/static/effects/011.jpg",
+            "scale": [
+              1280,
+              730
+            ]
+          },
+          {
+            "caption": "商业街",
+            "img": "/static/effects/012.jpg",
+            "scale": [
+              1280,
+              641
+            ]
+          },
+          {
+            "caption": "住宅区景观",
+            "img": "/static/effects/013.jpg",
+            "scale": [
+              1280,
+              800
+            ]
+          },
+          {
+            "caption": "住宅区景观",
+            "img": "/static/effects/014.jpg",
+            "scale": [
+              1280,
+              800
+            ]
+          },
+          {
+            "caption": "综合建筑",
+            "img": "/static/effects/015.jpg",
+            "scale": [
+              1280,
+              852
+            ]
+          },
+          {
+            "caption": "住宅区景观",
+            "img": "/static/effects/016.jpg",
+            "scale": [
+              1280,
+              912
+            ]
+          },
+          {
+            "caption": "别墅后院景观",
+            "img": "/static/effects/017.jpg",
+            "scale": [
+              1280,
+              768
+            ]
+          },
+          {
+            "caption": "别墅群公共区景观",
+            "img": "/static/effects/018.jpg",
+            "scale": [
+              1280,
+              768
+            ]
+          },
+          {
+            "caption": "住宅区入口景观",
+            "img": "/static/effects/019.jpg",
+            "scale": [
+              1280,
+              800
+            ]
+          },
+          {
+            "caption": "建筑群",
+            "img": "/static/effects/020.jpg",
+            "scale": [
+              1280,
+              832
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "homework": {
+    "name": "homework",
+    "title": "规划设计类",
+    "subtitle": "2008在学校",
+    "cover": "/static/homework/001.jpg",
+    "items": [
+      {
+        "title": "模型课作业：《欧式别墅花园设计》",
+        "thumb": "/static/homework/001.jpg",
+        "href": [
+          "/villa"
+        ],
+        "date": 20110210,
+        "level": 1,
+        "items": [
+          {
+            "caption": "别墅规划彩色平面图",
+            "img": "/static/homework/003.jpg",
+            "scale": [
+              1280,
+              960
+            ]
+          },
+          {
+            "caption": "效果图：夜景",
+            "img": "/static/homework/001.jpg",
+            "scale": [
+              1280,
+              800
+            ]
+          },
+          {
+            "caption": "效果图：白天",
+            "img": "/static/homework/002.jpg",
+            "scale": [
+              1280,
+              800
+            ]
+          },
+          {
+            "caption": "模型相片：前院",
+            "img": "/static/homework/004.jpg",
+            "scale": [
+              1280,
+              960
+            ]
+          },
+          {
+            "caption": "模型相片：花架",
+            "img": "/static/homework/005.jpg",
+            "scale": [
+              1280,
+              960
+            ]
+          },
+          {
+            "caption": "模型相片：前院东侧",
+            "img": "/static/homework/006.jpg",
+            "scale": [
+              1280,
+              960
+            ]
+          },
+          {
+            "caption": "模型相片：泳池",
+            "img": "/static/homework/007.jpg",
+            "scale": [
+              1280,
+              960
+            ]
+          }
+        ]
+      },
+      {
+        "title": "毕业设计：《大平澎湖休闲园》",
+        "thumb": "/static/homework/108.jpg",
+        "href": [
+          "/garden"
+        ],
+        "date": 20120501,
+        "level": 1,
+        "items": [
+          {
+            "caption": "整体彩色平面图",
+            "img": "/static/homework/101.jpg",
+            "scale": [
+              1280,
+              718
+            ]
+          },
+          {
+            "caption": "整体鸟瞰效果图与现场相片对比",
+            "img": "/static/homework/102.jpg",
+            "scale": [
+              1280,
+              721
+            ]
+          },
+          {
+            "caption": "效果图：入口大门《千里迎鹏》",
+            "img": "/static/homework/103.jpg",
+            "scale": [
+              1280,
+              960
+            ]
+          },
+          {
+            "caption": "效果图：景点名《听雨轩》",
+            "img": "/static/homework/104.jpg",
+            "scale": [
+              1280,
+              866
+            ]
+          },
+          {
+            "caption": "效果图：景点名《缤纷小溪》",
+            "img": "/static/homework/105.jpg",
+            "scale": [
+              1280,
+              854
+            ]
+          },
+          {
+            "caption": "效果图：景点名《艺景园》",
+            "img": "/static/homework/106.jpg",
+            "scale": [
+              1280,
+              960
+            ]
+          },
+          {
+            "caption": "效果图：景点名《水云间》",
+            "img": "/static/homework/107.jpg",
+            "scale": [
+              1280,
+              960
+            ]
+          },
+          {
+            "caption": "效果图：景点名《枫林晚道》",
+            "img": "/static/homework/108.jpg",
+            "scale": [
+              1280,
+              797
+            ]
+          },
+          {
+            "caption": "效果图：景点名《谈笑阁》",
+            "img": "/static/homework/109.jpg",
+            "scale": [
+              1280,
+              729
+            ]
+          },
+          {
+            "caption": "效果图：卵石小道",
+            "img": "/static/homework/110.jpg",
+            "scale": [
+              1280,
+              960
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
+
+

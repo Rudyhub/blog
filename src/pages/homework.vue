@@ -29,6 +29,7 @@ export default {
     }
   },
   mounted () {
+    console.log(window.localStorage.getItem('RudyData'))
     utils.scroll(this.$refs.body)
   },
   methods: {
