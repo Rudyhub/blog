@@ -13,23 +13,19 @@ export default {
     }
   },
   mounted () {
-    this.$parent.welcomeShow = (fn) => {
-      let _this, children, len, last
-      _this = this
-      children = _this.$el.children
-      len = children.length
-      last = children[len - 1]
-      for (let i = 0; i < len; i++) {
-        let timer = setTimeout(function () {
-          clearTimeout(timer)
-          children[i].classList.add('welcome-in')
-        }, 100 * i)
-      }
-      last.addEventListener('animationend', animateEnd, false)
-      function animateEnd (e) {
-        last.removeEventListener(e.type, animateEnd, false)
-        if (fn) fn('welcome', e.animationName)
-      }
+    let _this, children, len, i
+    _this = this
+    children = _this.$el.children
+    len = children.length
+    i = 0
+    for (; i < len; i++) {
+      children[i].style.animationDelay = i * 0.1 + 's'
+      children[i].classList.add('welcome-in')
+    }
+    children[len - 1].addEventListener('animationend', animationEnd)
+    function animationEnd (e) {
+      this.removeEventListener(e.type, animationEnd)
+      _this.$emit('welcomeEnd', e.animationName)
     }
   }
 }

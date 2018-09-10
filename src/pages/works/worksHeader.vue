@@ -1,15 +1,15 @@
 <template>
-  <header class="worksheader">
-    <h1 class="worksheader-h1 fs20">{{title}}</h1>
-    <div class="worksheader-tools">
-      <span class="worksheader-tool" v-for="i of 3" :key="'tool'+i" :class="{active: i===active}" @click="toolFn(i)" :title="'每行'+i+'张图'">x{{i}}</span>
+  <header class="works-header">
+    <h1 class="works-header-h1 fs20">{{title}}</h1>
+    <div class="works-header-tools">
+      <span class="works-header-tool" v-for="i of 3" :key="'tool'+i" :class="{active: i===active}" @click="toolFn(i)" :title="'每行'+i+'张图'">x{{i}}</span>
     </div>
   </header>
 </template>
 
 <script>
 export default {
-  name: 'worksheader',
+  name: 'works-header',
   props: {
     title: [String],
     active: {
@@ -26,11 +26,11 @@ export default {
 </script>
 
 <style>
-  .worksheader{
+  .works-header{
     position: relative;
     border-bottom: 1px solid #ddd;
   }
-  .worksheader-h1{
+  .works-header-h1{
     text-align: center;
     margin: 0;
     height: .9rem;
@@ -38,12 +38,12 @@ export default {
     background: #333;
     color: #fff;
   }
-  .worksheader-tools{
+  .works-header-tools{
     position: absolute;
     left: 0;
     bottom: 2px;
   }
-  .worksheader-tool{
+  .works-header-tool{
     display: inline-block;
     width: 2em;
     text-align: center;
@@ -54,10 +54,10 @@ export default {
     background: #888;
     margin: 0 2px;
   }
-  .worksheader-tool:hover{
+  .works-header-tool:hover{
     background: #666;
   }
-  .worksheader-tool.active{
+  .works-header-tool.active{
     background: #318642;
   }
 </style>

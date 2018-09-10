@@ -1,89 +1,62 @@
 <template>
-  <div class="works flex-center" :style="'perspective: '+(stagePerspective/10)+'rem'" @transitionend="stageTransEnd">
-    <navbar ref="navbar" class="flex-column" @click="navbarClick"/>
-    <popup ref="popup" @beforeEnter="onPopupShow" @afterLeave="onPopupHide">
-      <p class="fs12 popup-color-1"><b>操作指南：</b></p>
-      <p class="fs10">
-        鼠标左键左右拖动<b class="popup-color-1">&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&nbsp;&nbsp;&nbsp;</b>旋转<br>
-        点击书本<b class="popup-color-1">&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&nbsp;&nbsp;&nbsp;</b>进入查看作品<br/>
-        书本被打开后，双击<b class="popup-color-1">&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&nbsp;&nbsp;&nbsp;</b>关闭书本
-      </p>
-    </popup>
-    <div class="works-table flex-center"
-         :style="{
-         transition: (allTransition ? 'all '+allTransition+'s' : 'none'),
-         transform: 'translateY('+(tableTranslateY/10)+'rem) rotateX(' + tableRotateX + 'deg) rotateZ(' + tableRotateZ + 'deg)'
-         }">
-      <div class="book" v-for="(book, index) of books" :key="index" @click="readBook(index)"
+  <transition name="works" @afterEnter="afterEndFn">
+    <div v-show="show" class="works flex-center" :style="'perspective: '+(stagePerspective/10)+'rem'" @transitionend="stageTransEnd">
+      <navbar ref="navbar" class="flex-column" @click="navbarClick"/>
+      <popup ref="popup" @beforeEnter="onPopupShow" @afterLeave="onPopupHide">
+        <p class="fs12 popup-color-1"><b>操作指南：</b></p>
+        <p class="fs10">
+          鼠标左键左右拖动<b class="popup-color-1">&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&nbsp;&nbsp;&nbsp;</b>旋转<br>
+          点击书本<b class="popup-color-1">&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&nbsp;&nbsp;&nbsp;</b>进入查看作品<br/>
+          书本被打开后，双击<b class="popup-color-1">&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&nbsp;&nbsp;&nbsp;</b>关闭书本
+        </p>
+      </popup>
+      <div class="works-table flex-center"
+           :style="{
+           transition: (allTransition ? 'all '+allTransition+'s' : 'none'),
+           transform: 'translateY('+(tableTranslateY/10)+'rem) rotateX(' + tableRotateX + 'deg) rotateZ(' + tableRotateZ + 'deg)'
+           }">
+        <div class="book" v-for="(book, name) of books" :key="name" @click="readBook(name)"
+             :style="{
+             transition: (allTransition ? 'transform '+allTransition+'s' : 'none'),
+             transform: 'scale3d('+book.scale+','+book.scale+','+book.scale+') rotateX(-90deg) rotateY(' + book.rotateY + 'deg) translate3d('+(book.translateX/10)+'rem,-5rem,0)'
+             }">
+          <book-cover :book="book" class="book-cover flex-center" :style="{transform: 'rotateY('+book.coverRotateY+'deg)'}">
+            <div class="book-cover-inner" @dblclick="closeBook(name)">
+              <link-list :items="book.items" apart="left" :title="book.title"/>
+            </div>
+          </book-cover>
+          <div class="book-spine book-spine-a flex-center">
+            <div class="book-spine-title" v-html="spineTextFilter(book.title)"></div>
+            <div class="book-spine-subtitle" v-html="spineTextFilter(book.subtitle)"></div>
+          </div>
+          <div class="book-spine book-spine-b"></div>
+          <div class="book-spine book-spine-c"></div>
+          <div class="book-spine book-spine-d"></div>
+          <book-cover :book="book" class="book-back-cover flex-center">
+            <div class="book-back-cover-inner" @dblclick="closeBook(name)">
+              <link-list :items="book.items" apart="right" :title="book.title"></link-list>
+            </div>
+          </book-cover>
+        </div>
+      </div>
+      <div class="works-table-leg"
            :style="{
            transition: (allTransition ? 'transform '+allTransition+'s' : 'none'),
-           transform: 'scale3d('+book.scale+','+book.scale+','+book.scale+') rotateX(-90deg) rotateY(' + book.rotateY + 'deg) translate3d('+(book.translateX/10)+'rem,-5rem,0)'
-           }">
-        <bookcover :book="book" class="book-cover flex-center" :style="{transform: 'rotateY('+book.coverRotateY+'deg)'}">
-          <div class="book-cover-inner" @dblclick="closeBook(index)">
-            <linklist :items="book.items" apart="left" :title="book.title"></linklist>
-          </div>
-        </bookcover>
-        <div class="book-spine book-spine-a flex-center">
-          <div class="book-spine-title" v-html="spineTextFilter(book.title)"></div>
-          <div class="book-spine-subtitle" v-html="spineTextFilter(book.subtitle)"></div>
-        </div>
-        <div class="book-spine book-spine-b"></div>
-        <div class="book-spine book-spine-c"></div>
-        <div class="book-spine book-spine-d"></div>
-        <bookcover :book="book" class="book-back-cover flex-center">
-          <div class="book-back-cover-inner" @dblclick="closeBook(index)">
-            <linklist :items="book.items" apart="right" :title="book.title"></linklist>
-          </div>
-        </bookcover>
-      </div>
+           transform: 'rotateX('+(tableRotateX+90)+'deg) translate3d(0, -'+(4.2+tableTranslateY/10)+'rem, -2rem)'
+           }"></div>
     </div>
-    <div class="works-table-leg"
-         :style="{
-         transition: (allTransition ? 'transform '+allTransition+'s' : 'none'),
-         transform: 'rotateX('+(tableRotateX+90)+'deg) translate3d(0, -'+(4.2+tableTranslateY/10)+'rem, -2rem)'
-         }"></div>
-  </div>
+  </transition>
 </template>
 
 <script>
-import bookcover from './works/bookcover'
+import bookCover from './works/bookCover'
 import popup from '../components/popup'
 import utils from '../scripts/utils.js'
 import navbar from '../components/navbar'
-import linklist from './works/linklist'
+import linkList from './works/linkList'
 export default {
   name: 'works',
-  components: {bookcover, popup, navbar, linklist},
-  beforeCreate () {
-    let _this = this
-    _this.books = {}
-    utils.ajax({
-      url: '/static/works/works.json'
-    }).then(res => {
-      let books, len, i, local
-      len = Object.keys(res).length
-      books = _this.books
-      i = 0
-      for (let name in res) {
-        books[name] = {
-          rotateY: Math.round(i * (360 / len)),
-          coverRotateY: -90,
-          scale: 0.25,
-          translateX: -80
-        }
-        for (let k in res[name]) {
-          books[name][k] = res[name][k]
-        }
-        i++
-      }
-      local = JSON.parse(window.localStorage.getItem('RudyData') || '{}')
-      local.works = books
-      window.localStorage.setItem('RudyData', JSON.stringify(local))
-    }, err => {
-      console.log(err)
-    })
-  },
+  components: {bookCover, popup, navbar, linkList},
   data () {
     let inits = Object.freeze({
       stagePerspective: 100,
@@ -91,8 +64,10 @@ export default {
       tableTranslateY: 0
     })
     return {
+      show: false,
       activeIndex: -1,
       inits,
+      books: {},
       stagePerspective: inits.stagePerspective,
       tableRotateX: 90,
       tableRotateZ: 0,
@@ -103,7 +78,7 @@ export default {
     }
   },
   mounted () {
-    let _this, z, listener, timer
+    let _this, z, listener
     _this = this
     z = this.tableRotateZ
     listener = utils.listener(this.$el, {
@@ -133,17 +108,32 @@ export default {
         _this.allTransition = 0.8
       }
     })
-    timer = setTimeout(() => {
-      clearTimeout(timer)
-      this.allTransition = 1.5
-      this.tableRotateX = 60
-      timer = setTimeout(() => {
-        clearTimeout(timer)
-        this.allTransition = 0.8
-        this.$refs.navbar.show = true
-        this.$refs.popup.show = true
-      }, 1500)
-    }, 200)
+    utils.ajax({
+      url: '/static/works/works.json'
+    }).then(res => {
+      let len, i, local
+      len = Object.keys(res).length
+      i = 0
+      for (let name in res) {
+        _this.$set(_this.books, name, {
+          rotateY: Math.round(i * (360 / len)),
+          coverRotateY: -90,
+          scale: 0.25,
+          translateX: -80
+        })
+        for (let k in res[name]) {
+          _this.books[name][k] = res[name][k]
+        }
+        i++
+      }
+      local = JSON.parse(window.localStorage.getItem('RudyData') || '{}')
+      local.works = _this.books
+      window.localStorage.setItem('RudyData', JSON.stringify(local))
+
+      _this.show = true
+    }, err => {
+      console.error(err)
+    })
     this.$on('offRotate', () => {
       listener.off()
     })
@@ -153,6 +143,18 @@ export default {
     })
   },
   methods: {
+    afterEndFn () {
+      let _this, timer
+      _this = this
+      timer = setTimeout(() => {
+        clearTimeout(timer)
+        _this.allTransition = 0.8
+        _this.$refs.navbar.show = true
+        _this.$refs.popup.show = true
+      }, 1500)
+      _this.allTransition = 1.5
+      _this.tableRotateX = 60
+    },
     navbarClick (e, name) {
       if (name === 'help') {
         this.$refs.popup.show = !this.$refs.popup.show
@@ -161,19 +163,19 @@ export default {
     spineTextFilter (val) {
       return val.split('').join('<br>')
     },
-    readBook (index) {
+    readBook (name) {
       // 事件冒泡：book的click和旋转控制的mousedown->mouseup(touchstart->touchend)相互冲突，通过isRotateTable判断鼠标/手指是否触发了move事件和鼠标移动距离来判断是否是旋转操作
       if (this.isRotateTable) return
       if (this.isBookOpened) return
       this.isBookOpened = true
-      this.activeIndex = index
+      this.activeIndex = name
       if (this.stagePerspective === this.inits.stagePerspective) {
         this.$emit('offRotate')
         this.tableRotateX = 90
-        this.tableRotateZ = this.books[index].rotateY - 90
+        this.tableRotateZ = this.books[name].rotateY - 90
         this.tableTranslateY = 16
         this.stagePerspective = 50
-        this.books[index].scale = 0.32
+        this.books[name].scale = 0.32
         this.$refs.navbar.show = false
       }
     },
@@ -194,13 +196,13 @@ export default {
         }
       }
     },
-    closeBook (index) {
+    closeBook (name) {
       this.tableRotateX = this.inits.tableRotateX
       this.tableTranslateY = this.inits.tableTranslateY
       this.stagePerspective = this.inits.stagePerspective
-      this.books[index].scale = 0.25
-      this.books[index].translateX = -80
-      this.books[index].coverRotateY = -90
+      this.books[name].scale = 0.25
+      this.books[name].translateX = -80
+      this.books[name].coverRotateY = -90
       this.$refs.navbar.show = true
     }
   }
@@ -214,6 +216,18 @@ export default {
     background: #07080d;
     overflow: hidden;
     transition: all 0.8s;
+  }
+  .works-enter,
+  .works-leave-to{
+    opacity: 0;
+  }
+  .works-enter-active,
+  .works-leave-active{
+    transition: opacity .5s;
+  }
+  .works-leave,
+  .works-enter-to{
+    opacity: 1;
   }
   .works-table{
     width: 8rem;

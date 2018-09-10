@@ -77,15 +77,15 @@ export default {
   color: #910101;
 }
 .keyboard-row{
-  height: .6rem;
+  height: .65rem;
   margin: .05rem 0;
 }
 .keyboard-item{
   box-sizing: border-box;
   float: left;
-  width: .53rem;
-  height: .53rem;
-  margin:0 .03rem;
+  width: .6rem;
+  height: .6rem;
+  margin: 0 .04rem;
   vertical-align: middle;
   border-radius: 4px;
   line-height: 1.2;
@@ -97,34 +97,34 @@ export default {
   margin-right: 0.15rem;
 }
 .keyboard-Delete{
-  width: .7rem;
+  width: .76rem;
   margin-left: .15rem;
 }
 .keyboard-Backspace{
-  width: .94rem;
+  width: .98rem;
   font-size: .16rem;
 }
 .keyboard-Tab,
 .keyboard-Backslash{
-  width: .73rem;
+  width: .79rem;
 }
 .keyboard-CapsLock,
 .keyboard-Enter{
-  width: 1.02rem;
+  width: 1.13rem;
 }
 .keyboard-ShiftLeft,
 .keyboard-ShiftRight{
-  width: 1.31rem;
+  width: 1.47rem;
 }
 .keyboard-ControlLeft,
 .keyboard-ControlRight{
-  width: .65rem;
+  width: .76rem;
 }
 .keyboard-Space{
-  width: 3.45rem;
+  width: 3.8rem;
 }
 .keyboard-PrintScreen{
-  width: .7rem;
+  width: .86rem;
 }
 .keyboard-Delete,
 .keyboard-Backspace,

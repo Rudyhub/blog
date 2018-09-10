@@ -1,6 +1,6 @@
 <template>
   <section class="blog">
-    <headerbar isName="blog"/>
+    <header-bar isName="blog"/>
     <article class="blog-art">
       <h2>我没话说...</h2>
     </article>
@@ -8,10 +8,10 @@
 </template>
 
 <script>
-import headerbar from './common/headerbar'
+import headerBar from './common/headerBar'
 export default {
   name: 'blog',
-  components: {headerbar}
+  components: {headerBar}
 }
 </script>
 <style>

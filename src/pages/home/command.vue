@@ -1,17 +1,8 @@
 <template>
-    <div class="command fs8" @click="input.focus()">
-      <transition name="fade" @afterEnter="input.focus()">
-        <div v-show="show" class="command-sys">
-          欢迎进入老夫的互动系统，可与老夫进行简单的交流，想进入其他页面必须输入正确的指令。<br>
-          查看全部指令可输入：<span v-html="helpText"></span><br>
-          举个例：输入“帮助”后Enter。 来试一哈 <br>
-          <b>音乐模块：</b><br>
-          听歌可输入：听 + 空格 + 歌曲名 &nbsp; &nbsp; 如：听 蓝莲花 <br>
-          关闭可输入：关闭音乐、安静、嘘、静音 <br>
-          单曲循环可输入：单曲循环 （注意：再次输入，即可关闭单曲循环）<br>
-          继续播放可输入：继续音乐、歌曲继续...
-        </div>
-      </transition>
+    <div class="command fs9" @click="input.focus()">
+      <div class="command-sys">
+        欢迎进入老夫的互动系统，可与老夫进行简单的交流，想进入其他页面必须输入正确的指令。输入“？” 或 “帮助”，然后Enter，可查看关键指令。 <br>
+      </div>
     </div>
 </template>
 
@@ -25,15 +16,8 @@ lineIndex = 0
 
 export default {
   name: 'command',
-  props: {
-    show: {
-      type: [Boolean],
-      default: false
-    }
-  },
   data () {
     return {
-      helpText: store.nav.help.join(' &nbsp; |  &nbsp; '),
       input: document.createElement('input')
     }
   },
@@ -42,7 +26,7 @@ export default {
     this.input.className = 'command-input'
     document.addEventListener('keydown', function (e) {
       switch (e.key) {
-        case 'Enter': _this.addLine(); break
+        case 'Enter': _this.respone(_this.input.value); break
         case 'ArrowUp':
           if (lineIndex > 0) lineIndex--
           _this.input.value = lines[lineIndex]
@@ -58,15 +42,13 @@ export default {
     _this.$el.addEventListener('click', () => {
       _this.input.focus()
     })
-    _this.$watch('show', (e) => {
-      if (e) {
-        _this.addLine()
-        music.play()
-      }
-    })
+    _this.addLine()
+    if (music.paused) {
+      music.play()
+    }
   },
   methods: {
-    addLine () {
+    addLine (html) {
       let _this, line, head, val
       _this = this
       line = document.createElement('div')
@@ -81,36 +63,8 @@ export default {
         _this.input.parentNode.insertBefore(document.createTextNode(val), _this.input)
         if (val) {
           let sysLine = document.createElement('div')
-          let res = store.respone(val)
           sysLine.className = 'command-sys'
-          if (typeof res === 'object') {
-            switch (res[0]) {
-              case 'help':
-                sysLine.innerHTML = _this.help()
-                break
-              case 'clear':
-                _this.clear()
-                break
-              case 'music':
-                music.play(res[1], () => {
-                  sysLine.innerHTML = _this.musicList()
-                })
-                break
-              case 'music-num':
-                let musicFile = music.list[res[1]]
-                if (musicFile) {
-                  music.url(musicFile.FileHash)
-                  sysLine.innerHTML = '正在播放：' + musicFile.FileName
-                } else {
-                  sysLine.innerHTML = '木有音乐'
-                }
-                break
-              default:
-                _this.$router.push(res[0])
-            }
-          } else {
-            sysLine.innerHTML = res
-          }
+          sysLine.innerHTML = html || ''
           _this.$el.appendChild(sysLine)
           if (!lines.includes(val)) {
             lines.push(val)
@@ -126,17 +80,87 @@ export default {
       _this.$el.scrollTop = _this.$el.scrollHeight
       _this.input.focus()
     },
+    respone (val) {
+      let _this, len, i
+      _this = this
+      val = val.trim().toLowerCase()
+      i = 0
+      for (let page in store.nav) {
+        if (page === val || store.nav[page] === val) {
+          _this.$router.push(page)
+          return
+        }
+      }
+      for (let aiKey in store.aiKeys) {
+        if (store.aiKeys[aiKey].test(val)) {
+          switch (aiKey) {
+            case 'help':
+              _this.addLine(store.help()); break
+            case 'clear':
+              _this.clear(); break
+            case 'song':
+              music.play(val.replace(store.aiKeys[aiKey], ''), () => {
+                _this.addLine(_this.musicList())
+              })
+              break
+            case 'songPause':
+              if (window.Rmusic) {
+                window.Rmusic.pause()
+                _this.addLine('[系统回复 ~]: 已暂停音乐')
+                break
+              }
+              _this.addLine('[系统回复 ~]: 错误，未找到播放器。')
+              break
+            case 'songPlay':
+              if (window.Rmusic) {
+                if (window.Rmusic.paused) {
+                  window.Rmusic.play()
+                  _this.addLine('[系统回复 ~]: 已继续播放')
+                } else {
+                  _this.addLine('[系统回复 ~]: 歌曲已在播放')
+                }
+                break
+              }
+              _this.addLine('[系统回复 ~]: 错误，未找到播放器。')
+              break
+            case 'songLoop':
+              if (window.Rmusic) {
+                window.Rmusic.loop = !window.Rmusic.loop
+                _this.addLine('[系统回复 ~]: 已' + (window.Rmusic.loop ? '开启' : '关闭') + '循环')
+                break
+              }
+              _this.addLine('[系统回复 ~]: 错误，未找到播放器。')
+              break
+            case 'songNum':
+              let musicFile = music.list[parseInt(val)]
+              if (musicFile) {
+                music.url(musicFile.FileHash)
+                _this.addLine('正在播放：' + musicFile.FileName)
+              } else {
+                _this.addLine('木有音乐')
+              }
+              break
+            case 'songList':
+              _this.addLine(_this.musicList())
+          }
+          return
+        }
+      }
+      for (len = store.AI.length; i < len; i++) {
+        if (store.AI[i].user.test(val)) {
+          let sysLen = store.AI[i].sys.length
+          let index = Math.round(Math.random() * sysLen - 0.5)
+          _this.addLine('[令狐长老]: ' + store.AI[i].sys[index])
+          return
+        }
+      }
+      _this.addLine('[系统回复 ~]: 你说啥？')
+    },
     clear () {
       lines = []
       lineIndex = 0
       this.$el.innerHTML = ''
-    },
-    help () {
-      let html = ''
-      for (let page in store.nav) {
-        html += store.nav[page][0] + '：' + store.nav[page].join('  &nbsp; |  &nbsp; ') + '<br>'
-      }
-      return html
+      this.addLine()
     },
     musicList () {
       let html, list
@@ -144,7 +168,7 @@ export default {
       if (list && list.length) {
         html = '<dl class="command-dl"><dt>正在播放：' + list[0].FileName + '</dt>'
         if (list.length > 1) {
-          html += '<dd class="command-more-music command-dd">更多相关歌曲：（输入对应序号即听）</dd>'
+          html += '<dd class="command-b command-dd">更多相关歌曲：（输入对应序号即听）</dd>'
           list.forEach((file, index) => {
             html += '<dd class="command-dd">' + index + '：' + file.FileName + '</dd>'
           })
@@ -167,6 +191,9 @@ export default {
     overflow: hidden;
     box-sizing: border-box;
     line-height: 1.4;
+    word-spacing: .2em;
+    letter-spacing: .06em;
+    text-align: justify;
   }
   .command-sys{
     padding: 0.3em 0 0.3em 2em;
@@ -193,8 +220,12 @@ export default {
   .command-dd{
     margin: 0;
   }
-  .command-more-music{
-    color: #911;
+  .command-highlight{
+    color: #5f7fb9;
+  }
+  .command-b{
+    display: inline-block;
+    color: #b9231f;
     margin-top: .5em;
   }
 </style>

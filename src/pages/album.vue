@@ -1,15 +1,15 @@
 <template>
   <section class="album">
-    <headerbar isName="album"/>
+    <header-bar isName="album"/>
     <div style="text-align: center">啥都木有</div>
   </section>
 </template>
 
 <script>
-import headerbar from './common/headerbar'
+import headerBar from './common/headerBar'
 export default {
   name: 'ablum',
-  components: {headerbar}
+  components: {headerBar}
 }
 </script>
 <style>

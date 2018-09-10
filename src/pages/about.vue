@@ -61,7 +61,6 @@
 import utils from '../scripts/utils.js'
 import popup from '../components/popup'
 import navbar from '../components/navbar'
-import store from '../scripts/store'
 export default {
   name: 'about',
   components: {navbar, popup},
@@ -69,9 +68,9 @@ export default {
     return {
       aboutShow: false,
       glassBoxTransform: 'translate3d(0, 0, -2rem) rotateY(0)',
-      chartColor: store.about.chartColor,
-      skills: store.about.skills,
-      career: store.about.career
+      chartColor: [],
+      skills: [],
+      career: []
     }
   },
   mounted () {
@@ -122,7 +121,6 @@ export default {
       _this.glassBoxTransform = 'translate3d(' + transX + 'px, ' + transY + 'px, ' + (z / 10) + 'rem) rotateY(' + (rotateY / 10) + 'deg)'
     }
 
-    this.aboutShow = true
     this.$on('popupHide', () => {
       el.addEventListener('mousewheel', wheel)
       listen.on()
@@ -133,6 +131,19 @@ export default {
     })
     utils.scroll(this.$refs.glassSkill, '', scrollPrevent)
     utils.scroll(this.$refs.glassCareer, '', scrollPrevent)
+
+    utils.ajax({
+      url: '/static/about/about.json'
+    }).then(res => {
+      for (let k in res) {
+        if (res.hasOwnProperty(k)) {
+          _this[k] = res[k]
+        }
+      }
+      _this.aboutShow = true
+    }, err => {
+      console.error(err)
+    })
   },
   methods: {
     onGlassBoxInEnd () {

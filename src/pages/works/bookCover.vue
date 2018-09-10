@@ -1,16 +1,16 @@
 <template>
   <div @transitionend="transitionEnd">
-    <video v-if="book.video" class="bookcover-img" :src="book.video" autoplay loop></video>
-    <img v-else class="bookcover-img" :src="book.cover" draggable="false">
-    <h1 class="bookcover-title">{{book.title}}</h1>
-    <h2 class="bookcover-subtitle">{{book.subtitle}}</h2>
+    <video v-if="book.video" class="book-cover-img" :src="book.video" autoplay loop></video>
+    <img v-else class="book-cover-img" :src="book.cover" draggable="false">
+    <h1 class="book-cover-title">{{book.title}}</h1>
+    <h2 class="book-cover-subtitle">{{book.subtitle}}</h2>
     <slot></slot>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'bookcover',
+  name: 'book-cover',
   props: ['book'],
   methods: {
     transitionEnd (e) {
@@ -20,18 +20,18 @@ export default {
 }
 </script>
 <style>
-  .bookcover-title{
+  .book-cover-title{
     font-size: .6rem;
     line-height: 1;
     padding: .5em;
     border-bottom: 1px solid;
   }
-  .bookcover-subtitle{
+  .book-cover-subtitle{
     text-transform: uppercase;
     font-size: .5rem;
     margin: 0;
   }
-  .bookcover-img{
+  .book-cover-img{
     width: 80%;
     border-radius: 6px;
   }

@@ -236,14 +236,18 @@ export default {
     }
     promise = new Promise((resolve, reject) => {
       xhr = new XMLHttpRequest()
-      xhr.responseType = o.dataType
       xhr.timeout = o.timeout
       xhr.open(o.type, o.url, o.sync)
       xhr.setRequestHeader('Content-type', o.contentType)
       xhr.onreadystatechange = () => {
         if (xhr.readyState === 4) {
           if (xhr.status === 200) {
-            resolve(xhr.response)
+            try {
+              resolve(JSON.parse(xhr.response))
+            } catch (e) {
+              e.message = '响应的数据格式错误导致无法转为json，具体错误：' + e.message
+              reject(e)
+            }
           } else {
             reject(new Error('fail, readyState:' + xhr.readyState + ', status:' + xhr.status))
           }

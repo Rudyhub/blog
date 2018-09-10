@@ -8,8 +8,7 @@
             <p>RUDY</p>
           </div>
           <div class="computer-screen">
-            <welcome v-if="!commandShow"/>
-            <command :show="commandShow"/>
+            <component :is="screen" @welcomeEnd="welcomeEndFn"/>
           </div>
         </div>
       </transition>
@@ -30,7 +29,7 @@ export default {
   data () {
     return {
       show: false,
-      commandShow: false
+      screen: null
     }
   },
   mounted () {
@@ -38,9 +37,11 @@ export default {
   },
   methods: {
     coverAfterEnd () {
-      this.welcomeShow(() => {
-        this.commandShow = true
-      })
+      this.screen = welcome
+    },
+    welcomeEndFn () {
+      this.screen = command
+      this.screen.show = true
     }
   }
 }
@@ -48,8 +49,8 @@ export default {
 
 <style>
   .home{
-    perspective: 15rem;
-    width: 15rem;
+    perspective: 18rem;
+    width: 100%;
     height: 10rem;
     margin: 0 auto;
     overflow: hidden;
@@ -60,16 +61,16 @@ export default {
   }
   .computer{
     transform-style: preserve-3d;
-    transform: translateY(1rem);
-    width: 8.8rem;
+    transform: translateY(.5rem);
+    width: 10rem;
     height: 12rem;
     margin: 0 auto;
   }
   .computer-cover,
   .computer-keyboard,
   .computer-back-cover{
-    height: 5rem;
-    width: 8.8rem;
+    height: 6rem;
+    width: 10rem;
     position: absolute;
     left: 0;
     box-sizing: border-box;
@@ -97,12 +98,12 @@ export default {
   }
   .computer-cover-enter,
   .computer-leave-to{
-    transform: rotateX(-109deg);
+    transform: rotateX(-107deg);
   }
   .computer-keyboard{
     background: linear-gradient(135deg, #222, #17151c);
-    transform: rotateX(70deg);
-    top: 5rem;
+    transform: rotateX(72deg);
+    top: 6rem;
     transform-origin: top;
   }
   .computer-keyboard:after{

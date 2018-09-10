@@ -1,34 +1,31 @@
 <template>
-  <div class="linklist">
-    <h1 class="linklist-h1">{{title}}</h1>
-    <div class="linklist-info">
+  <div class="link-list">
+    <h1 class="link-list-h1">{{title}}</h1>
+    <div class="link-list-info">
       特别推荐：
       <span v-for="(rec, rindex) of recommend" :key="rindex">{{rec}}</span>
     </div>
-    <ul class="linklist-ul" ref="list" v-if="items">
-      <li class="linklist-li" v-for="(item, index) of thisItems" :key="index">
-        <div class="linklist-num">{{start+index+1}} / {{total}}</div>
-        <thumb class="linklist-thumb" v-if="item.thumb" :src="item.thumb"/>
-        <h2 class="linklist-h2">{{item.title}}
-          <sup class="linklist-sup linklist-not-online" v-if="item.online === 0">未上线</sup>
-          <sup class="linklist-sup linklist-recommend" v-if="item.level === 1">推荐</sup>
+    <ul class="link-list-ul" ref="list" v-if="items">
+      <li class="link-list-li" v-for="(item, index) of thisItems" :key="index">
+        <div class="link-list-num">{{start+index+1}} / {{total}}</div>
+        <thumb class="link-list-thumb" v-if="item.thumb" :src="item.thumb"/>
+        <h2 class="link-list-h2">{{item.title}}
+          <sup class="link-list-sup link-list-not-online" v-if="item.online === 0">未上线</sup>
+          <sup class="link-list-sup link-list-recommend" v-if="item.level === 1">推荐</sup>
         </h2>
-        <div class="linklist-list">
-          <time class="linklist-time">{{item.date | datemat}} </time>
-          <!--<a class="linklist-item linklist-href" v-if="item.href" v-for="(href, hIndex) of item.href" :key="'href'+hIndex" :href="href" target="_blank">-->
-            <!--<span class="linklist-favhd">体验</span><img class="linklist-favicon" :src="getFavicon(href)"/>-->
-          <!--</a>-->
-          <router-link class="linklist-item linklist-href" v-if="item.href" v-for="(href, hIndex) of item.href" :key="'href'+hIndex" :data="thisItems" :to="href" tag="a" target="_blank">
-            <span class="linklist-favhd">体验</span><img class="linklist-favicon" :src="getFavicon(href)"/>
-          </router-link>
-          <a class="linklist-item linklist-source" v-if="item.source" v-for="(source, sIndex) of item.source" :key="'source'+sIndex" :href="source" target="_blank">
-            <span class="linklist-favhd">源码</span><img class="linklist-favicon" :src="getFavicon(source)"/>
+        <div class="link-list-list">
+          <time class="link-list-time">{{item.date | datemat}} </time>
+          <a class="link-list-item link-list-href" v-if="item.href" v-for="(href, hIndex) of item.href" :key="'href'+hIndex" :href="href" target="_blank">
+            <span class="link-list-favhd">体验</span><img class="link-list-favicon" :src="getFavicon(href)"/>
           </a>
-          <a class="linklist-item linklist-docs" v-if="item.docs" v-for="(doc, dIndex) of item.docs" :key="'docs'+dIndex" :href="doc" target="_blank">
-            <span class="linklist-favhd">文档</span><img class="linklist-favicon" :src="getFavicon(doc)"/>
+          <a class="link-list-item link-list-source" v-if="item.source" v-for="(source, sIndex) of item.source" :key="'source'+sIndex" :href="source" target="_blank">
+            <span class="link-list-favhd">源码</span><img class="link-list-favicon" :src="getFavicon(source)"/>
+          </a>
+          <a class="link-list-item link-list-docs" v-if="item.docs" v-for="(doc, dIndex) of item.docs" :key="'docs'+dIndex" :href="doc" target="_blank">
+            <span class="link-list-favhd">文档</span><img class="link-list-favicon" :src="getFavicon(doc)"/>
           </a>
         </div>
-        <div class="linklist-desc" v-if="item.desc" v-html="item.desc"></div>
+        <div class="link-list-desc" v-if="item.desc" v-html="item.desc"></div>
       </li>
     </ul>
   </div>
@@ -39,7 +36,7 @@ import utils from '../../scripts/utils.js'
 import thumb from '../../components/thumb'
 import bookinner from '../../components/bookinner'
 export default {
-  name: 'linklist',
+  name: 'link-list',
   props: ['items', 'title', 'apart'],
   components: {bookinner, thumb},
   data () {
@@ -88,17 +85,17 @@ export default {
 </script>
 
 <style>
-  .linklist{
+  .link-list{
     cursor: auto;
     overflow: hidden;
     width: 100%;
     height: 100%;
   }
-  .linklist-h1{
+  .link-list-h1{
     font-size: 22px;
     text-align: center;
   }
-  .linklist-h2{
+  .link-list-h2{
     font-size: 16px;
     margin-top: 0;
     margin-bottom: 1em;
@@ -106,7 +103,7 @@ export default {
     white-space: nowrap;
     position: relative;
   }
-  .linklist-sup{
+  .link-list-sup{
     border-radius: 1em;
     line-height: 1;
     padding: .1em .5em;
@@ -114,12 +111,12 @@ export default {
     font-weight: normal;
     font-size: 12px;
   }
-  .linklist-info{
+  .link-list-info{
     font-size: 14px;
     text-align: left;
     margin: 0 3em;
   }
-  .linklist-info span{
+  .link-list-info span{
     display: inline-block;
     vertical-align: top;
     margin: 0 2px;
@@ -131,13 +128,13 @@ export default {
     min-width: 1em;
     text-align: center;
   }
-  .linklist-not-online{
+  .link-list-not-online{
     background: #787677;
   }
-  .linklist-recommend{
+  .link-list-recommend{
     background: #308846;
   }
-  .linklist-ul{
+  .link-list-ul{
     list-style: none;
     text-align: left;
     margin: 1.5em 2em;
@@ -146,7 +143,7 @@ export default {
     overflow: hidden;
     box-sizing: border-box;
   }
-  .linklist-li{
+  .link-list-li{
     font-size: 15px;
     padding: 1em .5em;
     position: relative;
@@ -157,7 +154,7 @@ export default {
     box-shadow: #ccc 0 1px 2px;
     background: #fff;
   }
-  .linklist-num{
+  .link-list-num{
     position: absolute;
     right: 0;
     top: 0;
@@ -167,18 +164,18 @@ export default {
     border-bottom-left-radius: .4em;
     color: #111;
   }
-  .linklist-thumb{
+  .link-list-thumb{
     width: 3.6em;
     height: 3.6em;
     margin-right: 1em;
     display: block;
     float: left;
   }
-  .linklist-time{
+  .link-list-time{
     display: inline-block;
     vertical-align: middle;
   }
-  .linklist-item{
+  .link-list-item{
     display: inline-block;
     font-size: 12px;
     vertical-align: middle;
@@ -189,30 +186,30 @@ export default {
     box-sizing: border-box;
     box-shadow: #555 0 0 2px;
   }
-  .linklist-item:hover{
+  .link-list-item:hover{
     transition: opacity .3s;
     opacity: 1;
   }
-  .linklist-href{
+  .link-list-href{
     background: linear-gradient(90deg, #6f4940 60%, #eee 60%);
   }
-  .linklist-source{
+  .link-list-source{
     background: linear-gradient(90deg, #477a4d 60%, #eee 60%);
   }
-  .linklist-docs{
+  .link-list-docs{
     background: linear-gradient(90deg, #7a2850 60%, #eee 60%);
   }
-  .linklist-favicon,
-  .linklist-favhd{
+  .link-list-favicon,
+  .link-list-favhd{
     display: inline-block;
     vertical-align: middle;
     margin: .1em .3em;
     color: #fff;
   }
-  .linklist-favicon{
+  .link-list-favicon{
     height: 1.2em;
   }
-  .linklist-desc{
+  .link-list-desc{
     font-size: 13px;
     color: #666;
     margin-top: .5em;
@@ -223,17 +220,17 @@ export default {
     text-indent: 2em;
     border-top: #eee solid 1px;
   }
-  .linklist-desc p{
+  .link-list-desc p{
     margin: 0;
   }
   @media (max-width: 767px) {
-    .linklist-h1{
+    .link-list-h1{
       font-size: 20px;
     }
-    .linklist-h2{
+    .link-list-h2{
       font-size: 14px;
     }
-    .linklist-li {
+    .link-list-li {
       font-size: 13px;
     }
   }

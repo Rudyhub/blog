@@ -1,15 +1,15 @@
 <template>
-  <div class="imglist">
-    <figure class="imglist-figure" v-for="(item, index) of thisItems" :key="'i'+index" :style="{width: calcWidth(item.zoom)}">
-      <img class="imglist-img" :src="item.img" :alt="item.caption" draggable="false">
-      <figcaption class="imglist-figcaption"><span class="fs12">{{item.caption}}</span></figcaption>
+  <div class="img-list">
+    <figure class="img-list-figure" v-for="(item, index) of thisItems" :key="'i'+index" :style="{width: calcWidth(item.zoom)}">
+      <img class="img-list-img" :src="item.img" :alt="item.caption" draggable="false">
+      <figcaption class="img-list-figcaption"><span class="fs12">{{item.caption}}</span></figcaption>
     </figure>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'imglist',
+  name: 'img-list',
   props: {
     items: [Array],
     times: {
@@ -55,25 +55,25 @@ export default {
 </script>
 
 <style>
-  .imglist{
+  .img-list{
     font-size: 0;
     text-align: center;
     text-align-last: left;
   }
-  .imglist-figure{
+  .img-list-figure{
     margin: 0 0 20px;
     box-sizing: border-box;
     display: inline-block;
     vertical-align: bottom;
     padding: 5px;
   }
-  .imglist-img{
+  .img-list-img{
     display: block;
     width: 100%;
     max-width: 1280px;
     margin: 0 auto;
   }
-  .imglist-figcaption{
+  .img-list-figcaption{
     text-align: center;
     text-align-last: auto;
     font-weight: bold;
@@ -83,7 +83,7 @@ export default {
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  .imglist-figcaption span{
+  .img-list-figcaption span{
     display: inline-block;
     padding: .4em;
     border-bottom: 3px double;

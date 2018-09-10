@@ -1,7 +1,7 @@
 <template>
   <transition name="fade" @beforeEnter="beforeEnter" @afterLeave="afterLeave">
     <nav v-show="show" class="navbar">
-      <router-link class="navbar-item" v-for="(navItem, name) of nav" :key="name" :to="'/'+name" tag="a" @click="onclick($event, name)">{{navItem[0]}}</router-link>
+      <router-link class="navbar-item" v-for="(navItem, name) of nav" :key="name" :to="'/'+name" tag="a" @click="onclick($event, name)">{{navItem}}</router-link>
       <a class="navbar-item" href="javascript:void(0)" @click="onclick($event, 'help')">指南</a>
     </nav>
   </transition>
@@ -12,14 +12,8 @@ import store from '../scripts/store.js'
 export default {
   name: 'navbar',
   data () {
-    let nav = {}
-    for (let key in store.nav) {
-      if (key !== 'help' && key !== 'clear') {
-        nav[key] = store.nav[key]
-      }
-    }
     return {
-      nav,
+      nav: store.nav,
       show: false
     }
   },
