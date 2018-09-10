@@ -57,14 +57,14 @@ export default {
   components: {bookcover, popup, navbar, linklist},
   beforeCreate () {
     let _this = this
+    _this.books = {}
     utils.ajax({
       url: '/static/works/works.json'
     }).then(res => {
-      let books, len, i, localData
+      let books, len, i, local
       len = Object.keys(res).length
-      books = {}
+      books = _this.books
       i = 0
-
       for (let name in res) {
         books[name] = {
           rotateY: Math.round(i * (360 / len)),
@@ -77,10 +77,9 @@ export default {
         }
         i++
       }
-      _this.books = books
-      localData = JSON.parse(window.localStorage.getItem('RudyData') || '{}')
-      localData.works = res
-      window.localStorage.setItem('RudyData', JSON.stringify(localData))
+      local = JSON.parse(window.localStorage.getItem('RudyData') || '{}')
+      local.works = books
+      window.localStorage.setItem('RudyData', JSON.stringify(local))
     }, err => {
       console.log(err)
     })
@@ -92,7 +91,6 @@ export default {
       tableTranslateY: 0
     })
     return {
-      books: {},
       activeIndex: -1,
       inits,
       stagePerspective: inits.stagePerspective,

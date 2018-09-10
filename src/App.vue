@@ -10,9 +10,6 @@ export default {
     window.Rmusic.addEventListener('canplay', () => {
       window.Rmusic.play()
     })
-    if (!window.localStorage.getItem('RudyData')) {
-      window.localStorage.setItem('RudyData', '{}')
-    }
   }
 }
 </script>
