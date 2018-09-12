@@ -10,30 +10,39 @@ export default {
     help: /^(帮助|help|-h|-?[?？]|查看指令)$/,
     clear: /^(cls|clear|清除|清屏)$/,
     song: /^听\s+/,
-    songPause: /^((music|-m)\s+off|音乐\s*[停止]|安静|嘘|静音)\s*$/,
-    songPlay: /^((music|-m)\s+on|播放(音乐|歌曲)*|音乐\s*(继续|播放))\s*$/,
-    songLoop: /^((music|-m)\s+loop|单曲循环)\s+$/,
+    songPause: /^((-m|music)\s+off|暂停音乐|安静|嘘|静音)\s*$/,
+    songPlay: /^((-m|music)\s+on|播放(音乐|歌曲))\s*$/,
+    songLoop: /^((-m|music)\s+loop|单曲循环)\s+$/,
     songNum: /^\d+$/,
-    songList: /^((music|-m)\s+list|歌单|歌曲(列表)*)\s*$/
+    songList: /^((-m|music)\s+list|查看歌单|歌单|歌曲列表)\s*$/,
+    songName: /^((-m|music)\s+(name|song)|(查看)?歌名)\s*$/
   }),
   help () {
-    let html = '<b class="command-b">访问页面：</b><br>'
+    let html = '<div class="command-answer-title">访问页面：</div><div class="command-answer-detail fs8">'
     for (let k in this.nav) {
       if (k === 'home') continue
-      html += '访问' + this.nav[k] + '：可输入的指令有“' + this.nav[k] + '”、“' + k + '”<br>'
+      html += '<span class="command-fc0">访问' + this.nav[k] + '</span>：可输入的指令有“' + this.nav[k] + '”、“' + k + '”<br>'
     }
-    html += `<b class="command-b">听音乐：</b><br>
-      听歌搜歌：可输入“听 + 空格 + 关键词（歌曲或歌星）”，如：听 蓝莲花，又如：听 许巍<br/>
-      暂停音乐：可输入指令有“-m off”、“music off”、“音乐停”、“安静”、“嘘”、“静音”<br/>
-      继续播放：可输入指令有“-m on”、“music on”、“播放”、“播放音乐”、“播放歌曲”、“音乐播放”、“音乐继续”<br/>
-      单曲循环：可输入指令有“-m loop”、“music loop”、“单曲循环”，注：关闭单曲循环同用<br/>
-      查看歌单：可输入指令有“-m list”、“music list”、“歌单”、“歌曲”，注：列出的只是上一次的搜索结果<br/>
-      <b class="command-b">其他指令：</b><br>
-      查看指令：可输入指令有“？”、“-h”、“help”、“帮助”、“查看指令”<br/>
-      清空屏幕：可输入指令有“cls”、“clear”、“清屏”、“清除”<br/>
-      <b class="command-b">问答系统：</b><br>
-      以上指令之外的事情，都交给本问答系统吧。当前系统只是个非常小的静态数据，纯属娱乐同时装一下X，能回复的问题不多，而且态度基本很傲娇，很皮。
-      以后，砸家想开发为一个具有人工智能的问答学习系统，不仅会回答码农的问题，还会回答九年义务教育的课程问题甚至各行业的专业问题。期待吧~`
+    html += `</div>
+      <div class="command-answer-title">听音乐：</div>
+      <div class="command-answer-detail fs8">
+        <span class="command-fc0">听歌搜歌</span>：可输入“听 + 空格 + 关键词（歌曲或歌星）”，如：听 蓝莲花，又如：听 许巍<br/>
+        <span class="command-fc0">暂停音乐</span>：可输入指令有“-m off”、“music off”、“暂停音乐”、“安静”、“嘘”、“静音”<br/>
+        <span class="command-fc0">播放音乐</span>：可输入指令有“-m on”、“music on”、“播放音乐”、“播放歌曲”<br/>
+        <span class="command-fc0">单曲循环</span>：可输入指令有“-m loop”、“music loop”、“单曲循环”，注：关闭单曲循环同用<br/>
+        <span class="command-fc0">查看歌单</span>：可输入指令有“-m list”、“music list”、“歌单”、“歌曲列表”，注：列出的只是上一次的搜索结果<br/>
+        <span class="command-fc0">查看歌名</span>：可输入指令有“-m name”、“music name”、“歌名”、“查看歌名”
+      </div>
+      <div class="command-answer-title">其他指令：</div>
+      <div class="command-answer-detail fs8">
+        <span class="command-fc0">查看指令</span>：可输入指令有“？”、“-h”、“help”、“帮助”、“查看指令”<br/>
+        <span class="command-fc0">清空屏幕</span>：可输入指令有“cls”、“clear”、“清屏”、“清除”
+      </div>
+      <div class="command-answer-title">问答系统：</div>
+      <div class="command-answer-detail fs8">
+        以上指令之外的事情，都交给本问答系统吧。当前系统只是个非常小的静态数据，纯属娱乐同时装一下X，能回复的问题不多，而且态度基本很傲娇，很皮。
+        以后，砸家想开发为一个具有人工智能的问答学习系统，不仅会回答码农的问题，还会回答九年义务教育的课程问题甚至各行业的专业问题。期待吧~
+      </div>`
     return html
   },
   AI: Object.freeze([{

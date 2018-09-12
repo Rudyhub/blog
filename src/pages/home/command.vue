@@ -4,7 +4,7 @@
         欢迎进入老夫的互动系统，可与老夫进行简单的交流，想进入其他页面必须输入正确的指令。输入“?” 或 “帮助”，然后Enter，可查看关键指令。<br>
       </div>
       <template v-for="(line, i) of lines">
-        <div class="command-ask" :key="'ask'+i">
+        <div v-if="line.ask" class="command-ask" :key="'ask'+i">
           <span class="command-ask-name">[You ~]:</span>
           {{line.ask}}
         </div>
@@ -33,13 +33,13 @@ export default {
   mounted () {
     let _this = this
     utils.scroll(_this.$el)
-    if (!window.Rsong.el.src || window.Rsong.el.paused) {
-      music.search('', kw => {
-        _this.lines.push({
-          ask: '听 ' + kw,
-          answer: '自动播放：' + kw
-        })
+    music.autoplayError = () => {
+      _this.lines.push({
+        answer: '自动播放失败，浏览器不支持自动播放，可输入“0”播放'
       })
+    }
+    if (!window.Rsong.el.src || window.Rsong.el.paused) {
+      music.search()
     }
   },
   methods: {
@@ -65,6 +65,14 @@ export default {
           break
       }
     },
+    autoLine () {
+      let name = music.getName()
+      this.lines.push({
+        ask: '听 ' + name,
+        answer: '正在播放：' + name
+      })
+      this.updateLine()
+    },
     pushLine (html) {
       let _this = this
       _this.historyIndex = 0
@@ -72,10 +80,11 @@ export default {
         ask: _this.ask,
         answer: html
       })
-      _this.ask = ''
-      setTimeout(() => {
-        _this.$el.scrollTop = _this.$el.scrollHeight - _this.$el.offsetHeight
-      }, 50)
+      this.updateLine()
+    },
+    updateLine () {
+      this.ask = ''
+      window.requestAnimationFrame(() => (this.$el.scrollTop = this.$el.scrollHeight - this.$el.offsetHeight))
     },
     respone (val) {
       let _this, len, i
@@ -124,12 +133,13 @@ export default {
               _this.pushLine('已' + (music.toggleLoop() ? '开启' : '关闭') + '循环')
               return
             case 'songNum':
-              music.search(parseInt(val), () => {
-                _this.pushLine('正在播放：' + music.getName())
-              })
+              music.search(parseInt(val))
               return
             case 'songList':
               _this.pushLine(_this.musicList())
+              return
+            case 'songName':
+              _this.autoLine()
               return
           }
         }
@@ -148,9 +158,9 @@ export default {
       let html, list
       list = music.getList()
       if (list && list.length) {
-        html = '<dl class="command-dl"><dt>正在播放：' + list[0].FileName + '</dt>'
+        html = '<dl class="command-dl">'
         if (list.length > 1) {
-          html += '<dd class="command-b command-dd">更多相关歌曲：（输入对应序号即听）</dd>'
+          html += '<dd class="command-answer-title command-dd">搜到歌曲：（输入对应序号即听）</dd>'
           list.forEach((file, index) => {
             html += '<dd class="command-dd">' + index + '：' + file.FileName + '</dd>'
           })
@@ -210,12 +220,12 @@ export default {
   .command-dd{
     margin: 0;
   }
-  .command-highlight{
-    color: #5f7fb9;
+  .command-fc0{
+    border-bottom: 1px dashed;
   }
-  .command-b{
-    display: inline-block;
+  .command-answer-title{
     color: #b9231f;
     margin-top: .5em;
+    font-weight: bolder;
   }
 </style>

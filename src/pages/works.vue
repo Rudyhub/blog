@@ -191,8 +191,10 @@ export default {
           this.books[this.activeIndex].coverRotateY = -270
           this.books[this.activeIndex].translateX = -100
         } else {
-          this.$emit('onRotate')
-          this.isBookOpened = false
+          if (e.propertyName === 'perspective') {
+            this.$emit('onRotate')
+            this.isBookOpened = false
+          }
         }
       }
     },

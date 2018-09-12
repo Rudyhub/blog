@@ -18,6 +18,9 @@ export default {
     v.autoplay = true
     v.addEventListener('canplay', () => {
       v.play()
+      setTimeout(() => {
+        if (v.paused && _this.autoplayError) _this.autoplayError()
+      }, 500)
     })
     v.addEventListener('play', () => {
       start = 0
@@ -123,11 +126,11 @@ export default {
     script = document.createElement('script')
     window.musicurl = function musicurl (res) {
       Rsong.el.src = res.data.play_url
-      if (_this.srcUpdate) _this.srcUpdate()
       Rsong.song = res.data
       _this.lyric()
       window.localStorage.setItem('songHash', res.data.hash)
       window.localStorage.setItem('songName', res.data.audio_name)
+      if (_this.srcUpdate) _this.srcUpdate()
       if (fn) fn()
     }
     script.onload = function loaded () {

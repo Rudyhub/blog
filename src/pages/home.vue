@@ -8,7 +8,7 @@
             <p>RUDY</p>
           </div>
           <div class="computer-screen">
-            <component :is="screen" @welcomeEnd="welcomeEndFn"/>
+            <component ref="screen" :is="screen" @welcomeEnd="welcomeEndFn"/>
           </div>
         </div>
       </transition>
@@ -55,16 +55,16 @@ export default {
     }
     music.srcUpdate = () => {
       this.lyric = ''
+      this.$refs.screen.autoLine()
     }
     this.show = true
   },
   methods: {
     coverAfterEnd () {
-      this.screen = welcome
+      this.screen = 'welcome'
     },
     welcomeEndFn () {
-      this.screen = command
-      this.screen.show = true
+      this.screen = 'command'
     }
   }
 }

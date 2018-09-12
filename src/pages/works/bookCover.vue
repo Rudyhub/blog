@@ -1,6 +1,6 @@
 <template>
   <div @transitionend="transitionEnd">
-    <video v-if="book.video" class="book-cover-img" :src="book.video" autoplay loop></video>
+    <video v-if="book.video" class="book-cover-img" @mouseenter="playVideo" :src="book.video" :poster="book.thumb" autoplay loop playsinline webkit-playsinline></video>
     <img v-else class="book-cover-img" :src="book.cover" draggable="false">
     <h1 class="book-cover-title">{{book.title}}</h1>
     <h2 class="book-cover-subtitle">{{book.subtitle}}</h2>
@@ -15,6 +15,9 @@ export default {
   methods: {
     transitionEnd (e) {
       this.$emit('transitionend', e)
+    },
+    playVideo (e) {
+      e.target.play()
     }
   }
 }
