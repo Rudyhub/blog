@@ -3,13 +3,11 @@
 </template>
 
 <script>
+import music from './scripts/music'
 export default {
   name: 'App',
   beforeCreate () {
-    window.Rmusic = new Audio()
-    window.Rmusic.addEventListener('canplay', () => {
-      window.Rmusic.play()
-    })
+    music.init()
   }
 }
 </script>

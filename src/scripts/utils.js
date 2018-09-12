@@ -132,7 +132,9 @@ export default {
     }
 
     function moveFn (e) {
-      e.preventDefault()
+      if (!e.ctrlKey) {
+        e.preventDefault()
+      }
       end = isTouch ? e.targetTouches[0][client] : e[client]
       speed = end - prev
       prev = end
