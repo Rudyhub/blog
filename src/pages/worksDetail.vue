@@ -20,14 +20,17 @@ import imgList from './works/imgList'
 export default {
   name: 'works-detail',
   components: {worksHeader, imgList},
+  props: ['workName', 'progIndex'],
   data () {
-    let data, title, items, name
+    let data, title, items
     data = window.localStorage.getItem('RudyData')
-    name = this.$route.params.workName
     try {
       data = JSON.parse(data)
-      title = data.works[name].title
-      items = data.works[name].items
+      title = data.works[this.workName].title
+      items = data.works[this.workName].items
+      if (typeof this.progIndex !== 'undefined' && items[this.progIndex]) {
+        items = [items[this.progIndex]]
+      }
     } catch (e) {
       title = '无数据'
       items = []

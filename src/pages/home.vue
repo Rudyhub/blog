@@ -44,19 +44,21 @@ export default {
   },
   mounted () {
     this.lines = Math.round(this.$refs.lyric.offsetHeight / 2)
-    music.lrcUpdate = lrc => {
+    music.on('lrcupdate', lrc => {
       this.lyric = lrc
-    }
-    music.timeUpdate = (cur, dur) => {
+    })
+    music.on('timeupdate', (cur, dur) => {
       this.songPlayed = 100 * (cur / dur).toFixed(4)
-    }
-    music.buffer = buf => {
+    })
+    music.on('buffer', buf => {
       this.songBufer = buf
-    }
-    music.srcUpdate = () => {
+    })
+    music.on('srcupdate', () => {
       this.lyric = ''
-      this.$refs.screen.autoLine()
-    }
+      try {
+        this.$refs.screen.autoLine()
+      } catch (e) {}
+    })
     this.show = true
   },
   methods: {

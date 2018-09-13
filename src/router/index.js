@@ -31,9 +31,10 @@ export default new Router({
       name: 'album',
       component: album
     }, {
-      path: '/works/:workName',
+      path: '/works/:workName/:progIndex?',
       name: 'works-detail',
-      component: worksDetail
+      component: worksDetail,
+      props: true
     }
   ]
 })

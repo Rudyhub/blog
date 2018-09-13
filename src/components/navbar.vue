@@ -1,7 +1,7 @@
 <template>
   <transition name="fade" @beforeEnter="beforeEnter" @afterLeave="afterLeave">
     <nav v-show="show" class="navbar">
-      <router-link class="navbar-item" v-for="(navItem, name) of nav" :key="name" :to="'/'+name" tag="a" @click="onclick($event, name)">{{navItem}}</router-link>
+      <router-link class="navbar-item" v-for="(navItem, name) of nav" :key="name" :to="'/'+name" tag="a">{{navItem}}</router-link>
       <a class="navbar-item" href="javascript:void(0)" @click="onclick($event, 'help')">指南</a>
     </nav>
   </transition>

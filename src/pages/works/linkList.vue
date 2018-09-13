@@ -1,6 +1,8 @@
 <template>
   <div class="link-list">
-    <h1 class="link-list-h1">{{title}}</h1>
+    <h1 class="link-list-h1">
+      <a class="link-list-h1-a" :href="href || 'javascript:void(0)'" target="_blank">{{title}}</a>
+    </h1>
     <div class="link-list-info">
       特别推荐：
       <span v-for="(rec, rindex) of recommend" :key="rindex">{{rec}}</span>
@@ -15,13 +17,13 @@
         </h2>
         <div class="link-list-list">
           <time class="link-list-time">{{item.date | datemat}} </time>
-          <a class="link-list-item link-list-href" v-if="item.href" v-for="(href, hIndex) of item.href" :key="'href'+hIndex" :href="href" target="_blank">
+          <a class="link-list-item link-list-href" v-for="(href, hIndex) of giveHref(item.href)" :key="'href'+hIndex" :href="hrefFilter(href, start + index)" target="_blank">
             <span class="link-list-favhd">体验</span><img class="link-list-favicon" :src="getFavicon(href)"/>
           </a>
-          <a class="link-list-item link-list-source" v-if="item.source" v-for="(source, sIndex) of item.source" :key="'source'+sIndex" :href="source" target="_blank">
+          <a class="link-list-item link-list-source" v-if="item.source" v-for="(source, sIndex) of item.source" :key="'source'+sIndex" :href="hrefFilter(source, start + index)" target="_blank">
             <span class="link-list-favhd">源码</span><img class="link-list-favicon" :src="getFavicon(source)"/>
           </a>
-          <a class="link-list-item link-list-docs" v-if="item.docs" v-for="(doc, dIndex) of item.docs" :key="'docs'+dIndex" :href="doc" target="_blank">
+          <a class="link-list-item link-list-docs" v-if="item.docs" v-for="(doc, dIndex) of item.docs" :key="'docs'+dIndex" :href="hrefFilter(doc, start + index)" target="_blank">
             <span class="link-list-favhd">文档</span><img class="link-list-favicon" :src="getFavicon(doc)"/>
           </a>
         </div>
@@ -37,7 +39,7 @@ import thumb from '../../components/thumb'
 import bookinner from '../../components/bookinner'
 export default {
   name: 'link-list',
-  props: ['items', 'title', 'apart'],
+  props: ['items', 'title', 'apart', 'href'],
   components: {bookinner, thumb},
   data () {
     let len, recommend, thisItems, start, end
@@ -79,7 +81,13 @@ export default {
     utils.scroll(this.$refs.list)
   },
   methods: {
-    getFavicon: utils.favicon
+    getFavicon: utils.favicon,
+    hrefFilter (href, index) {
+      return /^https?:\/\//.test(href) ? href : href + '/' + index
+    },
+    giveHref (href) {
+      return !href ? [this.href] : href
+    }
   }
 }
 </script>
@@ -94,6 +102,9 @@ export default {
   .link-list-h1{
     font-size: 22px;
     text-align: center;
+  }
+  a.link-list-h1-a{
+    color: #553a37;
   }
   .link-list-h2{
     font-size: 16px;

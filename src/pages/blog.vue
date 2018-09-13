@@ -1,6 +1,6 @@
 <template>
   <section class="blog">
-    <header-bar isName="blog"/>
+    <header-bar active="blog"/>
     <article class="blog-art">
       <h2>我没话说...</h2>
     </article>

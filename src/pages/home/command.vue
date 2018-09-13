@@ -24,20 +24,41 @@ import music from '../../scripts/music.js'
 export default {
   name: 'command',
   data () {
-    return {
+    let data = {
+      AI: [],
       ask: '',
       lines: [],
       historyIndex: 0
     }
+    utils.ajax({
+      url: '/static/ai.json'
+    }).then(res => {
+      res.forEach((item, i) => {
+        let ask, g
+        ask = item.ask.replace(/(?:^\/)|(?:\/([ig]*)$)/g, ($0, $1) => {
+          if ($1) {
+            g = $1
+          }
+          return ''
+        })
+        item.ask = new RegExp(ask, g ? g + '' : '')
+        data.AI[i] = item
+      })
+    }, err => {
+      console.log(err)
+    })
+    return data
   },
   mounted () {
     let _this = this
     utils.scroll(_this.$el)
-    music.autoplayError = () => {
-      _this.lines.push({
-        answer: '自动播放失败，浏览器不支持自动播放，可输入“0”播放'
-      })
-    }
+    music.on('error', err => {
+      if (err.playError === 1) {
+        _this.lines.push({
+          answer: '自动播放失败，浏览器不支持自动播放，可输入“播放音乐”。'
+        })
+      }
+    })
     if (!window.Rsong.el.src || window.Rsong.el.paused) {
       music.search()
     }
@@ -97,7 +118,6 @@ export default {
           if (val === 'home') {
             _this.pushLine('这就是首页了噻')
           } else {
-            music.pause()
             _this.$router.push(page)
           }
           return
@@ -124,10 +144,14 @@ export default {
             case 'songPlay':
               if (music.paused()) {
                 music.play()
-                _this.pushLine('已继续播放：' + music.getName())
+                _this.pushLine('播放：' + music.getName())
               } else {
-                _this.pushLine('歌曲已在播放：' + music.getName())
+                _this.pushLine('歌曲：“' + music.getName() + '”已在播放')
               }
+              return
+            case 'songStop':
+              music.stop()
+              _this.pushLine('已停止音乐')
               return
             case 'songLoop':
               _this.pushLine('已' + (music.toggleLoop() ? '开启' : '关闭') + '循环')
@@ -141,14 +165,24 @@ export default {
             case 'songName':
               _this.autoLine()
               return
+            case 'songNext':
+              music.next(() => {
+                _this.pushLine('歌曲：“' + music.getName() + '”已在播放')
+              })
+              return
+            case 'songPrev':
+              music.prev(() => {
+                _this.pushLine('歌曲：“' + music.getName() + '”已在播放')
+              })
+              return
           }
         }
       }
-      for (len = store.AI.length; i < len; i++) {
-        if (store.AI[i].ask.test(val)) {
-          let sysLen = store.AI[i].answer.length
+      for (len = _this.AI.length; i < len; i++) {
+        if (_this.AI[i].ask.test(val)) {
+          let sysLen = _this.AI[i].answer.length
           let index = Math.round(Math.random() * sysLen - 0.5)
-          _this.pushLine(store.AI[i].answer[index])
+          _this.pushLine(_this.AI[i].answer[index])
           return
         }
       }
@@ -187,10 +221,14 @@ export default {
     letter-spacing: .06em;
     text-align: justify;
   }
+  @media (min-width: 1600px) {
+    .command{
+      font-size: 14px;
+    }
+  }
   .command-ask{
     white-space: nowrap;
     overflow: hidden;
-    padding: .4em 0;
     line-height: 1;
   }
   .command-answer{

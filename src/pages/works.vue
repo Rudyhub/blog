@@ -22,7 +22,7 @@
              }">
           <book-cover :book="book" class="book-cover flex-center" :style="{transform: 'rotateY('+book.coverRotateY+'deg)'}">
             <div class="book-cover-inner" @dblclick="closeBook(name)">
-              <link-list :items="book.items" apart="left" :title="book.title"/>
+              <link-list :items="book.items" apart="left" :title="book.title" :href="book.href"/>
             </div>
           </book-cover>
           <div class="book-spine book-spine-a flex-center">
@@ -34,7 +34,7 @@
           <div class="book-spine book-spine-d"></div>
           <book-cover :book="book" class="book-back-cover flex-center">
             <div class="book-back-cover-inner" @dblclick="closeBook(name)">
-              <link-list :items="book.items" apart="right" :title="book.title"></link-list>
+              <link-list :items="book.items" apart="right" :title="book.title" :href="book.href"></link-list>
             </div>
           </book-cover>
         </div>

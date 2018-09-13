@@ -5,6 +5,45 @@ export default {
     len: 0,
     lrc: ''
   },
+  _handler: {
+    error: [],
+    buffer: [],
+    timeupdate: [],
+    lrcupdate: [],
+    srcupdate: []
+  },
+  on (evt, fn) {
+    let _this, handler
+    _this = this
+    handler = _this._handler[evt]
+    if (handler && !handler.includes(fn)) {
+      handler.push(fn)
+    }
+  },
+  off (evt, fn) {
+    let _this, handler, len, i
+    _this = this
+    handler = _this._handler[evt]
+    if (handler) {
+      len = handler.length
+      i = 0
+      for (; i < len; i++) {
+        if (fn === handler[i]) {
+          handler.splice(i, 1)
+          break
+        }
+      }
+    }
+  },
+  fire (evt, args) {
+    let _this, handler
+    _this = this
+    handler = _this._handler[evt]
+    handler.forEach(fn => {
+      fn.apply(_this, args)
+    })
+  },
+  songIndex: 0,
   init () {
     let _this, v, start
     _this = this
@@ -13,43 +52,35 @@ export default {
     window.Rsong = {
       el: v,
       song: null,
-      list: null
+      list: []
     }
-    v.autoplay = true
     v.addEventListener('canplay', () => {
-      v.play()
-      setTimeout(() => {
-        if (v.paused && _this.autoplayError) _this.autoplayError()
-      }, 500)
+      v.play().catch(err => {
+        err.playError = 1
+        _this.fire('error', [err])
+      })
     })
     v.addEventListener('play', () => {
       start = 0
     })
     v.addEventListener('ended', () => {
-      _this.songIndex++
-      if (v.loop === false && window.Rsong.list && window.Rsong.list[_this.songIndex]) {
-        _this.url(window.Rsong.list[_this.songIndex].FileHash)
-      }
+      if (v.loop === false) _this.next()
     })
     start = 0
     v.addEventListener('timeupdate', () => {
-      if (_this.buffer) {
-        try {
-          _this.buffer((v.buffered.end(v.buffered.length - 1) / v.duration) * 100)
-        } catch (e) {}
-      }
-      if (_this.lrcUpdate) {
-        for (let i = start; i < _this._lrc.len; i++) {
-          if (Math.abs(_this._lrc.time[i] - v.currentTime) <= 1) {
-            if (start !== i) {
-              start = i
-              _this.lrcUpdate(_this._lrc.text[i])
-            }
-            break
+      try {
+        _this.fire('buffer', [(v.buffered.end(v.buffered.length - 1) / v.duration) * 100])
+      } catch (e) {}
+      for (let i = start; i < _this._lrc.len; i++) {
+        if (Math.abs(_this._lrc.time[i] - v.currentTime) <= 1) {
+          if (start !== i) {
+            start = i
+            _this.fire('lrcupdate', [_this._lrc.text[i]])
           }
+          break
         }
       }
-      if (_this.timeUpdate) _this.timeUpdate(v.currentTime, v.duration)
+      _this.fire('timeupdate', [v.currentTime, v.duration])
     })
   },
   search (kw, fn) {
@@ -60,7 +91,7 @@ export default {
       if (list && list[kw]) {
         _this.url(list[kw].FileHash, fn)
       } else if (window.Rsong.song) {
-        _this.stop()
+        _this.replay()
         if (fn) fn()
       }
     } else {
@@ -82,29 +113,6 @@ export default {
         if (fn) fn(songName)
       }
     }
-  },
-  play () {
-    window.Rsong.el.play()
-  },
-  pause () {
-    window.Rsong.el.pause()
-  },
-  paused () {
-    return window.Rsong.el.paused
-  },
-  stop () {
-    window.Rsong.el.currentTime = 0
-    window.Rsong.el.pause()
-  },
-  toggleLoop () {
-    window.Rsong.el.loop = !window.Rsong.el.loop
-    return window.Rsong.el.loop
-  },
-  getName () {
-    return window.Rsong.song ? window.Rsong.song.audio_name : ''
-  },
-  getList () {
-    return window.Rsong.list
   },
   find (songName, fn) {
     let script = document.createElement('script')
@@ -130,7 +138,7 @@ export default {
       _this.lyric()
       window.localStorage.setItem('songHash', res.data.hash)
       window.localStorage.setItem('songName', res.data.audio_name)
-      if (_this.srcUpdate) _this.srcUpdate()
+      _this.fire('srcupdate', [res.data])
       if (fn) fn()
     }
     script.onload = function loaded () {
@@ -160,5 +168,55 @@ export default {
       match = reg.exec(lrc)
     }
     _this._lrc.len = _this._lrc.time.length
+  },
+  play () {
+    window.Rsong.el.play()
+  },
+  pause () {
+    window.Rsong.el.pause()
+  },
+  paused () {
+    return window.Rsong.el.paused
+  },
+  stop () {
+    this.replay()
+    setTimeout(() => {
+      this.pause()
+    }, 50)
+  },
+  replay () {
+    window.Rsong.el.currentTime = 0
+  },
+  toggleLoop () {
+    window.Rsong.el.loop = !window.Rsong.el.loop
+    return window.Rsong.el.loop
+  },
+  getName () {
+    return window.Rsong.song ? window.Rsong.song.audio_name : ''
+  },
+  getList () {
+    return window.Rsong.list
+  },
+  next (fn) {
+    let list, len
+    list = window.Rsong.list
+    len = list.length
+    if (len) {
+      this.songIndex = this.songIndex < len - 1 ? this.songIndex + 1 : 0
+      this.url(list[this.songIndex].FileHash)
+    } else {
+      if (fn) fn()
+    }
+  },
+  prev (fn) {
+    let list, len
+    list = window.Rsong.list
+    len = list.length
+    if (len) {
+      this.songIndex = this.songIndex > 0 ? this.songIndex - 1 : list.length - 1
+      this.url(list[this.songIndex].FileHash)
+    } else {
+      if (fn) fn()
+    }
   }
 }

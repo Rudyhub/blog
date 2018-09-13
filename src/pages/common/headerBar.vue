@@ -7,10 +7,10 @@
       </form>
       <div class="header-navbar">
         <nav class="header-nav">
-          <router-link class="header-nav-item" v-for="(item, name) of nav" :key="name" :class="name===isName ? 'header-nav-active' : ''" :to="'/'+name" tag="a">{{item}}</router-link>
+          <router-link class="header-nav-item" v-for="(item, name) of nav" :key="name" :class="name===active ? 'header-nav-active' : ''" :to="'/'+name" tag="a">{{item}}</router-link>
         </nav>
         <nav class="header-nav-dropmenu">
-          <router-link class="header-nav-item" v-for="(item, name) of nav" :key="name" :class="name===isName ? 'header-nav-active' : ''" :to="'/'+name" tag="a">{{item}}</router-link>
+          <router-link class="header-nav-item" v-for="(item, name) of nav" :key="name" :class="name===active ? 'header-nav-active' : ''" :to="'/'+name" tag="a">{{item}}</router-link>
         </nav>
       </div>
     </div>
@@ -21,7 +21,7 @@
 import store from '../../scripts/store.js'
 export default {
   name: 'header-bar',
-  props: ['isName'],
+  props: ['active'],
   data () {
     return {
       nav: store.nav
