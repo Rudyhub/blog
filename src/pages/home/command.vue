@@ -131,6 +131,7 @@ export default {
               return
             case 'clear':
               _this.lines.splice(0, _this.lines.length)
+              _this.ask = ''
               return
             case 'song':
               music.search(val.replace(store.aiKeys[aiKey], ''), () => {
@@ -265,5 +266,9 @@ export default {
     color: #b9231f;
     margin-top: .5em;
     font-weight: bolder;
+  }
+  .command-p{
+    margin: .5em 0;
+    text-indent: 2em;
   }
 </style>
