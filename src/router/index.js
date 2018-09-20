@@ -8,6 +8,7 @@ import album from '@/pages/album'
 import worksDetail from '@/pages/worksDetail'
 Vue.use(Router)
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',

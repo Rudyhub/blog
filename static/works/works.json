@@ -695,7 +695,7 @@
     "title": "景观方案设计类",
     "subtitle": "2014 在溪林峰",
     "cover": "/static/landscape/j03.jpg",
-    "href": "/#/works/landscape",
+    "href": "/works/landscape",
     "items": [
       {
         "title": "深圳十五峯：屋顶花园",
@@ -1298,7 +1298,7 @@
     "title": "效果图类",
     "subtitle": "2012 在朗形",
     "cover": "/static/effects/001.jpg",
-    "href": "/#/works/effects",
+    "href": "/works/effects",
     "items": [
       {
         "title": "全部效果图",
@@ -1474,7 +1474,7 @@
     "title": "规划设计类",
     "subtitle": "2008在学校",
     "cover": "/static/homework/001.jpg",
-    "href": "/#/works/homework",
+    "href": "/works/homework",
     "items": [
       {
         "title": "模型课作业：《欧式别墅花园设计》",

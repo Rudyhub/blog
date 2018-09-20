@@ -1,26 +1,29 @@
 <template>
-  <div class="home">
-    <div class="computer">
-      <transition name="computer-cover" @afterEnter="coverAfterEnd">
-        <div v-show="show" class="computer-cover">
-          <div class="computer-back-cover flex-column">
-            <img class="computer-logo" src="/static/face.png" alt="">
-            <p>RUDY</p>
+  <div class="app-main">
+    <div class="home">
+      <div class="computer">
+        <transition name="computer-cover" @afterEnter="coverAfterEnd">
+          <div v-show="show" class="computer-cover">
+            <div class="computer-back-cover flex-column">
+              <img class="computer-logo" src="/static/face.png" alt="">
+              <p>RUDY</p>
+            </div>
+            <div class="computer-screen">
+              <component ref="screen" :is="screen" @welcomeEnd="welcomeEndFn"/>
+            </div>
           </div>
-          <div class="computer-screen">
-            <component ref="screen" :is="screen" @welcomeEnd="welcomeEndFn"/>
-          </div>
-        </div>
-      </transition>
-      <div class="computer-keyboard">
-        <keyboard/>
-        <div ref="lyric" class="lyric fs16 flex-center" :style="{backgroundImage: 'linear-gradient(to right, #2f4d2f '+songPlayed+'%, #4d2f2f '+songPlayed+'%, #4d2f2f '+songBufer+'%, transparent '+songBufer+'%)'}">
-          <div class="lyric-text">{{lyric}}</div>
-          <div class="lyric-line" v-for="i of lines" :key="'h'+i" :style="{top: i*2 + 'px'}">
+        </transition>
+        <div class="computer-keyboard">
+          <keyboard/>
+          <div ref="lyric" class="lyric fs16 flex-center" :style="{backgroundImage: 'linear-gradient(to right, #2f4d2f '+songPlayed+'%, #4d2f2f '+songPlayed+'%, #4d2f2f '+songBufer+'%, transparent '+songBufer+'%)'}">
+            <div class="lyric-text">{{lyric}}</div>
+            <div class="lyric-line" v-for="i of lines" :key="'h'+i" :style="{top: i*2 + 'px'}">
+            </div>
           </div>
         </div>
       </div>
     </div>
+    <a class="ICP" href="http://www.miitbeian.gov.cn/" target="_blank">粤ICP备18116298号</a>
   </div>
 </template>
 
@@ -29,6 +32,7 @@ import welcome from '../components/welcome'
 import command from './home/command'
 import keyboard from './home/keyboard'
 import music from '../scripts/music.js'
+import utils from '../scripts/utils.js'
 export default {
   name: 'home',
   components: {welcome, command, keyboard},
@@ -60,6 +64,7 @@ export default {
       } catch (e) {}
     })
     this.show = true
+    utils.scroll(this.$el)
   },
   methods: {
     coverAfterEnd () {
@@ -73,6 +78,23 @@ export default {
 </script>
 
 <style>
+  .app-main{
+    overflow: hidden;
+    height: 100%;
+  }
+  .ICP{
+    width:100%;
+    bottom: 0;
+    text-decoration: none;
+    text-align:center;
+    font-size: 16px;
+    display: block;
+    padding: 1em;
+    line-height: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    background: #fff;
+  }
   .home{
     perspective: 18rem;
     width: 100%;

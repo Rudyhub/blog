@@ -13,7 +13,7 @@ export default {
     songPause: /^((-m|music)\s+(off|pause|puase)|暂停音乐|安静|嘘|静音)\s*$/,
     songPlay: /^((-m|music)\s+(on|play)|播放(音乐|歌曲))\s*$/,
     songStop: /^((-m|music)\s+stop|停止(播放|音乐))\s*$/,
-    songLoop: /^((-m|music)\s+loop|单曲循环)\s+$/,
+    songLoop: /^((-m|music)\s+loop|单曲循环)\s*$/,
     songNum: /^\d+$/,
     songList: /^((-m|music)\s+list|查看歌单|歌单|歌曲列表)\s*$/,
     songName: /^((-m|music)\s+name|(查看)?歌名)\s*$/,

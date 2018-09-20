@@ -1,4 +1,5 @@
 export default {
+  rootPath: '/music',
   _lrc: {
     time: [],
     text: [],
@@ -115,38 +116,40 @@ export default {
     }
   },
   find (songName, fn) {
-    let script = document.createElement('script')
-    window.musichash = function musichash (res) {
-      window.Rsong.list = res.data.lists
-      if (fn) fn()
+    let xhr = new XMLHttpRequest()
+    xhr.open('get', this.rootPath + '?songName=' + songName, true)
+    xhr.onreadystatechange = () => {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        try {
+          let res = typeof xhr.response === 'object' ? xhr.response : JSON.parse(xhr.response)
+          window.Rsong.list = res.data.lists
+          if (fn) fn()
+        } catch (e) {}
+      }
     }
-    script.onload = function loaded () {
-      document.head.removeChild(script)
-      script = script.onload = null
-    }
-    document.head.appendChild(script)
-    script.src = 'http://songsearch.kugou.com/song_search_v2?callback=musichash&keyword=' + songName + '&platform=WebFilter&filter=2'
+    xhr.send()
   },
   url (hash, fn) {
-    let _this, Rsong, script
+    let _this, xhr, Rsong
     _this = this
     Rsong = window.Rsong
-    script = document.createElement('script')
-    window.musicurl = function musicurl (res) {
-      Rsong.el.src = res.data.play_url
-      Rsong.song = res.data
-      _this.lyric()
-      window.localStorage.setItem('songHash', res.data.hash)
-      window.localStorage.setItem('songName', res.data.audio_name)
-      _this.fire('srcupdate', [res.data])
-      if (fn) fn()
+    xhr = new XMLHttpRequest()
+    xhr.open('get', _this.rootPath + '?hash=' + hash, true)
+    xhr.onreadystatechange = () => {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        try {
+          let res = typeof xhr.response === 'object' ? xhr.response : JSON.parse(xhr.response)
+          Rsong.el.src = res.data.play_url
+          Rsong.song = res.data
+          _this.lyric()
+          window.localStorage.setItem('songHash', res.data.hash)
+          window.localStorage.setItem('songName', res.data.audio_name)
+          _this.fire('srcupdate', [res.data])
+          if (fn) fn()
+        } catch (e) {}
+      }
     }
-    script.onload = function loaded () {
-      document.head.removeChild(script)
-      script = script.onload = null
-    }
-    script.src = 'http://www.kugou.com/yy/index.php?r=play/getdata&hash=' + hash + '&callback=musicurl'
-    document.head.appendChild(script)
+    xhr.send()
   },
   lyric () {
     let _this, reg, match, lrc
