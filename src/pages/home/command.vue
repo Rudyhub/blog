@@ -1,7 +1,7 @@
 <template>
     <div class="command fs9">
       <div class="command-answer">
-        欢迎进入老夫的互动系统，可与老夫进行简单的交流，想进入其他页面必须输入正确的指令。输入“?” 或 “帮助”，然后Enter，可查看关键指令。<br>
+        欢迎进入本rudy长老的个人系统，进入其他页面须输入指令。输入“?” 或 “帮助”，然后Enter，可查看所有指令。<br>
       </div>
       <template v-for="(line, i) of lines">
         <div v-if="line.ask" class="command-ask" :key="'ask'+i">
@@ -55,7 +55,7 @@ export default {
     music.on('error', err => {
       if (err.playError === 1) {
         _this.lines.push({
-          answer: '自动播放失败，浏览器不支持自动播放，可输入“播放音乐”。'
+          answer: '音乐自动播放失败，可输入“播放音乐”。'
         })
       }
     })

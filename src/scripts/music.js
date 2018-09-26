@@ -1,5 +1,5 @@
 export default {
-  rootPath: '/music',
+  rootPath: /rudyhub\.github\.io/i.test(window.location.href) ? 'https://670752970.com/music' : '/music',
   _lrc: {
     time: [],
     text: [],
