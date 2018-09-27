@@ -21,7 +21,7 @@
         </div>
       </div>
     </div>
-    <div class="ICP fs10">
+    <div class="ICP">
       <a class="ICP-a" href="http://www.miitbeian.gov.cn/" target="_blank">
         粤ICP备 18116298号
       </a>
@@ -194,6 +194,7 @@ export default {
     bottom: 0;
     text-align: center;
     white-space: nowrap;
+    font-size: .2rem;
   }
   a.ICP-a{
     display: inline-block;
@@ -202,7 +203,7 @@ export default {
     padding: 0 1em;
   }
   .ICP-img{
-    width: .35rem;
+    width: .33rem;
   }
   .ICP-img, .ICP-span{
     display: inline-block;
