@@ -194,7 +194,7 @@ export default {
     bottom: 0;
     text-align: center;
     white-space: nowrap;
-    font-size: .2rem;
+    font-size: 14px;
   }
   a.ICP-a{
     display: inline-block;
@@ -202,11 +202,16 @@ export default {
     color: #fee;
     padding: 0 1em;
   }
-  .ICP-img{
-    width: .33rem;
-  }
   .ICP-img, .ICP-span{
     display: inline-block;
     vertical-align: middle;
+  }
+  @media (min-width: 768px) {
+    .ICP{
+      font-size: .2rem;
+    }
+    .ICP-img{
+      width: .33rem;
+    }
   }
 </style>
