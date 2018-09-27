@@ -206,7 +206,7 @@ export default {
     display: inline-block;
     vertical-align: middle;
   }
-  @media (min-width: 768px) {
+  @media (max-width: 768px) {
     .ICP{
       font-size: .2rem;
     }
