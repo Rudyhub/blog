@@ -21,7 +21,15 @@
         </div>
       </div>
     </div>
-    <a class="ICP fs9" href="http://www.miitbeian.gov.cn/" target="_blank"><span class="ICP-span">{{ICP}}</span></a>
+    <div class="ICP fs10">
+      <a class="ICP-a" href="http://www.miitbeian.gov.cn/" target="_blank">
+        粤ICP备 18116298号
+      </a>
+      <a class="ICP-a" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44030402002546" target="_blank">
+        <img class="ICP-img" src="/static/beian.png"/>
+        <span class="ICP-span">粤公网安备 44030402002546号</span>
+      </a>
+    </div>
   </div>
 </template>
 
@@ -34,15 +42,13 @@ export default {
   name: 'home',
   components: {welcome, command, keyboard},
   data () {
-    let ICP = '粤 ICP 备 18116298 号'
     return {
       show: false,
       screen: null,
       lyric: '',
       lines: 0,
       songPlayed: 0,
-      songBufer: 0,
-      ICP
+      songBufer: 0
     }
   },
   mounted () {
@@ -76,26 +82,6 @@ export default {
 </script>
 
 <style>
-  a.ICP{
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    text-decoration: none;
-    text-align: center;
-    display: block;
-    line-height: 1;
-    white-space: nowrap;
-    overflow: hidden;
-    color: #fff;
-    box-sizing: border-box;
-  }
-  .ICP-span{
-    display: inline-block;
-    background: #5a0001;
-    padding: .3em;
-    border-radius: .2em;
-    border: 2px solid #333;
-  }
   .home{
     perspective: 18rem;
     width: 100%;
@@ -109,7 +95,7 @@ export default {
   }
   .computer{
     transform-style: preserve-3d;
-    transform: translateY(.5rem);
+    transform: translateY(.1rem);
     width: 10rem;
     height: 12rem;
     margin: 0 auto;
@@ -201,5 +187,25 @@ export default {
     border-top: 1px dotted;
     border-bottom: 1px dotted;
     width: 100%;
+  }
+  .ICP{
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    text-align: center;
+    white-space: nowrap;
+  }
+  a.ICP-a{
+    display: inline-block;
+    vertical-align: middle;
+    color: #fee;
+    padding: 0 1em;
+  }
+  .ICP-img{
+    width: .35rem;
+  }
+  .ICP-img, .ICP-span{
+    display: inline-block;
+    vertical-align: middle;
   }
 </style>
